@@ -1,14 +1,19 @@
 package name.dengchao.test.fx;
 
 import javafx.application.Application;
-import javafx.event.EventType;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.ToolBar;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class HelloWorld extends Application {
 
@@ -16,23 +21,57 @@ public class HelloWorld extends Application {
         launch(args);
     }
 
+    class WindowButtons extends HBox {
+
+        public WindowButtons() {
+            Button closeBtn = new Button("X");
+
+            closeBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    Platform.exit();
+                }
+            });
+
+            this.getChildren().add(closeBtn);
+        }
+    }
+
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Hello World!");
+    public void start(Stage primaryStage) {
+        //remove window decoration
+        primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction((event) -> System.out.println("Hello World!"));
+        BorderPane borderPane = new BorderPane();
+        borderPane.setStyle("-fx-background-color: green;");
 
-        VBox root = new VBox();
-        root.getChildren().add(btn);
+        ToolBar toolBar = new ToolBar();
+
+        int height = 10;
+        toolBar.setPrefHeight(height);
+        toolBar.setMinHeight(height);
+        toolBar.setMaxHeight(height);
+        toolBar.getItems().add(new WindowButtons());
+
+        borderPane.setTop(toolBar);
 
         TextArea textArea = new TextArea();
+        textArea.setText("测试");
         textArea.setPrefRowCount(1);
-        textArea.setBackground(Background.EMPTY);
-        root.getChildren().add(textArea);
+        textArea.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    System.out.println("Execute query");
+                    event.consume();
+                }
+            }
+        });
 
-        primaryStage.setScene(new Scene(root, 300, 250));
+        borderPane.setCenter(textArea);
+
+        primaryStage.setScene(new Scene(borderPane, 600, 60));
         primaryStage.show();
     }
 }
