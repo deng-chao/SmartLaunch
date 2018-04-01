@@ -1,5 +1,6 @@
 package name.dengchao.test.fx.hotkey.handler;
 
+import name.dengchao.test.fx.PublicComponent;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -19,20 +20,8 @@ import name.dengchao.test.fx.plugin.PluginManager;
 @Data
 public class TypeSuggestion {
 
-    public TypeSuggestion(Stage primaryStage, TextField shade, TextField textField, ListView<String> listView) {
-        this.primaryStage = primaryStage;
-        this.shade = shade;
-        this.textField = textField;
-        this.listView = listView;
-    }
-
-    private Stage primaryStage;
-    private TextField shade;
-    private TextField textField;
-    private ListView<String> listView;
-
     public void suggest(KeyEvent event) {
-        String input = textField.getText();
+        String input = PublicComponent.getTextField().getText();
         if (event.getCode() == KeyCode.BACK_SPACE && input.length() > 0) {
             input = input.substring(0, input.length() - 1);
         } else {
@@ -58,25 +47,25 @@ public class TypeSuggestion {
             }
         }
         if (!CollectionUtils.isEmpty(candidates)) {
-            listView.setVisible(true);
-            shade.setText(candidates.get(0));
+            PublicComponent.getListView().setVisible(true);
+            PublicComponent.getShade().setText(candidates.get(0));
             ObservableList<String> items = FXCollections.observableArrayList(candidates);
-            listView.setItems(items);
+            PublicComponent.getListView().setItems(items);
         } else {
             if (input.contains(" ")) {
-                listView.setVisible(true);
-                listView.getItems().clear();
-                listView.getItems().add("No command match");
-                shade.setText("");
+                PublicComponent.getListView().setVisible(true);
+                PublicComponent.getListView().getItems().clear();
+                PublicComponent.getListView().getItems().add("No command match");
+                PublicComponent.getShade().setText("");
             } else {
-                listView.setVisible(true);
-                listView.getItems().clear();
-                listView.getItems().add("Search '" + input + "' in google.");
-                shade.setText("");
+                PublicComponent.getListView().setVisible(true);
+                PublicComponent.getListView().getItems().clear();
+                PublicComponent.getListView().getItems().add("Search '" + input + "' in google.");
+                PublicComponent.getShade().setText("");
             }
         }
-        listView.setMaxHeight(listView.getItems().size() * 45.0 + 3);
-        listView.getSelectionModel().select(0);
-        primaryStage.setHeight(63 + listView.getItems().size() * 45.0);
+        PublicComponent.getListView().setMaxHeight(PublicComponent.getPrimaryStage().getMaxHeight());
+        PublicComponent.getListView().getSelectionModel().select(0);
+        PublicComponent.getPrimaryStage().setHeight(PublicComponent.getListView().getHeight() + 60);
     }
 }
