@@ -1,16 +1,14 @@
 package name.dengchao.test.fx.plugin.builtin;
 
-import lombok.NoArgsConstructor;
-import name.dengchao.test.fx.plugin.DisplayType;
-import org.springframework.util.StreamUtils;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+
+import lombok.NoArgsConstructor;
+import name.dengchao.test.fx.plugin.DisplayType;
 
 @NoArgsConstructor
 public class Calculator extends BuiltinPlugin {
@@ -20,6 +18,7 @@ public class Calculator extends BuiltinPlugin {
     @Override
     public InputStream execute() {
         try {
+            // use js engine directly.
             ScriptEngineManager mgr = new ScriptEngineManager();
             ScriptEngine engine = mgr.getEngineByName("JavaScript");
             Object result = engine.eval(expression);
@@ -45,12 +44,5 @@ public class Calculator extends BuiltinPlugin {
             return;
         }
         this.expression = parameters[0];
-    }
-
-    public static void main(String[] args) throws IOException {
-        Calculator calculator = new Calculator();
-        calculator.setParameters("1+2");
-        String in = StreamUtils.copyToString(calculator.execute(), StandardCharsets.UTF_8);
-        System.out.println(in);
     }
 }
