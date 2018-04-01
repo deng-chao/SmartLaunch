@@ -19,6 +19,9 @@ import name.dengchao.test.fx.hotkey.InputEventHandler;
 import name.dengchao.test.fx.hotkey.os.BringToFont;
 import name.dengchao.test.fx.hotkey.os.GlobalKeyListener;
 import name.dengchao.test.fx.plugin.PluginManager;
+import org.springframework.core.io.ClassPathResource;
+
+import java.io.IOException;
 
 public class SmartLaunch extends Application {
 
@@ -33,12 +36,10 @@ public class SmartLaunch extends Application {
     public void start(Stage primaryStage) {
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        TextField shade = new TextField();
-        setTextField(shade);
+        TextField shade = createDefaultTextField();
         shade.setStyle("-fx-text-inner-color: gray;");
 
-        TextField textField = new TextField();
-        setTextField(textField);
+        TextField textField = createDefaultTextField();
         InputEventHandler handler = new InputEventHandler(primaryStage, shade, textField);
         textField.addEventHandler(KeyEvent.KEY_PRESSED, handler);
 
@@ -48,13 +49,20 @@ public class SmartLaunch extends Application {
         vBox.setStyle("-fx-background-color: blue;");
         vBox.setStyle("-fx-border-radius: 2;");
         vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
-        vBox.setStyle("-fx-padding: 10;");
+        vBox.setStyle("-fx-padding: 8;");
         vBox.setStyle("-fx-background-color: transparent;");
 
         Scene scene = new Scene(vBox, 600, 56);
+
+        try {
+            scene.getStylesheets().add(new ClassPathResource("application.css").getURL().toExternalForm());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
 
         Platform.setImplicitExit(false);
@@ -64,16 +72,16 @@ public class SmartLaunch extends Application {
         });
     }
 
-    private void setTextField(TextField shade) {
-        shade.setFont(Font.font(25));
-        shade.setMinHeight(50);
-        shade.setPrefHeight(50);
-        shade.setMaxHeight(50);
-        shade.setLayoutX(3);
-        shade.setLayoutY(3);
-        shade.setPrefWidth(594);
-        shade.setStyle("-fx-background-color: transparent;");
+    private TextField createDefaultTextField() {
+        TextField textField = new TextField();
+        textField.setFont(Font.font(25));
+        textField.setMinHeight(50);
+        textField.setPrefHeight(50);
+        textField.setMaxHeight(50);
+        textField.setLayoutX(3);
+        textField.setLayoutY(3);
+        textField.setPrefWidth(594);
+        textField.setStyle("-fx-background-color: transparent;");
+        return textField;
     }
-
-
 }
