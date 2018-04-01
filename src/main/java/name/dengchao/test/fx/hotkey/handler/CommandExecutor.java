@@ -31,27 +31,18 @@ public class CommandExecutor {
     private Tooltip tooltip = new Tooltip();
 
     public void execute(KeyEvent event) {
-        long t1 = System.currentTimeMillis();
-        long t2 = 0, t3 = 0, t4 = 0, t5 = 0, t6 = 0, t7 = 0, t8 = 0, t9 = 0;
         String input = textField.getText() + event.getText();
-        t2 = System.currentTimeMillis();
         String[] inputs = input.trim().split(" ");
         Plugin activePlugin = PluginManager.pluginMap.get(inputs[0]);
-        t3 = System.currentTimeMillis();
         InputStream inputStream = null;
         if (activePlugin != null) {
             String[] params = new String[inputs.length - 1];
             System.arraycopy(inputs, 1, params, 0, params.length);
-            t4 = System.currentTimeMillis();
             activePlugin.setParameters(params);
-            t5 = System.currentTimeMillis();
-            System.out.println(t3 - t2);
             inputStream = activePlugin.execute();
-            t6 = System.currentTimeMillis();
         }
         event.consume();
 
-        t7 = System.currentTimeMillis();
         if (activePlugin.getDisplayType() == DisplayType.NONE) {
             primaryStage.hide();
         } else if (activePlugin.getDisplayType() == DisplayType.NUM) {
@@ -72,12 +63,5 @@ public class CommandExecutor {
                 e.printStackTrace();
             }
         }
-        t8 = System.currentTimeMillis();
-        System.out.println("3 " + (t3 - t2));
-        System.out.println("4 " + (t4 - t2));
-        System.out.println("5 " + (t5 - t2));
-        System.out.println("6 " + (t6 - t2));
-        System.out.println("7 " + (t7 - t2));
-        System.out.println("8 " + (t8 - t2));
     }
 }

@@ -33,4 +33,8 @@ public class Utils {
     public static String getLogPath() {
         return getHomePath().concat("/log");
     }
+
+    public static String getStartMenuPath() {
+        return SystemUtils.getUserHome() + "/AppData/Roaming/Microsoft/Windows/Start Menu/Programs";
+    }
 }

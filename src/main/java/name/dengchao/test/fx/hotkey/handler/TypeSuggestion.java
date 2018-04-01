@@ -53,7 +53,7 @@ public class TypeSuggestion {
         Set<String> pluginNames = PluginManager.pluginMap.keySet();
         List<String> candidates = new ArrayList<>();
         for (String pluginName : pluginNames) {
-            if (pluginName.startsWith(input)) {
+            if (pluginName.toLowerCase().startsWith(input.toLowerCase())) {
                 candidates.add(pluginName);
             }
         }
