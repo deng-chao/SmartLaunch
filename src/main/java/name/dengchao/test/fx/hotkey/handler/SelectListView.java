@@ -4,12 +4,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import name.dengchao.test.fx.PublicComponent;
 
 
 public class SelectListView {
 
-    public SelectListView(ListView<String> listView) {
-        this.listView = listView;
+    public SelectListView() {
+        this.listView = PublicComponent.getListView();
     }
 
     private ListView<String> listView;

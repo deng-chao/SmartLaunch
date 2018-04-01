@@ -3,6 +3,7 @@ package name.dengchao.test.fx;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Border;
@@ -16,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import name.dengchao.test.fx.hotkey.InputEventHandler;
+import name.dengchao.test.fx.hotkey.handler.ListViewCellFactory;
 import name.dengchao.test.fx.hotkey.os.BringToFont;
 import name.dengchao.test.fx.hotkey.os.GlobalKeyListener;
 import name.dengchao.test.fx.plugin.PluginManager;
@@ -34,14 +36,24 @@ public class SmartLaunch extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.initStyle(StageStyle.UNDECORATED);
+
+        PublicComponent.setPrimaryStage(primaryStage);
+
+        ListView<String> listView = new ListView();
+        listView.setCellFactory(lst -> new ListViewCellFactory());
+        listView.setLayoutY(55);
+        listView.setLayoutX(3);
+        listView.setMaxWidth(594);
+        listView.setPrefWidth(594);
+        listView.setVisible(false);
+        PublicComponent.setListView(listView);
 
         TextField shade = createDefaultTextField();
         shade.setStyle("-fx-text-inner-color: gray;");
+        PublicComponent.setShade(shade);
 
         TextField textField = createDefaultTextField();
-        InputEventHandler handler = new InputEventHandler(primaryStage, shade, textField);
-        textField.addEventHandler(KeyEvent.KEY_PRESSED, handler);
+        PublicComponent.setTextField(textField);
 
         Pane vBox = new Pane();
         vBox.getChildren().add(shade);
@@ -52,14 +64,17 @@ public class SmartLaunch extends Application {
         vBox.setStyle("-fx-padding: 8;");
         vBox.setStyle("-fx-background-color: transparent;");
 
-        Scene scene = new Scene(vBox, 600, 56);
+        vBox.getChildren().add(listView);
 
+        Scene scene = new Scene(vBox, 600, 56);
         try {
             scene.getStylesheets().add(new ClassPathResource("application.css").getURL().toExternalForm());
         } catch (IOException e) {
             e.printStackTrace();
         }
         scene.setFill(Color.TRANSPARENT);
+
+        primaryStage.setMaxHeight(500);
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setAlwaysOnTop(true);
@@ -69,6 +84,8 @@ public class SmartLaunch extends Application {
         Platform.runLater(() -> {
             textField.requestFocus();
             GlobalKeyListener.register("-49-3675", new BringToFont(primaryStage, textField));
+            InputEventHandler handler = new InputEventHandler();
+            textField.addEventHandler(KeyEvent.KEY_PRESSED, handler);
         });
     }
 

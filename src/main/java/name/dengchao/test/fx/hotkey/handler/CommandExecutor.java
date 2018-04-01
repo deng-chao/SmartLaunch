@@ -1,12 +1,21 @@
 package name.dengchao.test.fx.hotkey.handler;
 
+import javafx.event.Event;
+import javafx.scene.control.ListView;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.MouseEvent;
+import name.dengchao.test.fx.PublicComponent;
+import name.dengchao.test.fx.hotkey.handler.display.DisplayTooltip;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.List;
 
 import javafx.geometry.Point2D;
 import javafx.scene.control.TextField;
@@ -20,20 +29,40 @@ import name.dengchao.test.fx.plugin.PluginManager;
 
 public class CommandExecutor {
 
-    public CommandExecutor(Stage stage, TextField textField) {
-        this.primaryStage = stage;
-        this.textField = textField;
+    public CommandExecutor() {
+        this.primaryStage = PublicComponent.getPrimaryStage();
+        this.textField = PublicComponent.getTextField();
+        this.listView = PublicComponent.getListView();
     }
 
     private Stage primaryStage;
     private TextField textField;
+    private ListView<String> listView;
 
-    private Tooltip tooltip = new Tooltip();
+    public void execute(InputEvent event) {
+        Plugin activePlugin = null;
+        String[] inputs = null;
+        if (event instanceof KeyEvent) {
+            KeyEvent evt = (KeyEvent) event;
+            String input = textField.getText() + evt.getText();
+            inputs = input.trim().split(" ");
+            activePlugin = PluginManager.pluginMap.get(inputs[0]);
 
-    public void execute(KeyEvent event) {
-        String input = textField.getText() + event.getText();
-        String[] inputs = input.trim().split(" ");
-        Plugin activePlugin = PluginManager.pluginMap.get(inputs[0]);
+            if (activePlugin == null) {
+                String potentialCandidate = listView.getSelectionModel().getSelectedItem();
+                textField.setText(potentialCandidate);
+                activePlugin = PluginManager.pluginMap.get(potentialCandidate);
+            }
+        } else if (event instanceof MouseEvent) {
+            String cmd = listView.getSelectionModel().getSelectedItem();
+            activePlugin = PluginManager.pluginMap.get(cmd);
+            inputs = new String[]{cmd};
+        }
+
+        execute(event, inputs, activePlugin);
+    }
+
+    public void execute(Event event, String[] inputs, Plugin activePlugin) {
         InputStream inputStream = null;
         if (activePlugin != null) {
             String[] params = new String[inputs.length - 1];
@@ -43,25 +72,14 @@ public class CommandExecutor {
         }
         event.consume();
 
-        if (activePlugin.getDisplayType() == DisplayType.NONE) {
+        display(activePlugin.getDisplayType(), inputStream);
+    }
+
+    private void display(DisplayType type, InputStream inputStream) {
+        if (type == DisplayType.NONE) {
             primaryStage.hide();
-        } else if (activePlugin.getDisplayType() == DisplayType.NUM) {
-            try {
-                String numStr = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
-                NumberFormat format = new DecimalFormat("###,###,###,###,###.###");
-                double value = Double.valueOf(numStr);
-                tooltip.setText(format.format(value));
-                Point2D point2D = textField.localToScreen(0, 0);
-                if (!tooltip.isShowing()) {
-                    tooltip.setY(point2D.getY() + 3);
-                    tooltip.setFont(Font.font(16));
-                }
-                tooltip.hide();
-                tooltip.show(primaryStage);
-                tooltip.setX(point2D.getX() + primaryStage.getWidth() - tooltip.getWidth());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } else if (type == DisplayType.NUM) {
+            new DisplayTooltip().display(inputStream);
         }
     }
 }
