@@ -1,9 +1,7 @@
-package name.dengchao.test.fx;
+package name.dengchao.test.fx.plugin;
 
 import com.alibaba.fastjson.JSON;
-import name.dengchao.test.fx.plugin.Plugin;
-import name.dengchao.test.fx.plugin.builtin.BuiltinPlugin;
-import name.dengchao.test.fx.plugin.windows.WindowsPlugin;
+
 import org.apache.commons.io.FileUtils;
 import org.reflections.Reflections;
 
@@ -13,6 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import name.dengchao.test.fx.plugin.Plugin;
+import name.dengchao.test.fx.plugin.builtin.BuiltinPlugin;
+import name.dengchao.test.fx.plugin.windows.WindowsPlugin;
+import name.dengchao.test.fx.utils.Utils;
 
 public class PluginManager {
 
@@ -44,10 +47,7 @@ public class PluginManager {
     }
 
     public static void loadWindowsPlugins() {
-        String home = System.getProperties().getProperty("user.home");
-        String appHome = home + "/AppData/Local/QuickLaunch";
-        String pluginConfigPath = appHome + "/plugins/config";
-        File file = new File(pluginConfigPath);
+        File file = new File(Utils.getPluginConfigPath());
         if (!file.isDirectory()) {
             System.out.println("plugin should be a directory");
             return;
@@ -62,10 +62,5 @@ public class PluginManager {
                 e.printStackTrace();
             }
         }
-
-    }
-
-    public static void main(String[] args) {
-        loadWindowsPlugins();
     }
 }
