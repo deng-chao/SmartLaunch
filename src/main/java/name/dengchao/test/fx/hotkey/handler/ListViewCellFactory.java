@@ -1,9 +1,7 @@
 package name.dengchao.test.fx.hotkey.handler;
 
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;

@@ -8,15 +8,17 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import name.dengchao.test.fx.plugin.DisplayType;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Calculator extends BuiltinPlugin {
 
     private String expression;
-    private String description;
+    private String description = "内置计算器，直接输入表达式";
 
     @Override
     public InputStream execute() {
@@ -47,5 +49,10 @@ public class Calculator extends BuiltinPlugin {
             return;
         }
         this.expression = parameters[0];
+    }
+
+    @Override
+    public String[] getParameterNames() {
+        return new String[]{"expression"};
     }
 }

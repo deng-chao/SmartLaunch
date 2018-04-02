@@ -12,5 +12,9 @@ public interface Plugin {
 
     void setParameters(String... parameters);
 
+    default String[] getParameterNames() {
+        return null;
+    }
+
     InputStream execute();
 }
