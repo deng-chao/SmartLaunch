@@ -8,6 +8,7 @@ import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.SystemUtils;
 import org.reflections.Reflections;
 
 import java.io.File;
@@ -29,9 +30,13 @@ public class PluginManager {
 
     public static void load() {
         loadBuiltinPlugin();
-        loadWindowsPlugins();
-        loadStartMenu(Utils.getUserStartMenuPath());
-        loadStartMenu(Utils.getSystemStartMenuPath());
+        if (SystemUtils.IS_OS_MAC){
+
+        } else if (SystemUtils.IS_OS_WINDOWS){
+            loadWindowsPlugins();
+            loadStartMenu(Utils.getUserStartMenuPath());
+            loadStartMenu(Utils.getSystemStartMenuPath());
+        }
     }
 
     private static void loadBuiltinPlugin() {
