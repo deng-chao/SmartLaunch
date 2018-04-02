@@ -6,10 +6,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import name.dengchao.test.fx.PublicComponent;
+import name.dengchao.test.fx.plugin.Plugin;
 
 public class SelectListView {
 
-    private ListView<String> listView = PublicComponent.getListView();
+    private ListView<Plugin> listView = PublicComponent.getListView();
     private TextField textField = PublicComponent.getTextField();
     private TextField shadow = PublicComponent.getShade();
 
@@ -19,7 +20,7 @@ public class SelectListView {
             int index = indices.get(0);
             if (index > 0) {
                 listView.getSelectionModel().select(index - 1);
-                textField.setText(listView.getSelectionModel().getSelectedItem());
+                textField.setText(listView.getSelectionModel().getSelectedItem().getName());
                 shadow.setText("");
             }
             event.consume();
@@ -28,7 +29,7 @@ public class SelectListView {
             int index = indices.get(0);
             if (index < listView.getItems().size()) {
                 listView.getSelectionModel().select(index + 1);
-                textField.setText(listView.getSelectionModel().getSelectedItem());
+                textField.setText(listView.getSelectionModel().getSelectedItem().getName());
                 shadow.setText("");
             }
             event.consume();

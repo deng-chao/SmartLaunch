@@ -8,7 +8,7 @@ import name.dengchao.test.fx.plugin.DisplayType;
 @Data
 public class Exit extends BuiltinPlugin {
 
-    private String description;
+    private String description = "Exit SmartLaunch";
 
     @Override
     public String getName() {

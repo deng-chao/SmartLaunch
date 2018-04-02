@@ -11,7 +11,6 @@ import org.reflections.Reflections;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -100,6 +99,7 @@ public class PluginManager {
             startMenu.setName(file.getName());
             startMenu.setParameters(new String[0]);
             startMenu.setPath(file.getAbsolutePath());
+            startMenu.setDescription(file.getName());
             String name = startMenu.getName().toLowerCase().
                 replace(".lnk", "").
                 replace(" ", "_");
@@ -128,10 +128,5 @@ public class PluginManager {
                 pluginMap.put(firstLetter.toString(), startMenu);
             }
         }
-    }
-
-    public static void main(String[] args) {
-        String aa = "ab是我";
-        System.out.println(Arrays.asList(aa.split("|")));
     }
 }

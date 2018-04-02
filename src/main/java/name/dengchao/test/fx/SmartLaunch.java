@@ -24,6 +24,7 @@ import name.dengchao.test.fx.hotkey.InputEventHandler;
 import name.dengchao.test.fx.hotkey.handler.ListViewCellFactory;
 import name.dengchao.test.fx.hotkey.os.BringToFont;
 import name.dengchao.test.fx.hotkey.os.GlobalKeyListener;
+import name.dengchao.test.fx.plugin.Plugin;
 import name.dengchao.test.fx.plugin.PluginManager;
 
 public class SmartLaunch extends Application {
@@ -40,7 +41,7 @@ public class SmartLaunch extends Application {
 
         PublicComponent.setPrimaryStage(primaryStage);
 
-        ListView<String> listView = new ListView();
+        ListView<Plugin> listView = new ListView();
         listView.setCellFactory(lst -> new ListViewCellFactory());
         listView.setLayoutY(55);
         listView.setLayoutX(3);

@@ -26,7 +26,7 @@ public class CommandExecutor {
 
     private Stage primaryStage;
     private TextField textField;
-    private ListView<String> listView;
+    private ListView<Plugin> listView;
 
     public void execute(InputEvent event) {
         Plugin activePlugin = null;
@@ -49,13 +49,12 @@ public class CommandExecutor {
                 }
             } else {
                 // if not command match, read selected suggestion.
-                String potentialCandidate = listView.getSelectionModel().getSelectedItem();
-                textField.setText(potentialCandidate);
+                Plugin potentialCandidate = listView.getSelectionModel().getSelectedItem();
+                textField.setText(potentialCandidate.getName());
                 activePlugin = PluginManager.pluginMap.get(potentialCandidate);
             }
         } else if (event instanceof MouseEvent) {
-            String cmd = listView.getSelectionModel().getSelectedItem();
-            activePlugin = PluginManager.pluginMap.get(cmd);
+            activePlugin = listView.getSelectionModel().getSelectedItem();
         }
 
         System.out.println("activePlugin: " + activePlugin);
