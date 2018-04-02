@@ -48,13 +48,16 @@ public class Utils {
             lowercaseFileName.contains("install") ||
             lowercaseFileName.contains("about") ||
             lowercaseFileName.contains("feedback") ||
+            lowercaseFileName.contains("url") ||
             lowercaseFileName.contains("卸载") ||
             lowercaseFileName.contains("更新") ||
             lowercaseFileName.contains("配置") ||
+            lowercaseFileName.contains("帮助") ||
             lowercaseFileName.contains("设置") ||
             lowercaseFileName.contains("上载") ||
             lowercaseFileName.contains("关于") ||
             lowercaseFileName.contains("反馈") ||
+            lowercaseFileName.contains("向导") ||
             lowercaseFileName.contains("升级")) {
             return false;
         }
