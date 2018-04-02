@@ -12,7 +12,7 @@ public class WindowsPlugin implements Plugin {
 
     private String name;
     private DisplayType displayType;
-    private String[] parameters;
+    private String[] parameters = new String[0];
     private String path;
 
     @Override

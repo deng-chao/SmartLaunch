@@ -1,5 +1,9 @@
 package name.dengchao.test.fx;
 
+import org.springframework.core.io.ClassPathResource;
+
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -21,9 +25,6 @@ import name.dengchao.test.fx.hotkey.handler.ListViewCellFactory;
 import name.dengchao.test.fx.hotkey.os.BringToFont;
 import name.dengchao.test.fx.hotkey.os.GlobalKeyListener;
 import name.dengchao.test.fx.plugin.PluginManager;
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.IOException;
 
 public class SmartLaunch extends Application {
 
@@ -83,7 +84,7 @@ public class SmartLaunch extends Application {
         Platform.setImplicitExit(false);
         Platform.runLater(() -> {
             textField.requestFocus();
-            GlobalKeyListener.register("-49-3675", new BringToFont(primaryStage, textField));
+            GlobalKeyListener.register("-49-3675", new BringToFont());
             InputEventHandler handler = new InputEventHandler();
             textField.addEventHandler(KeyEvent.KEY_PRESSED, handler);
         });
@@ -91,7 +92,7 @@ public class SmartLaunch extends Application {
 
     private TextField createDefaultTextField() {
         TextField textField = new TextField();
-        textField.setFont(Font.font(25));
+        textField.setFont(Font.font("Courier New", 25));
         textField.setMinHeight(50);
         textField.setPrefHeight(50);
         textField.setMaxHeight(50);

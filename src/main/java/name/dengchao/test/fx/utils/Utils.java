@@ -34,7 +34,36 @@ public class Utils {
         return getHomePath().concat("/log");
     }
 
-    public static String getStartMenuPath() {
+    public static String getUserStartMenuPath() {
         return SystemUtils.getUserHome() + "/AppData/Roaming/Microsoft/Windows/Start Menu/Programs";
+    }
+
+    public static String getSystemStartMenuPath() {
+        return "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs";
+    }
+
+    public static boolean isAppFile(String fileName) {
+        String lowercaseFileName = fileName.toLowerCase();
+        if (lowercaseFileName.contains("update") ||
+            lowercaseFileName.contains("install") ||
+            lowercaseFileName.contains("about") ||
+            lowercaseFileName.contains("feedback") ||
+            lowercaseFileName.contains("卸载") ||
+            lowercaseFileName.contains("更新") ||
+            lowercaseFileName.contains("配置") ||
+            lowercaseFileName.contains("上载") ||
+            lowercaseFileName.contains("关于") ||
+            lowercaseFileName.contains("反馈") ||
+            lowercaseFileName.contains("升级")) {
+            return false;
+        }
+        return true;
+    }
+
+    public static String removeSurplusSpace(String input) {
+        while (input.contains("  ")) {
+            input = input.replaceAll("  ", " ");
+        }
+        return input;
     }
 }

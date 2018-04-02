@@ -9,7 +9,7 @@ public class ListViewCellFactory extends ListCell<String> {
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
         setPrefHeight(45.0);
-        setFont(Font.font(20));
+        setFont(Font.font("Courier New", 20));
         setPadding(new Insets(0, 0, 0, 17));
         if (empty) {
             setText(null);
@@ -17,4 +17,6 @@ public class ListViewCellFactory extends ListCell<String> {
             setText(item);
         }
     }
+
+
 }
