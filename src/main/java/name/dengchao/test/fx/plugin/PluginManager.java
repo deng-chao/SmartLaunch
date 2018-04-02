@@ -100,7 +100,8 @@ public class PluginManager {
 
             String name = file.getName().toLowerCase().
                 replace(".lnk", "").
-                replace(" ", "_");
+                replace(" ", "_").
+                replace(".lnk", "");
 
             String[] chars = name.split("|");
             StringBuilder firstLetter = new StringBuilder();
@@ -120,7 +121,7 @@ public class PluginManager {
                 }
             }
 
-            List<String> pluginNames = Lists.newArrayList(file.getName());
+            List<String> pluginNames = Lists.newArrayList(name);
             if (fullLetter.length() != name.length()) {
                 pluginNames.add(firstLetter.toString());
                 pluginNames.add(fullLetter.toString());
