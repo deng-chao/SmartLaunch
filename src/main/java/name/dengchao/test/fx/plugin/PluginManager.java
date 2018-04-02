@@ -2,9 +2,6 @@ package name.dengchao.test.fx.plugin;
 
 import com.alibaba.fastjson.JSON;
 
-import mslinks.ShellLink;
-import mslinks.ShellLinkException;
-import name.dengchao.test.fx.plugin.windows.StartMenu;
 import org.apache.commons.io.FileUtils;
 import org.reflections.Reflections;
 
@@ -15,8 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import name.dengchao.test.fx.plugin.Plugin;
 import name.dengchao.test.fx.plugin.builtin.BuiltinPlugin;
+import name.dengchao.test.fx.plugin.windows.StartMenu;
 import name.dengchao.test.fx.plugin.windows.WindowsPlugin;
 import name.dengchao.test.fx.utils.Utils;
 
@@ -27,7 +24,8 @@ public class PluginManager {
     public static void load() {
         loadBuiltinPlugin();
         loadWindowsPlugins();
-        loadStartMenu();
+        loadStartMenu(Utils.getUserStartMenuPath());
+        loadStartMenu(Utils.getSystemStartMenuPath());
     }
 
     private static void loadBuiltinPlugin() {
@@ -68,8 +66,7 @@ public class PluginManager {
         }
     }
 
-    public static void loadStartMenu() {
-        String startMenuPath = Utils.getStartMenuPath();
+    public static void loadStartMenu(String startMenuPath) {
         File dir = new File(startMenuPath);
         System.out.println(dir.getAbsolutePath());
         if (!dir.exists()) {
@@ -86,25 +83,23 @@ public class PluginManager {
                 loadStartMenuItem(file1);
             }
         } else {
-            try {
-                StartMenu startMenu = new StartMenu();
-                startMenu.setDisplayType(DisplayType.NONE);
-                startMenu.setName(file.getName());
-                startMenu.setParameters(new String[0]);
-                // TODO distinguish the dir shortcut, open the dir in file explorer directly.
-                File target = new File(new ShellLink(file).resolveTarget());
-                if (target.exists() && !target.isDirectory()) {
-                    startMenu.setPath(target.getAbsolutePath());
-                    String name = startMenu.getName().toLowerCase().
-                            replace(".lnk", "").
-                            replace(" ", "_");
-                    pluginMap.put(name, startMenu);
-                }
-            } catch (IOException e) {
-                System.out.println("failed to read shortcut: " + file.getAbsolutePath());
-            } catch (ShellLinkException e) {
-                System.out.println("failed to read shortcut: " + file.getAbsolutePath());
+            if (!Utils.isAppFile(file.getName())) {
+                return;
             }
+            if (pluginMap.get(file.getName()) != null) {
+                return;
+            }
+            // TODO distinguish the dir shortcut, open the dir in file explorer directly.
+
+            StartMenu startMenu = new StartMenu();
+            startMenu.setDisplayType(DisplayType.NONE);
+            startMenu.setName(file.getName());
+            startMenu.setParameters(new String[0]);
+            startMenu.setPath(file.getAbsolutePath());
+            String name = startMenu.getName().toLowerCase().
+                replace(".lnk", "").
+                replace(" ", "_");
+            pluginMap.put(name, startMenu);
         }
     }
 }

@@ -1,28 +1,17 @@
 package name.dengchao.test.fx.hotkey.handler;
 
+import java.io.InputStream;
+import java.util.Arrays;
+
 import javafx.event.Event;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import name.dengchao.test.fx.PublicComponent;
 import name.dengchao.test.fx.hotkey.handler.display.DisplayTooltip;
-import org.jetbrains.annotations.Nullable;
-import org.springframework.util.StreamUtils;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.List;
-
-import javafx.geometry.Point2D;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import name.dengchao.test.fx.plugin.DisplayType;
 import name.dengchao.test.fx.plugin.Plugin;
 import name.dengchao.test.fx.plugin.PluginManager;
@@ -41,14 +30,25 @@ public class CommandExecutor {
 
     public void execute(InputEvent event) {
         Plugin activePlugin = null;
-        String[] inputs = null;
         if (event instanceof KeyEvent) {
+
+            // read command from input box
             KeyEvent evt = (KeyEvent) event;
             String input = textField.getText() + evt.getText();
-            inputs = input.trim().split(" ");
+            String[] inputs = input.trim().split(" ");
             activePlugin = PluginManager.pluginMap.get(inputs[0]);
 
-            if (activePlugin == null) {
+            // set parameter if match command
+            if (activePlugin != null) {
+                boolean overwriteParams = inputs.length > 1;
+                String[] params = new String[inputs.length - 1];
+                System.out.println(Arrays.asList(inputs));
+                if (overwriteParams) {
+                    System.arraycopy(inputs, 1, params, 0, params.length);
+                    activePlugin.setParameters(params);
+                }
+            } else {
+                // if not command match, read selected suggestion.
                 String potentialCandidate = listView.getSelectionModel().getSelectedItem();
                 textField.setText(potentialCandidate);
                 activePlugin = PluginManager.pluginMap.get(potentialCandidate);
@@ -56,22 +56,18 @@ public class CommandExecutor {
         } else if (event instanceof MouseEvent) {
             String cmd = listView.getSelectionModel().getSelectedItem();
             activePlugin = PluginManager.pluginMap.get(cmd);
-            inputs = new String[]{cmd};
         }
 
-        execute(event, inputs, activePlugin);
+        System.out.println("activePlugin: " + activePlugin);
+        execute(event, activePlugin);
     }
 
-    public void execute(Event event, String[] inputs, Plugin activePlugin) {
+    public void execute(Event event, Plugin activePlugin) {
         InputStream inputStream = null;
         if (activePlugin != null) {
-            String[] params = new String[inputs.length - 1];
-            System.arraycopy(inputs, 1, params, 0, params.length);
-            activePlugin.setParameters(params);
             inputStream = activePlugin.execute();
         }
         event.consume();
-
         display(activePlugin.getDisplayType(), inputStream);
     }
 
