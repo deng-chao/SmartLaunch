@@ -8,8 +8,7 @@ public class Constants {
 
     public static final String HOME_WINDOWS = "/AppData/Local/SmartLaunch";
 
-    // TODO Correct it
-    public static final String HOME_MAC = "/AppData/Local/SmartLaunch";
+    public static final String HOME_MAC = "/Library/Application Support/SmartLaunch";
 
     // TODO Correct it
     public static final String HOME_LINUX = "/AppData/Local/SmartLaunch";

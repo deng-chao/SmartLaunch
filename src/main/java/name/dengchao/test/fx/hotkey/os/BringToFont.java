@@ -23,6 +23,7 @@ public class BringToFont implements Action {
                 } else {
                     PublicComponent.getPrimaryStage().show();
                     PublicComponent.getTextField().selectAll();
+                    PublicComponent.getTextField().requestFocus();
                     PublicComponent.getShade().setText("");
                 }
             });
