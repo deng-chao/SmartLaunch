@@ -3,13 +3,14 @@ package name.dengchao.test.fx.hotkey;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import name.dengchao.test.fx.PublicComponent;
-import name.dengchao.test.fx.hotkey.handler.*;
+import name.dengchao.test.fx.hotkey.handler.AutoComplete;
+import name.dengchao.test.fx.hotkey.handler.CommandExecutor;
+import name.dengchao.test.fx.hotkey.handler.SelectListView;
+import name.dengchao.test.fx.hotkey.handler.TypeSuggestion;
 import name.dengchao.test.fx.plugin.Plugin;
 
 public class InputEventHandler implements EventHandler<KeyEvent> {
