@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import name.dengchao.test.fx.PublicComponent;
 import name.dengchao.test.fx.hotkey.handler.*;
+import name.dengchao.test.fx.plugin.Plugin;
 
 public class InputEventHandler implements EventHandler<KeyEvent> {
 
@@ -20,7 +21,7 @@ public class InputEventHandler implements EventHandler<KeyEvent> {
     private CommandExecutor ce = new CommandExecutor();
 
     public InputEventHandler() {
-        ListView<String> listView = PublicComponent.getListView();
+        ListView<Plugin> listView = PublicComponent.getListView();
         Platform.runLater(() -> {
             listView.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {

@@ -3,6 +3,7 @@ package name.dengchao.test.fx;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import name.dengchao.test.fx.plugin.Plugin;
 
 
 public class PublicComponent {
@@ -10,7 +11,7 @@ public class PublicComponent {
     private static TextField textField;
     private static TextField shade;
     private static Stage primaryStage;
-    private static ListView<String> listView;
+    private static ListView<Plugin> listView;
 
     public static TextField getTextField() {
         return textField;
@@ -36,11 +37,11 @@ public class PublicComponent {
         PublicComponent.primaryStage = primaryStage;
     }
 
-    public static ListView<String> getListView() {
+    public static ListView<Plugin> getListView() {
         return listView;
     }
 
-    public static void setListView(ListView<String> listView) {
+    public static void setListView(ListView<Plugin> listView) {
         PublicComponent.listView = listView;
     }
 }

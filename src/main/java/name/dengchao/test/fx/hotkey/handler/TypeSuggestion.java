@@ -1,6 +1,5 @@
 package name.dengchao.test.fx.hotkey.handler;
 
-import name.dengchao.test.fx.PublicComponent;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -9,12 +8,11 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import lombok.Data;
+import name.dengchao.test.fx.PublicComponent;
+import name.dengchao.test.fx.plugin.Plugin;
 import name.dengchao.test.fx.plugin.PluginManager;
 
 @Data
@@ -40,27 +38,27 @@ public class TypeSuggestion {
 
     private void suggestCommand(String input) {
         Set<String> pluginNames = PluginManager.pluginMap.keySet();
-        List<String> candidates = new ArrayList<>();
+        List<Plugin> candidates = new ArrayList<>();
         for (String pluginName : pluginNames) {
             if (pluginName.toLowerCase().startsWith(input.toLowerCase())) {
-                candidates.add(pluginName);
+                candidates.add(PluginManager.pluginMap.get(pluginName));
             }
         }
         if (!CollectionUtils.isEmpty(candidates)) {
             PublicComponent.getListView().setVisible(true);
-            PublicComponent.getShade().setText(candidates.get(0));
-            ObservableList<String> items = FXCollections.observableArrayList(candidates);
+            PublicComponent.getShade().setText(candidates.get(0).getName());
+            ObservableList<Plugin> items = FXCollections.observableArrayList(candidates);
             PublicComponent.getListView().setItems(items);
         } else {
             if (input.contains(" ")) {
                 PublicComponent.getListView().setVisible(true);
                 PublicComponent.getListView().getItems().clear();
-                PublicComponent.getListView().getItems().add("No command match");
+//                PublicComponent.getListView().getItems().add("No command match");
                 PublicComponent.getShade().setText("");
             } else {
                 PublicComponent.getListView().setVisible(true);
                 PublicComponent.getListView().getItems().clear();
-                PublicComponent.getListView().getItems().add("Search '" + input + "' in google.");
+//                PublicComponent.getListView().getItems().add("Search '" + input + "' in google.");
                 PublicComponent.getShade().setText("");
             }
         }
