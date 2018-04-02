@@ -1,5 +1,7 @@
 package name.dengchao.test.fx.plugin;
 
+import com.google.common.collect.Lists;
+
 import com.alibaba.fastjson.JSON;
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
@@ -11,6 +13,7 @@ import org.reflections.Reflections;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -94,13 +97,8 @@ public class PluginManager {
             }
             // TODO distinguish the dir shortcut, open the dir in file explorer directly.
 
-            StartMenu startMenu = new StartMenu();
-            startMenu.setDisplayType(DisplayType.NONE);
-            startMenu.setName(file.getName());
-            startMenu.setParameters(new String[0]);
-            startMenu.setPath(file.getAbsolutePath());
-            startMenu.setDescription(file.getName());
-            String name = startMenu.getName().toLowerCase().
+
+            String name = file.getName().toLowerCase().
                 replace(".lnk", "").
                 replace(" ", "_");
 
@@ -121,11 +119,20 @@ public class PluginManager {
                     fullLetter.append(aChar);
                 }
             }
-            pluginMap.put(name, startMenu);
+
+            List<String> pluginNames = Lists.newArrayList(file.getName());
             if (fullLetter.length() != name.length()) {
-                System.out.println(name + ", " + fullLetter + ", " + firstLetter);
-                pluginMap.put(fullLetter.toString(), startMenu);
-                pluginMap.put(firstLetter.toString(), startMenu);
+                pluginNames.add(firstLetter.toString());
+                pluginNames.add(fullLetter.toString());
+            }
+            for (String pluginName : pluginNames) {
+                StartMenu startMenu = new StartMenu();
+                startMenu.setDisplayType(DisplayType.NONE);
+                startMenu.setName(pluginName);
+                startMenu.setParameters(new String[0]);
+                startMenu.setPath(file.getAbsolutePath());
+                startMenu.setDescription(file.getName());
+                pluginMap.put(pluginName, startMenu);
             }
         }
     }
