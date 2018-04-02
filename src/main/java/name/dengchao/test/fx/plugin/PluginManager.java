@@ -1,6 +1,9 @@
 package name.dengchao.test.fx.plugin;
 
 import com.alibaba.fastjson.JSON;
+import com.github.stuxuhai.jpinyin.PinyinException;
+import com.github.stuxuhai.jpinyin.PinyinFormat;
+import com.github.stuxuhai.jpinyin.PinyinHelper;
 
 import org.apache.commons.io.FileUtils;
 import org.reflections.Reflections;
@@ -8,6 +11,7 @@ import org.reflections.Reflections;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -99,7 +103,35 @@ public class PluginManager {
             String name = startMenu.getName().toLowerCase().
                 replace(".lnk", "").
                 replace(" ", "_");
+
+            String[] chars = name.split("|");
+            StringBuilder firstLetter = new StringBuilder();
+            StringBuilder fullLetter = new StringBuilder();
+            for (String aChar : chars) {
+                if (Utils.isChinese(aChar)) {
+                    try {
+                        String pinyin = PinyinHelper.convertToPinyinString(aChar, "", PinyinFormat.WITHOUT_TONE);
+                        firstLetter.append(pinyin.substring(0, 1));
+                        fullLetter.append(pinyin);
+                    } catch (PinyinException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    firstLetter.append(aChar);
+                    fullLetter.append(aChar);
+                }
+            }
             pluginMap.put(name, startMenu);
+            if (fullLetter.length() != name.length()) {
+                System.out.println(name + ", " + fullLetter + ", " + firstLetter);
+                pluginMap.put(fullLetter.toString(), startMenu);
+                pluginMap.put(firstLetter.toString(), startMenu);
+            }
         }
+    }
+
+    public static void main(String[] args) {
+        String aa = "ab是我";
+        System.out.println(Arrays.asList(aa.split("|")));
     }
 }

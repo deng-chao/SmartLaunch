@@ -7,13 +7,16 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import name.dengchao.test.fx.plugin.DisplayType;
 
+@Data
 @NoArgsConstructor
 public class Calculator extends BuiltinPlugin {
 
     private String expression;
+    private String description;
 
     @Override
     public InputStream execute() {
