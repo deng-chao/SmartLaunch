@@ -18,9 +18,13 @@ public class BringToFont implements Action {
         running = true;
         if (PublicComponent.getPrimaryStage() != null) {
             Platform.runLater(() -> {
-                PublicComponent.getPrimaryStage().show();
-                PublicComponent.getTextField().selectAll();
-                PublicComponent.getShade().setText("");
+                if (PublicComponent.getPrimaryStage().isShowing()) {
+                    PublicComponent.getPrimaryStage().hide();
+                } else {
+                    PublicComponent.getPrimaryStage().show();
+                    PublicComponent.getTextField().selectAll();
+                    PublicComponent.getShade().setText("");
+                }
             });
         }
         running = false;
