@@ -2,10 +2,13 @@ package name.dengchao.test.fx.plugin.builtin;
 
 import java.io.InputStream;
 
-import javafx.application.Platform;
+import lombok.Data;
 import name.dengchao.test.fx.plugin.DisplayType;
 
+@Data
 public class Exit extends BuiltinPlugin {
+
+    private String description;
 
     @Override
     public String getName() {

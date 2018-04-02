@@ -6,6 +6,8 @@ public interface Plugin {
 
     String getName();
 
+    String getDescription();
+
     DisplayType getDisplayType();
 
     void setParameters(String... parameters);

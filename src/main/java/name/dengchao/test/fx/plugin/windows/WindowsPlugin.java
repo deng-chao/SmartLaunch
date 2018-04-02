@@ -14,6 +14,7 @@ public class WindowsPlugin implements Plugin {
     private DisplayType displayType;
     private String[] parameters = new String[0];
     private String path;
+    private String description;
 
     @Override
     public String getName() {

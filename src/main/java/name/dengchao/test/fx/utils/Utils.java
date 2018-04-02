@@ -51,6 +51,7 @@ public class Utils {
             lowercaseFileName.contains("卸载") ||
             lowercaseFileName.contains("更新") ||
             lowercaseFileName.contains("配置") ||
+            lowercaseFileName.contains("设置") ||
             lowercaseFileName.contains("上载") ||
             lowercaseFileName.contains("关于") ||
             lowercaseFileName.contains("反馈") ||
@@ -65,5 +66,16 @@ public class Utils {
             input = input.replaceAll("  ", " ");
         }
         return input;
+    }
+
+    public static boolean isChinese(String string) {
+        int n = 0;
+        for (int i = 0; i < string.length(); i++) {
+            n = (int) string.charAt(i);
+            if (!(19968 <= n && n < 40869)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
