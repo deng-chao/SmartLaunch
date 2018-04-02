@@ -20,7 +20,9 @@ public class SelectListView {
             int index = indices.get(0);
             if (index > 0) {
                 listView.getSelectionModel().select(index - 1);
+                listView.scrollTo(index - 5);
                 textField.setText(listView.getSelectionModel().getSelectedItem().getName());
+                textField.selectAll();
                 shadow.setText("");
             }
             event.consume();
@@ -28,8 +30,10 @@ public class SelectListView {
             ObservableList<Integer> indices = listView.getSelectionModel().getSelectedIndices();
             int index = indices.get(0);
             if (index < listView.getItems().size()) {
+                listView.scrollTo(index - 5);
                 listView.getSelectionModel().select(index + 1);
                 textField.setText(listView.getSelectionModel().getSelectedItem().getName());
+                textField.selectAll();
                 shadow.setText("");
             }
             event.consume();

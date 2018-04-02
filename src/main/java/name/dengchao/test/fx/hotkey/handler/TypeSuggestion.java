@@ -1,5 +1,6 @@
 package name.dengchao.test.fx.hotkey.handler;
 
+import name.dengchao.test.fx.utils.Utils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -25,9 +26,7 @@ public class TypeSuggestion {
         } else {
             input = input + event.getText();
         }
-        while (input.contains("  ")) {
-            input = input.replaceAll("  ", " ");
-        }
+        input = Utils.removeSurplusSpace(input);
         String[] parts = input.split(" ");
         if (parts.length == 1) {
             suggestCommand(input);
@@ -65,5 +64,15 @@ public class TypeSuggestion {
         PublicComponent.getListView().setMaxHeight(PublicComponent.getPrimaryStage().getMaxHeight());
         PublicComponent.getListView().getSelectionModel().select(0);
         PublicComponent.getPrimaryStage().setHeight(PublicComponent.getListView().getHeight() + 60);
+    }
+
+    private void suggestParameter(Plugin plugin, String input) {
+        if (plugin == null) {
+            return;
+        }
+        String[] parts = input.split(" ");
+        if (parts[parts.length - 1].trim().equals("")) {
+            
+        }
     }
 }

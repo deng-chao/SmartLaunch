@@ -1,28 +1,24 @@
 package name.dengchao.test.fx.plugin;
 
-import com.google.common.collect.Lists;
-
-import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
-
-import org.apache.commons.io.FileUtils;
+import com.google.common.collect.Lists;
+import name.dengchao.test.fx.plugin.builtin.BuiltinPlugin;
+import name.dengchao.test.fx.plugin.windows.StartMenu;
+import name.dengchao.test.fx.plugin.windows.WindowsPlugin;
+import name.dengchao.test.fx.utils.Utils;
 import org.apache.commons.lang.SystemUtils;
 import org.reflections.Reflections;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import name.dengchao.test.fx.plugin.builtin.BuiltinPlugin;
-import name.dengchao.test.fx.plugin.windows.StartMenu;
-import name.dengchao.test.fx.plugin.windows.WindowsPlugin;
-import name.dengchao.test.fx.utils.Utils;
 
 public class PluginManager {
 
@@ -30,9 +26,9 @@ public class PluginManager {
 
     public static void load() {
         loadBuiltinPlugin();
-        if (SystemUtils.IS_OS_MAC){
+        if (SystemUtils.IS_OS_MAC) {
 
-        } else if (SystemUtils.IS_OS_WINDOWS){
+        } else if (SystemUtils.IS_OS_WINDOWS) {
             loadWindowsPlugins();
             loadStartMenu(Utils.getUserStartMenuPath());
             loadStartMenu(Utils.getSystemStartMenuPath());
@@ -59,6 +55,8 @@ public class PluginManager {
         }
     }
 
+    private static ObjectMapper mapper = new ObjectMapper();
+
     public static void loadWindowsPlugins() {
         File file = new File(Utils.getPluginConfigPath());
         if (!file.isDirectory()) {
@@ -66,10 +64,10 @@ public class PluginManager {
             return;
         }
         File[] files = file.listFiles();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         for (File configFile : files) {
             try {
-                String content = FileUtils.readFileToString(configFile, StandardCharsets.UTF_8);
-                WindowsPlugin plugin = JSON.parseObject(content, WindowsPlugin.class);
+                WindowsPlugin plugin = mapper.readValue(configFile, WindowsPlugin.class);
                 pluginMap.put(plugin.getName(), plugin);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -104,9 +102,9 @@ public class PluginManager {
 
 
             String name = file.getName().toLowerCase().
-                replace(".lnk", "").
-                replace(" ", "_").
-                replace(".lnk", "");
+                    replace(".lnk", "").
+                    replace(" ", "_").
+                    replace(".lnk", "");
 
             String[] chars = name.split("|");
             StringBuilder firstLetter = new StringBuilder();

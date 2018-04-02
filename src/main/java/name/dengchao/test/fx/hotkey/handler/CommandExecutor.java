@@ -51,13 +51,12 @@ public class CommandExecutor {
                 // if not command match, read selected suggestion.
                 Plugin potentialCandidate = listView.getSelectionModel().getSelectedItem();
                 textField.setText(potentialCandidate.getName());
-                activePlugin = PluginManager.pluginMap.get(potentialCandidate);
+                activePlugin = PluginManager.pluginMap.get(potentialCandidate.getName());
             }
         } else if (event instanceof MouseEvent) {
             activePlugin = listView.getSelectionModel().getSelectedItem();
         }
 
-        System.out.println("activePlugin: " + activePlugin);
         execute(event, activePlugin);
     }
 
