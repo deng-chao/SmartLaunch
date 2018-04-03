@@ -1,5 +1,6 @@
 package name.dengchao.test.fx.hotkey.handler;
 
+import javafx.scene.Node;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ public class TypeSuggestion {
         // Prevent false suggestion
         if (event.getCode() == KeyCode.WINDOWS){
             return;
+        }
+        for (Node node : PublicComponent.getDisplayNodes()) {
+            node.setVisible(false);
         }
         String input = PublicComponent.getTextField().getText();
         if (event.getCode() == KeyCode.BACK_SPACE && input.length() > 0) {
@@ -65,7 +69,7 @@ public class TypeSuggestion {
                 PublicComponent.getShade().setText("");
             }
         }
-        PublicComponent.getListView().setMaxHeight(PublicComponent.getPrimaryStage().getMaxHeight());
+//        PublicComponent.getListView().setMaxHeight(PublicComponent.getPrimaryStage().getMaxHeight());
         PublicComponent.getListView().getSelectionModel().select(0);
         PublicComponent.getPrimaryStage().setHeight(PublicComponent.getListView().getHeight() + 60);
     }

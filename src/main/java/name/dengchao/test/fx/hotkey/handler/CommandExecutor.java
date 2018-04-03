@@ -11,6 +11,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import name.dengchao.test.fx.PublicComponent;
+import name.dengchao.test.fx.hotkey.handler.display.DisplayJson;
+import name.dengchao.test.fx.hotkey.handler.display.DisplayResult;
 import name.dengchao.test.fx.hotkey.handler.display.DisplayTooltip;
 import name.dengchao.test.fx.plugin.DisplayType;
 import name.dengchao.test.fx.plugin.Plugin;
@@ -74,6 +76,8 @@ public class CommandExecutor {
             primaryStage.hide();
         } else if (type == DisplayType.NUM) {
             new DisplayTooltip().display(inputStream);
+        } else if (type == DisplayType.JSON) {
+            new DisplayJson().display(inputStream);
         }
     }
 }

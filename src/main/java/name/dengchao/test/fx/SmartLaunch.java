@@ -37,10 +37,12 @@ public class SmartLaunch extends Application {
 
         ListView<Plugin> listView = new ListView();
         listView.setCellFactory(lst -> new ListViewCellFactory());
-        listView.setLayoutY(55);
+        listView.setLayoutY(53);
         listView.setLayoutX(3);
         listView.setMaxWidth(594);
         listView.setPrefWidth(594);
+        listView.setMaxHeight(400);
+        listView.setPrefHeight(400);
         listView.setVisible(false);
         PublicComponent.setListView(listView);
 
@@ -51,19 +53,20 @@ public class SmartLaunch extends Application {
         TextField textField = createDefaultTextField();
         PublicComponent.setTextField(textField);
 
-        Pane vBox = new Pane();
-        vBox.getChildren().add(shade);
-        vBox.getChildren().add(textField);
-        vBox.setStyle("-fx-background-color: blue;");
-        vBox.setStyle("-fx-border-radius: 2;");
-        vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(2))));
-        vBox.setStyle("-fx-padding: 8;");
-        vBox.setStyle("-fx-background-color: transparent;");
+        Pane pane = new Pane();
+        pane.getChildren().add(shade);
+        pane.getChildren().add(textField);
+        pane.setStyle("-fx-background-color: blue;");
+        pane.setStyle("-fx-border-radius: 2;");
+        pane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(2))));
+        pane.setStyle("-fx-padding: 8;");
+        pane.setStyle("-fx-background-color: transparent;");
 
-        vBox.getChildren().add(listView);
+        pane.getChildren().add(listView);
+        pane.setPrefHeight(450);
 
-        Scene scene = new Scene(vBox, 600, 56);
-        scene.setFill(Color.TRANSPARENT);
+        Scene scene = new Scene(pane, 600, 56);
+//        scene.setFill(Color.TRANSPARENT);
 
         primaryStage.setMaxHeight(500);
         primaryStage.setScene(scene);

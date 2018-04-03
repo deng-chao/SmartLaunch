@@ -8,6 +8,7 @@ import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 
+import name.dengchao.test.fx.plugin.rest.RestPlugin;
 import org.apache.commons.lang.SystemUtils;
 import org.reflections.Reflections;
 
@@ -33,6 +34,7 @@ public class PluginManager {
 
         } else if (SystemUtils.IS_OS_WINDOWS) {
             loadWindowsPlugins();
+            loadRestPlugin();
             loadStartMenu(Utils.getUserStartMenuPath());
             loadStartMenu(Utils.getSystemStartMenuPath());
         }
@@ -86,6 +88,26 @@ public class PluginManager {
             return;
         }
         loadStartMenuItem(dir);
+    }
+
+    private static void loadRestPlugin(){
+        Reflections reflections = new Reflections("name.dengchao.test.fx.plugin.rest");
+        Set<Class<? extends RestPlugin>> restClasses = reflections.getSubTypesOf(RestPlugin.class);
+        for (Class<? extends RestPlugin> restClass : restClasses) {
+            try {
+                RestPlugin builtin = restClass.newInstance();
+                Plugin plugin = pluginMap.get(builtin.getName());
+                if (plugin == null) {
+                    pluginMap.put(builtin.getName(), builtin);
+                } else {
+                    throw new RuntimeException("Duplicated plugin name");
+                }
+            } catch (InstantiationException e) {
+                // TODO throw exception
+            } catch (IllegalAccessException e) {
+                // TODO throw exception
+            }
+        }
     }
 
     private static void loadStartMenuItem(File file) {
