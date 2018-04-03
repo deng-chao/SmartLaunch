@@ -1,9 +1,5 @@
 package name.dengchao.test.fx.hotkey.handler.display;
 
-import javafx.geometry.Point2D;
-import javafx.scene.control.Tooltip;
-import javafx.scene.text.Font;
-import name.dengchao.test.fx.PublicComponent;
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
@@ -11,6 +7,11 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
+import javafx.geometry.Point2D;
+import javafx.scene.control.Tooltip;
+import javafx.scene.text.Font;
+import name.dengchao.test.fx.PublicComponent;
 
 public class DisplayTooltip implements DisplayResult {
 
@@ -27,10 +28,11 @@ public class DisplayTooltip implements DisplayResult {
             if (!tooltip.isShowing()) {
                 tooltip.setY(point2D.getY() + 3);
                 tooltip.setFont(Font.font(16));
+                tooltip.show(PublicComponent.getPrimaryStage());
+                tooltip.setX(point2D.getX() + PublicComponent.getPrimaryStage().getWidth() - tooltip.getWidth());
             }
-            tooltip.hide();
-            tooltip.show(PublicComponent.getPrimaryStage());
-            tooltip.setX(point2D.getX() + PublicComponent.getPrimaryStage().getWidth() - tooltip.getWidth());
+//            tooltip.hide();
+//            tooltip.show(PublicComponent.getPrimaryStage());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,5 @@
 package name.dengchao.test.fx.hotkey.handler;
 
-import name.dengchao.test.fx.utils.Utils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import lombok.Data;
 import name.dengchao.test.fx.PublicComponent;
 import name.dengchao.test.fx.plugin.Plugin;
 import name.dengchao.test.fx.plugin.PluginManager;
+import name.dengchao.test.fx.utils.Utils;
 
 @Data
 public class TypeSuggestion {

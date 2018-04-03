@@ -1,9 +1,5 @@
 package name.dengchao.test.fx;
 
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -22,8 +18,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import name.dengchao.test.fx.hotkey.InputEventHandler;
 import name.dengchao.test.fx.hotkey.handler.ListViewCellFactory;
-import name.dengchao.test.fx.hotkey.os.BringToFont;
-import name.dengchao.test.fx.hotkey.os.GlobalKeyListener;
 import name.dengchao.test.fx.plugin.Plugin;
 import name.dengchao.test.fx.plugin.PluginManager;
 
@@ -69,11 +63,6 @@ public class SmartLaunch extends Application {
         vBox.getChildren().add(listView);
 
         Scene scene = new Scene(vBox, 600, 56);
-        try {
-            scene.getStylesheets().add(new ClassPathResource("application.css").getURL().toExternalForm());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         scene.setFill(Color.TRANSPARENT);
 
         primaryStage.setMaxHeight(500);
@@ -85,7 +74,6 @@ public class SmartLaunch extends Application {
         Platform.setImplicitExit(false);
         Platform.runLater(() -> {
             textField.requestFocus();
-            GlobalKeyListener.register("-49-3675", new BringToFont());
             InputEventHandler handler = new InputEventHandler();
             textField.addEventHandler(KeyEvent.KEY_PRESSED, handler);
         });

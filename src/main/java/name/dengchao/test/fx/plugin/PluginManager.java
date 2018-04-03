@@ -1,15 +1,13 @@
 package name.dengchao.test.fx.plugin;
 
+import com.google.common.collect.Lists;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
-import com.google.common.collect.Lists;
-import name.dengchao.test.fx.plugin.builtin.BuiltinPlugin;
-import name.dengchao.test.fx.plugin.windows.StartMenu;
-import name.dengchao.test.fx.plugin.windows.WindowsPlugin;
-import name.dengchao.test.fx.utils.Utils;
+
 import org.apache.commons.lang.SystemUtils;
 import org.reflections.Reflections;
 
@@ -19,6 +17,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import name.dengchao.test.fx.plugin.builtin.BuiltinPlugin;
+import name.dengchao.test.fx.plugin.windows.StartMenu;
+import name.dengchao.test.fx.plugin.windows.WindowsPlugin;
+import name.dengchao.test.fx.utils.Utils;
 
 public class PluginManager {
 
