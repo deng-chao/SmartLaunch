@@ -1,15 +1,16 @@
 package name.dengchao.test.fx;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import name.dengchao.test.fx.plugin.DisplayType;
-import name.dengchao.test.fx.plugin.windows.WindowsPlugin;
-import name.dengchao.test.fx.utils.Utils;
+
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+
+import name.dengchao.test.fx.plugin.DisplayType;
+import name.dengchao.test.fx.plugin.windows.WindowsPlugin;
+import name.dengchao.test.fx.utils.Utils;
 
 public class JacksonTest {
 
