@@ -31,8 +31,6 @@ public class DisplayTooltip implements DisplayResult {
                 tooltip.show(PublicComponent.getPrimaryStage());
                 tooltip.setX(point2D.getX() + PublicComponent.getPrimaryStage().getWidth() - tooltip.getWidth());
             }
-//            tooltip.hide();
-//            tooltip.show(PublicComponent.getPrimaryStage());
         } catch (IOException e) {
             e.printStackTrace();
         }

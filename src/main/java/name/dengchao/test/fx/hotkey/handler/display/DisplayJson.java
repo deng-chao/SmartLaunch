@@ -1,16 +1,18 @@
 package name.dengchao.test.fx.hotkey.handler.display;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
-import name.dengchao.test.fx.PublicComponent;
+
 import org.apache.commons.io.IOUtils;
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import name.dengchao.test.fx.PublicComponent;
 
 public class DisplayJson implements DisplayResult {
 
@@ -21,11 +23,12 @@ public class DisplayJson implements DisplayResult {
         try {
             if (!PublicComponent.getDisplayNodes().contains(textArea)) {
                 PublicComponent.getDisplayNodes().add(textArea);
+                textArea.setEditable(false);
                 textArea.setLayoutY(53);
                 textArea.setLayoutX(3);
                 textArea.setMaxWidth(594);
                 textArea.setPrefWidth(594);
-                textArea.setFont(Font.font("Courier New", 17));
+                textArea.setFont(Font.font("Courier New", 20));
                 textArea.setMaxHeight(400);
                 textArea.setPrefHeight(400);
                 ((Pane) PublicComponent.getPrimaryStage().getScene().getRoot()).getChildren().add(textArea);
