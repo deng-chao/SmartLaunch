@@ -11,6 +11,8 @@ public abstract class RestPlugin implements Plugin {
 
     abstract protected Request getRequest();
 
+    abstract protected String[] getFinalParameters();
+
     @Override
     public InputStream execute() {
         try {
@@ -18,5 +20,18 @@ public abstract class RestPlugin implements Plugin {
         } catch (IOException e) {
             return new ByteArrayInputStream("Failed to call rest api".getBytes());
         }
+    }
+
+    protected String appendParameter(String requestUrl) {
+        if (getParameterNames().length > 0) {
+            requestUrl = requestUrl + "?";
+        }
+        for (int i = 0; i < getParameterNames().length; i++) {
+            requestUrl = requestUrl + getParameterNames()[i] + "=" + getFinalParameters()[i];
+            if (i < getParameterNames().length - 1) {
+                requestUrl = requestUrl + "&";
+            }
+        }
+        return requestUrl;
     }
 }
