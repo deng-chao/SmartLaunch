@@ -99,7 +99,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>name.dengchao.test.fx.SmartLaunch</mainClass>
+                            <mainClass>name.dengchao.fx.SmartLaunch</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -119,7 +119,7 @@
             <plugin>
                 <groupId>com.akathist.maven.plugins.launch4j</groupId>
                 <artifactId>launch4j-maven-plugin</artifactId>
-                <version>1.7.21</version>
+                <version>1.7.11</version>
                 <executions>
                     <execution>
                         <id>l4j-gui</id>
@@ -131,26 +131,27 @@
                             <headerType>gui</headerType>
                             <outfile>target/SmartLaunch.exe</outfile>
                             <jar>target/SmartLaunch-jar-with-dependencies.jar</jar>
+                            <icon>F:\dengchao\git\SmartLaunch\src\main\resources\icon.ico</icon>
                             <!-- if <dontWrapJar>true</dontWrapJar> change to this conf
                             <jar>${project.artifactId}-${project.version}.jar</jar> -->
                             <dontWrapJar>false</dontWrapJar>
                             <errTitle>Error in launch4j plugin</errTitle>
                             <classPath>
-                                <mainClass>name.dengchao.test.fx.SmartLaunch</mainClass>
+                                <mainClass>name.dengchao.fx.SmartLaunch</mainClass>
                             </classPath>
                             <jre>
-                                <minVersion>1.8.0</minVersion>
-                                <maxVersion>1.8.0_151</maxVersion>
-                                <initialHeapSize>512</initialHeapSize>
+                                <path>%JAVA_HOME%</path>
+                                <minVersion>1.8.0_171</minVersion>
+                                <initialHeapSize>128</initialHeapSize>
                                 <maxHeapSize>1024</maxHeapSize>
                             </jre>
                             <versionInfo>
                                 <fileVersion>1.0.0.0</fileVersion>
                                 <txtFileVersion>1.0.0.0</txtFileVersion>
-                                <fileDescription>des</fileDescription>
+                                <fileDescription>SmartLauch</fileDescription>
                                 <copyright>Copyright (c) 2017</copyright>
                                 <companyName>dengchao</companyName>
-                                <productVersion>3.0.0.0</productVersion>
+                                <productVersion>1.0.0.0</productVersion>
                                 <txtProductVersion>${project.version}</txtProductVersion>
                                 <productName>SmartLaunch</productName>
                                 <internalName>SmartLaunch</internalName>
