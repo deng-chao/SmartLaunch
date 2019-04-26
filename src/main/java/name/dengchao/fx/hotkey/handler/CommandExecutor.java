@@ -1,8 +1,5 @@
 package name.dengchao.fx.hotkey.handler;
 
-import java.io.InputStream;
-import java.util.Arrays;
-
 import javafx.event.Event;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -10,12 +7,15 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import name.dengchao.fx.PublicComponent;
 import name.dengchao.fx.hotkey.handler.display.DisplayJson;
 import name.dengchao.fx.hotkey.handler.display.DisplayTooltip;
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.plugin.PluginManager;
-import name.dengchao.fx.PublicComponent;
+
+import java.io.InputStream;
+import java.util.Arrays;
 
 public class CommandExecutor {
 

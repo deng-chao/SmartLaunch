@@ -1,10 +1,14 @@
 package name.dengchao.fx.utils;
 
 
-import org.apache.commons.lang.SystemUtils;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import org.apache.commons.lang.SystemUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Utils {
@@ -46,26 +50,16 @@ public class Utils {
         return fileName.endsWith(".lnk");
     }
 
-    public static boolean isAppFile(String fileName) {
-        String lowercaseFileName = fileName.toLowerCase();
-        if (lowercaseFileName.contains("update") ||
-                lowercaseFileName.contains("install") ||
-                lowercaseFileName.contains("about") ||
-                lowercaseFileName.contains("feedback") ||
-                lowercaseFileName.contains("url") ||
-                lowercaseFileName.contains("卸载") ||
-                lowercaseFileName.contains("更新") ||
-                lowercaseFileName.contains("配置") ||
-                lowercaseFileName.contains("帮助") ||
-                lowercaseFileName.contains("设置") ||
-                lowercaseFileName.contains("上载") ||
-                lowercaseFileName.contains("关于") ||
-                lowercaseFileName.contains("反馈") ||
-                lowercaseFileName.contains("向导") ||
-                lowercaseFileName.contains("升级")) {
-            return false;
+    public static boolean isAppFile(File file) {
+        try {
+            WindowsShortcut shortcut = new WindowsShortcut(file);
+            return shortcut.getRealFilename().endsWith(".exe");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     public static String removeSurplusSpace(String input) {
@@ -76,9 +70,8 @@ public class Utils {
     }
 
     public static boolean isChinese(String string) {
-        int n = 0;
         for (int i = 0; i < string.length(); i++) {
-            n = (int) string.charAt(i);
+            int n = (int) string.charAt(i);
             if (!(19968 <= n && n < 40869)) {
                 return false;
             }

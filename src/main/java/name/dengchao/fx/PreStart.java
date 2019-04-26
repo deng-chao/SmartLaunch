@@ -1,17 +1,17 @@
 package name.dengchao.fx;
 
-import name.dengchao.fx.hotkey.os.GlobalKeyListener;
-import name.dengchao.fx.hotkey.os.VoidDispatchService;
-import name.dengchao.fx.utils.Utils;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
+
+import name.dengchao.fx.hotkey.os.GlobalKeyListener;
+import name.dengchao.fx.hotkey.os.VoidDispatchService;
+import name.dengchao.fx.tray.Tray;
+import name.dengchao.fx.utils.Utils;
 
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-
-import name.dengchao.fx.tray.Tray;
 
 // TODO should be a hook, allow developer register operation here.
 public class PreStart {

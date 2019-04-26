@@ -21,8 +21,8 @@ public class GlobalKeyListener implements NativeKeyListener {
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
-        boolean isWinPressed = (e.getModifiers() & NativeKeyEvent.META_MASK) != 0;
-        if (e.getKeyCode() == NativeKeyEvent.VC_N && isWinPressed) {
+        boolean isAltPressed = (e.getModifiers() & NativeKeyEvent.ALT_MASK) != 0;
+        if (e.getKeyCode() == NativeKeyEvent.VC_SPACE && isAltPressed) {
             bringToFont.act();
             consumeIfUsingHotKey(e);
         }

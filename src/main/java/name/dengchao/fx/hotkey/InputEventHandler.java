@@ -6,12 +6,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import name.dengchao.fx.PublicComponent;
 import name.dengchao.fx.hotkey.handler.AutoComplete;
 import name.dengchao.fx.hotkey.handler.CommandExecutor;
 import name.dengchao.fx.hotkey.handler.SelectListView;
 import name.dengchao.fx.hotkey.handler.TypeSuggestion;
 import name.dengchao.fx.plugin.Plugin;
-import name.dengchao.fx.PublicComponent;
 
 public class InputEventHandler implements EventHandler<KeyEvent> {
 

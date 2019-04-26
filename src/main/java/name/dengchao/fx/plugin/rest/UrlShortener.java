@@ -1,10 +1,11 @@
 package name.dengchao.fx.plugin.rest;
 
-import name.dengchao.fx.plugin.DisplayType;
-import org.apache.http.client.fluent.Request;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import org.apache.http.client.fluent.Request;
+
+import name.dengchao.fx.plugin.DisplayType;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

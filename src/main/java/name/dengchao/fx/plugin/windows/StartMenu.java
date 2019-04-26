@@ -1,11 +1,12 @@
 package name.dengchao.fx.plugin.windows;
 
-import java.io.InputStream;
-import java.util.Arrays;
-
 import lombok.Data;
+
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
+
+import java.io.InputStream;
+import java.util.Arrays;
 
 @Data
 public class StartMenu implements Plugin {

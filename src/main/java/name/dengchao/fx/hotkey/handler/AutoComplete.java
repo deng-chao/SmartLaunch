@@ -1,11 +1,11 @@
 package name.dengchao.fx.hotkey.handler;
 
+import static name.dengchao.fx.PublicComponent.getShade;
+import static name.dengchao.fx.PublicComponent.getTextField;
+
 import org.springframework.util.StringUtils;
 
 import javafx.scene.input.KeyEvent;
-
-import static name.dengchao.fx.PublicComponent.getShade;
-import static name.dengchao.fx.PublicComponent.getTextField;
 
 public class AutoComplete {
 

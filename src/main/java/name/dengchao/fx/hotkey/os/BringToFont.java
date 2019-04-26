@@ -1,8 +1,9 @@
 package name.dengchao.fx.hotkey.os;
 
 
-import javafx.application.Platform;
 import lombok.Data;
+
+import javafx.application.Platform;
 import name.dengchao.fx.PublicComponent;
 
 @Data
