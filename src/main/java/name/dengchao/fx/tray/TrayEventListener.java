@@ -1,9 +1,9 @@
 package name.dengchao.fx.tray;
 
+import name.dengchao.fx.hotkey.os.BringToFont;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
-import name.dengchao.fx.hotkey.os.BringToFont;
 
 public class TrayEventListener implements MouseListener {
 

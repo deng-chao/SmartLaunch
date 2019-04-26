@@ -3,14 +3,14 @@ package name.dengchao.fx;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import name.dengchao.fx.plugin.DisplayType;
-import name.dengchao.fx.utils.Utils;
 import org.junit.Test;
+
+import name.dengchao.fx.plugin.DisplayType;
+import name.dengchao.fx.plugin.windows.WindowsPlugin;
+import name.dengchao.fx.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
-
-import name.dengchao.fx.plugin.windows.WindowsPlugin;
 
 public class JacksonTest {
 

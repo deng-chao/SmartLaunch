@@ -1,21 +1,22 @@
 package name.dengchao.fx.hotkey.handler;
 
+import lombok.Data;
+
+import org.springframework.util.CollectionUtils;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import name.dengchao.fx.PublicComponent;
 import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.plugin.PluginManager;
-import org.springframework.util.CollectionUtils;
+import name.dengchao.fx.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import lombok.Data;
-import name.dengchao.fx.PublicComponent;
-import name.dengchao.fx.utils.Utils;
 
 @Data
 public class TypeSuggestion {

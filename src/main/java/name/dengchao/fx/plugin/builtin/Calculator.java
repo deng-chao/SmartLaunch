@@ -1,16 +1,17 @@
 package name.dengchao.fx.plugin.builtin;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import name.dengchao.fx.plugin.DisplayType;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import name.dengchao.fx.plugin.DisplayType;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 @Data
 @NoArgsConstructor

@@ -1,11 +1,12 @@
 package name.dengchao.fx.plugin.windows;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import lombok.Data;
+
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 @Data
 public class WindowsPlugin implements Plugin {

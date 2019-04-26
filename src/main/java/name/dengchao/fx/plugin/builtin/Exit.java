@@ -1,10 +1,11 @@
 package name.dengchao.fx.plugin.builtin;
 
-import java.io.InputStream;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import name.dengchao.fx.plugin.DisplayType;
+
+import java.io.InputStream;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

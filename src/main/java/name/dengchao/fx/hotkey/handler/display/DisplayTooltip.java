@@ -2,16 +2,16 @@ package name.dengchao.fx.hotkey.handler.display;
 
 import org.springframework.util.StreamUtils;
 
+import javafx.geometry.Point2D;
+import javafx.scene.control.Tooltip;
+import javafx.scene.text.Font;
+import name.dengchao.fx.PublicComponent;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
-import javafx.geometry.Point2D;
-import javafx.scene.control.Tooltip;
-import javafx.scene.text.Font;
-import name.dengchao.fx.PublicComponent;
 
 public class DisplayTooltip implements DisplayResult {
 

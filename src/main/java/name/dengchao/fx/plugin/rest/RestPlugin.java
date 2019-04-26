@@ -1,7 +1,8 @@
 package name.dengchao.fx.plugin.rest;
 
-import name.dengchao.fx.plugin.Plugin;
 import org.apache.http.client.fluent.Request;
+
+import name.dengchao.fx.plugin.Plugin;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

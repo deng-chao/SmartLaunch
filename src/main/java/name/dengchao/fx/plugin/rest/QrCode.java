@@ -1,14 +1,15 @@
 package name.dengchao.fx.plugin.rest;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import org.apache.http.client.fluent.Request;
+
+import name.dengchao.fx.plugin.DisplayType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import name.dengchao.fx.plugin.DisplayType;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

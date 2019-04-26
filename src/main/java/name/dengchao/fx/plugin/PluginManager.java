@@ -1,16 +1,20 @@
 package name.dengchao.fx.plugin;
 
-import com.google.common.collect.Lists;
-
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
+import com.google.common.collect.Lists;
 
-import name.dengchao.fx.plugin.rest.RestPlugin;
 import org.apache.commons.lang.SystemUtils;
 import org.reflections.Reflections;
+
+import name.dengchao.fx.plugin.builtin.BuiltinPlugin;
+import name.dengchao.fx.plugin.rest.RestPlugin;
+import name.dengchao.fx.plugin.windows.StartMenu;
+import name.dengchao.fx.plugin.windows.WindowsPlugin;
+import name.dengchao.fx.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,11 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import name.dengchao.fx.plugin.builtin.BuiltinPlugin;
-import name.dengchao.fx.plugin.windows.StartMenu;
-import name.dengchao.fx.plugin.windows.WindowsPlugin;
-import name.dengchao.fx.utils.Utils;
 
 public class PluginManager {
 
@@ -117,7 +116,7 @@ public class PluginManager {
                 loadStartMenuItem(file1);
             }
         } else {
-            if (!Utils.isLink(file.getName()) || !Utils.isAppFile(file.getName())) {
+            if (!Utils.isLink(file.getName()) || !Utils.isAppFile(file)) {
                 return;
             }
             if (pluginMap.get(file.getName()) != null) {

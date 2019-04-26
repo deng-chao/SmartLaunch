@@ -12,4 +12,6 @@ public class Constants {
 
     // TODO Correct it
     public static final String HOME_LINUX = "/AppData/Local/SmartLaunch";
+
+    public static final String USER_HOME = System.getProperty("user.home");
 }

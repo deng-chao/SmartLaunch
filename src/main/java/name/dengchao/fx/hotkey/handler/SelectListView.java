@@ -5,8 +5,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.PublicComponent;
+import name.dengchao.fx.plugin.Plugin;
 
 public class SelectListView {
 
