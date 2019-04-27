@@ -1,12 +1,19 @@
 package name.dengchao.fx.utils;
 
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
 import org.apache.commons.lang.SystemUtils;
+import sun.awt.shell.ShellFolder;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -77,5 +84,41 @@ public class Utils {
             }
         }
         return true;
+    }
+
+    public static Icon getSmallIcon(File file) {
+        if (file == null || !file.exists()) {
+            return null;
+        }
+        FileSystemView fsv = FileSystemView.getFileSystemView();
+        return fsv.getSystemIcon(file);
+    }
+
+    public static Image toFxImage(Icon icon) {
+        BufferedImage bImg;
+        if (icon instanceof BufferedImage) {
+            bImg = (BufferedImage) icon;
+        } else {
+            ImageIcon swingImageIcon = (ImageIcon) icon;
+            java.awt.Image awtImage = swingImageIcon.getImage();
+            bImg = new BufferedImage(awtImage.getWidth(null), awtImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D graphics = bImg.createGraphics();
+            graphics.drawImage(awtImage, 0, 0, null);
+            graphics.dispose();
+        }
+        return SwingFXUtils.toFXImage(bImg, null);
+    }
+
+    public static Icon getBigIcon(File file) {
+        if (file != null && file.exists()) {
+            return null;
+        }
+        try {
+            ShellFolder sf = ShellFolder.getShellFolder(file);
+            return new ImageIcon(sf.getIcon(true));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

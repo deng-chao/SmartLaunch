@@ -6,15 +6,14 @@ import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.google.common.collect.Lists;
-
-import org.apache.commons.lang.SystemUtils;
-import org.reflections.Reflections;
-
+import javafx.scene.image.ImageView;
 import name.dengchao.fx.plugin.builtin.BuiltinPlugin;
 import name.dengchao.fx.plugin.rest.RestPlugin;
 import name.dengchao.fx.plugin.windows.StartMenu;
 import name.dengchao.fx.plugin.windows.WindowsPlugin;
 import name.dengchao.fx.utils.Utils;
+import org.apache.commons.lang.SystemUtils;
+import org.reflections.Reflections;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,8 +33,10 @@ public class PluginManager {
         } else if (SystemUtils.IS_OS_WINDOWS) {
             loadWindowsPlugins();
             loadRestPlugin();
-            loadStartMenu(Utils.getUserStartMenuPath());
-            loadStartMenu(Utils.getSystemStartMenuPath());
+            Thread t1 = new Thread(() -> loadStartMenu(Utils.getUserStartMenuPath()));
+            Thread t2 = new Thread(() -> loadStartMenu(Utils.getSystemStartMenuPath()));
+            t1.start();
+            t2.start();
         }
     }
 
@@ -156,6 +157,7 @@ public class PluginManager {
                 startMenu.setParameters(new String[0]);
                 startMenu.setPath(file.getAbsolutePath());
                 startMenu.setDescription(displayName);
+                startMenu.setIcon(new ImageView(Utils.toFxImage(Utils.getSmallIcon(file))));
                 pluginMap.put(name, startMenu);
             }
         }

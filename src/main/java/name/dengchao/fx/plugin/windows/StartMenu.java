@@ -1,5 +1,6 @@
 package name.dengchao.fx.plugin.windows;
 
+import javafx.scene.image.ImageView;
 import lombok.Data;
 
 import name.dengchao.fx.plugin.DisplayType;
@@ -16,6 +17,7 @@ public class StartMenu implements Plugin {
     private String[] parameters = new String[0];
     private String path;
     private String description;
+    private ImageView icon;
 
     @Override
     public InputStream execute() {

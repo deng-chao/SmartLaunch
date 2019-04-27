@@ -1,10 +1,16 @@
 package name.dengchao.fx.plugin;
 
+import javafx.scene.image.ImageView;
+
 import java.io.InputStream;
 
 public interface Plugin {
 
     String getName();
+
+    default ImageView getIcon() {
+        return null;
+    }
 
     String getDescription();
 
