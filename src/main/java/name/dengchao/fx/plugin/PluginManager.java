@@ -6,14 +6,16 @@ import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.google.common.collect.Lists;
+
+import org.apache.commons.lang.SystemUtils;
+import org.reflections.Reflections;
+
 import javafx.scene.image.ImageView;
 import name.dengchao.fx.plugin.builtin.BuiltinPlugin;
 import name.dengchao.fx.plugin.rest.RestPlugin;
 import name.dengchao.fx.plugin.windows.StartMenu;
 import name.dengchao.fx.plugin.windows.WindowsPlugin;
 import name.dengchao.fx.utils.Utils;
-import org.apache.commons.lang.SystemUtils;
-import org.reflections.Reflections;
 
 import java.io.File;
 import java.io.IOException;
@@ -123,7 +125,7 @@ public class PluginManager {
             if (pluginMap.get(file.getName()) != null) {
                 return;
             }
-            // TODO distinguish the dir shortcut, open the dir in file explorer directly.
+            System.out.println(file.getAbsolutePath());
             String displayName = file.getName().replace(".lnk", "");
             String pluginName = displayName.toLowerCase().replace(" ", "-");
 

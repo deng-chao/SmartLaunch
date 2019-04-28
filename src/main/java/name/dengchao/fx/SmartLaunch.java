@@ -39,8 +39,8 @@ public class SmartLaunch extends Application {
         listView.setCellFactory(lst -> new ListViewCellFactory());
         listView.setLayoutY(53);
         listView.setLayoutX(3);
-        listView.setMaxWidth(594);
-        listView.setPrefWidth(594);
+        listView.setMaxWidth(794);
+        listView.setPrefWidth(794);
         listView.setMaxHeight(400);
         listView.setPrefHeight(400);
         listView.setVisible(false);
@@ -65,7 +65,7 @@ public class SmartLaunch extends Application {
         pane.getChildren().add(listView);
         pane.setPrefHeight(450);
 
-        Scene scene = new Scene(pane, 600, 56);
+        Scene scene = new Scene(pane, 800, 56);
 //        scene.setFill(Color.TRANSPARENT);
 
         primaryStage.setMaxHeight(500);
@@ -90,7 +90,7 @@ public class SmartLaunch extends Application {
         textField.setMaxHeight(50);
         textField.setLayoutX(3);
         textField.setLayoutY(3);
-        textField.setPrefWidth(594);
+        textField.setPrefWidth(794);
         textField.setStyle("-fx-background-color: transparent;");
         return textField;
     }

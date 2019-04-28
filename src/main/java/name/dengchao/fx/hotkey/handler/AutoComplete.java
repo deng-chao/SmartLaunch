@@ -1,21 +1,24 @@
 package name.dengchao.fx.hotkey.handler;
 
-import static name.dengchao.fx.PublicComponent.getShade;
+import static name.dengchao.fx.PublicComponent.getListView;
 import static name.dengchao.fx.PublicComponent.getTextField;
 
-import org.springframework.util.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import javafx.scene.input.KeyEvent;
+import name.dengchao.fx.plugin.Plugin;
 
 public class AutoComplete {
 
     public void execute(KeyEvent event) {
-        if (StringUtils.isEmpty(getShade().getText())) {
+
+        if (CollectionUtils.isEmpty(getListView().getItems())) {
             event.consume();
-        } else {
-            getTextField().setText(getShade().getText() + " ");
-            getTextField().positionCaret(getTextField().getText().length());
-            event.consume();
+            return;
         }
+        Plugin mostMatch = getListView().getItems().get(0);
+        getTextField().setText(mostMatch.getName());
+        getTextField().positionCaret(mostMatch.getName().length());
+        event.consume();
     }
 }
