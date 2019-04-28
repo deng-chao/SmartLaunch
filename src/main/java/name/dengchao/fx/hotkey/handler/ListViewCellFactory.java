@@ -43,6 +43,8 @@ public class ListViewCellFactory extends ListCell<Plugin> {
             HBox vBox = new HBox();
             Text name = new Text();
             ImageView imageView = item.getIcon() == null ? defaultImage : item.getIcon();
+            imageView.setFitHeight(25);
+            imageView.setFitWidth(25);
             if (vBox.getChildren().size() == 0) {
                 Label label = new Label(item.getDescription(), imageView);
                 label.setFont(Font.font("Courier New", 22));

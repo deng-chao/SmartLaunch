@@ -1,8 +1,10 @@
 package name.dengchao.fx.plugin.windows;
 
-import javafx.scene.image.ImageView;
 import lombok.Data;
 
+import org.springframework.util.ObjectUtils;
+
+import javafx.scene.image.ImageView;
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
 
@@ -28,5 +30,21 @@ public class StartMenu implements Plugin {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || !(object instanceof StartMenu)) {
+            return false;
+        }
+        if (this == object) {
+            return true;
+        }
+        return ObjectUtils.nullSafeEquals(path, ((StartMenu) object).getPath());
+    }
+
+    @Override
+    public int hashCode() {
+        return path == null ? super.hashCode() : path.hashCode();
     }
 }

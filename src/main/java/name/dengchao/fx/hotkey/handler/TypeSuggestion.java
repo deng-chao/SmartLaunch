@@ -23,7 +23,7 @@ public class TypeSuggestion {
 
     public void suggest(KeyEvent event) {
         // Prevent false suggestion
-        if (event.getCode() == KeyCode.WINDOWS){
+        if (event.getCode() == KeyCode.WINDOWS) {
             return;
         }
         for (Node node : PublicComponent.getDisplayNodes()) {
@@ -48,13 +48,16 @@ public class TypeSuggestion {
         Set<String> pluginNames = PluginManager.pluginMap.keySet();
         List<Plugin> candidates = new ArrayList<>();
         for (String pluginName : pluginNames) {
-            if (pluginName.toLowerCase().startsWith(input.toLowerCase())) {
-                candidates.add(PluginManager.pluginMap.get(pluginName));
+            if (pluginName.toLowerCase().contains(input.toLowerCase())) {
+                Plugin plugin = PluginManager.pluginMap.get(pluginName);
+                if (!candidates.contains(plugin)) {
+                    candidates.add(PluginManager.pluginMap.get(pluginName));
+                }
             }
         }
         if (!CollectionUtils.isEmpty(candidates)) {
             PublicComponent.getListView().setVisible(true);
-            PublicComponent.getShade().setText(candidates.get(0).getName());
+//            PublicComponent.getShade().setText(candidates.get(0).getName());
             ObservableList<Plugin> items = FXCollections.observableArrayList(candidates);
             PublicComponent.getListView().setItems(items);
         } else {
@@ -62,12 +65,12 @@ public class TypeSuggestion {
                 PublicComponent.getListView().setVisible(true);
                 PublicComponent.getListView().getItems().clear();
 //                PublicComponent.getListView().getItems().add("No command match");
-                PublicComponent.getShade().setText("");
+//                PublicComponent.getShade().setText("");
             } else {
                 PublicComponent.getListView().setVisible(true);
                 PublicComponent.getListView().getItems().clear();
 //                PublicComponent.getListView().getItems().add("Search '" + input + "' in google.");
-                PublicComponent.getShade().setText("");
+//                PublicComponent.getShade().setText("");
             }
         }
 //        PublicComponent.getListView().setMaxHeight(PublicComponent.getPrimaryStage().getMaxHeight());
@@ -81,7 +84,7 @@ public class TypeSuggestion {
         }
         String[] parts = input.split(" ");
         if (parts[parts.length - 1].trim().equals("")) {
-            
+
         }
     }
 }

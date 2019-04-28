@@ -25,7 +25,7 @@ public class BringToFont implements Action {
                     PublicComponent.getPrimaryStage().show();
                     PublicComponent.getTextField().selectAll();
                     PublicComponent.getTextField().requestFocus();
-                    PublicComponent.getShade().setText("");
+//                    PublicComponent.getShade().setText("");
                 }
             });
         }
