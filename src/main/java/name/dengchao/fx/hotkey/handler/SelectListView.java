@@ -12,7 +12,6 @@ public class SelectListView {
 
     private ListView<Plugin> listView = PublicComponent.getListView();
     private TextField textField = PublicComponent.getTextField();
-    private TextField shadow = PublicComponent.getShade();
 
     public void execute(KeyEvent event) {
         if (event.getCode() == KeyCode.UP) {
@@ -23,7 +22,6 @@ public class SelectListView {
                 listView.scrollTo(index - 5);
                 textField.setText(listView.getSelectionModel().getSelectedItem().getName());
                 textField.selectAll();
-                shadow.setText("");
             }
             event.consume();
         } else if (event.getCode() == KeyCode.DOWN) {
@@ -34,7 +32,6 @@ public class SelectListView {
                 listView.getSelectionModel().select(index + 1);
                 textField.setText(listView.getSelectionModel().getSelectedItem().getName());
                 textField.selectAll();
-                shadow.setText("");
             }
             event.consume();
         }

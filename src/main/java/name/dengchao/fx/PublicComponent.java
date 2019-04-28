@@ -13,7 +13,6 @@ import java.util.List;
 public class PublicComponent {
 
     private static TextField textField;
-    private static TextField shade;
     private static Stage primaryStage;
     private static ListView<Plugin> listView;
 
@@ -25,14 +24,6 @@ public class PublicComponent {
 
     public static void setTextField(TextField textField) {
         PublicComponent.textField = textField;
-    }
-
-    public static TextField getShade() {
-        return shade;
-    }
-
-    public static void setShade(TextField shade) {
-        PublicComponent.shade = shade;
     }
 
     public static Stage getPrimaryStage() {

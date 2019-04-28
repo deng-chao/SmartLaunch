@@ -6,16 +6,13 @@ import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.google.common.collect.Lists;
-
-import org.apache.commons.lang.SystemUtils;
-import org.reflections.Reflections;
-
 import javafx.scene.image.ImageView;
 import name.dengchao.fx.plugin.builtin.BuiltinPlugin;
-import name.dengchao.fx.plugin.rest.RestPlugin;
 import name.dengchao.fx.plugin.windows.StartMenu;
 import name.dengchao.fx.plugin.windows.WindowsPlugin;
 import name.dengchao.fx.utils.Utils;
+import org.apache.commons.lang.SystemUtils;
+import org.reflections.Reflections;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PluginManager {
 
     public static Map<String, Plugin> pluginMap = new ConcurrentHashMap<>();
+    private static ObjectMapper mapper = new ObjectMapper();
 
     public static void load() {
         loadBuiltinPlugin();
@@ -62,8 +60,6 @@ public class PluginManager {
         }
     }
 
-    private static ObjectMapper mapper = new ObjectMapper();
-
     public static void loadWindowsPlugins() {
         File file = new File(Utils.getPluginConfigPath());
         if (!file.isDirectory()) {
@@ -94,10 +90,10 @@ public class PluginManager {
 
     private static void loadRestPlugin() {
         Reflections reflections = new Reflections("name.dengchao.fx.plugin.rest");
-        Set<Class<? extends RestPlugin>> restClasses = reflections.getSubTypesOf(RestPlugin.class);
-        for (Class<? extends RestPlugin> restClass : restClasses) {
+        Set<Class<? extends Plugin>> restClasses = reflections.getSubTypesOf(Plugin.class);
+        for (Class<? extends Plugin> restClass : restClasses) {
             try {
-                RestPlugin builtin = restClass.newInstance();
+                Plugin builtin = restClass.newInstance();
                 Plugin plugin = pluginMap.get(builtin.getName());
                 if (plugin == null) {
                     pluginMap.put(builtin.getName(), builtin);
