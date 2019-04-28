@@ -46,19 +46,14 @@ public class SmartLaunch extends Application {
         listView.setVisible(false);
         PublicComponent.setListView(listView);
 
-        TextField shade = createDefaultTextField();
-        shade.setStyle("-fx-text-inner-color: gray;");
-        PublicComponent.setShade(shade);
-
         TextField textField = createDefaultTextField();
         PublicComponent.setTextField(textField);
 
         Pane pane = new Pane();
-        pane.getChildren().add(shade);
         pane.getChildren().add(textField);
         pane.setStyle("-fx-background-color: blue;");
         pane.setStyle("-fx-border-radius: 2;");
-        pane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(2))));
+        pane.setBorder(new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(2))));
         pane.setStyle("-fx-padding: 8;");
         pane.setStyle("-fx-background-color: transparent;");
 

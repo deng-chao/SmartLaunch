@@ -1,12 +1,11 @@
 package name.dengchao.fx.hotkey.handler;
 
-import static name.dengchao.fx.PublicComponent.getListView;
-import static name.dengchao.fx.PublicComponent.getTextField;
-
-import org.springframework.util.CollectionUtils;
-
 import javafx.scene.input.KeyEvent;
 import name.dengchao.fx.plugin.Plugin;
+import org.springframework.util.CollectionUtils;
+
+import static name.dengchao.fx.PublicComponent.getListView;
+import static name.dengchao.fx.PublicComponent.getTextField;
 
 public class AutoComplete {
 
@@ -16,9 +15,18 @@ public class AutoComplete {
             event.consume();
             return;
         }
-        Plugin mostMatch = getListView().getItems().get(0);
-        getTextField().setText(mostMatch.getName());
-        getTextField().positionCaret(mostMatch.getName().length());
+        complete();
         event.consume();
+    }
+
+    public static void complete() {
+        Plugin mostMatch = getListView().getSelectionModel().getSelectedItems().get(0);
+        String currInput = getTextField().getText();
+        int index = currInput.lastIndexOf('|');
+        boolean hasPipe = currInput.lastIndexOf('|') >= 0;
+        String preCommand = hasPipe ? currInput.substring(0, index) : "";
+        String completed = (hasPipe ? preCommand + "| " : "") + mostMatch.getName() + " ";
+        getTextField().setText(completed);
+        getTextField().positionCaret(completed.length());
     }
 }

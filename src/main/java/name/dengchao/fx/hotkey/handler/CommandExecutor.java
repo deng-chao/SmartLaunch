@@ -1,11 +1,10 @@
 package name.dengchao.fx.hotkey.handler;
 
+import com.google.common.collect.Lists;
 import javafx.event.Event;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputEvent;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import name.dengchao.fx.PublicComponent;
 import name.dengchao.fx.hotkey.handler.display.DisplayJson;
@@ -15,7 +14,7 @@ import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.plugin.PluginManager;
 
 import java.io.InputStream;
-import java.util.Arrays;
+import java.util.List;
 
 public class CommandExecutor {
 
@@ -30,44 +29,40 @@ public class CommandExecutor {
     private ListView<Plugin> listView;
 
     public void execute(InputEvent event) {
-        Plugin activePlugin = null;
-        if (event instanceof KeyEvent) {
+        AutoComplete.complete();
+        List<Plugin> activePlugins = Lists.newArrayList();
 
-            // read command from input box
-            KeyEvent evt = (KeyEvent) event;
-            String input = textField.getText() + evt.getText();
-            String[] inputs = input.trim().split(" ");
-            activePlugin = PluginManager.pluginMap.get(inputs[0]);
-
-            // set parameter if match command
-            if (activePlugin != null) {
-                boolean overwriteParams = inputs.length > 1;
-                String[] params = new String[inputs.length - 1];
-                System.out.println(Arrays.asList(inputs));
-                if (overwriteParams) {
-                    System.arraycopy(inputs, 1, params, 0, params.length);
-                    activePlugin.setParameters(params);
-                }
-            } else {
-                // if not command match, read selected suggestion.
-                Plugin potentialCandidate = listView.getSelectionModel().getSelectedItem();
-                textField.setText(potentialCandidate.getName());
-                activePlugin = PluginManager.pluginMap.get(potentialCandidate.getName());
+        String input = textField.getText();
+        String[] commands = input.split("\\|");
+        for (String command : commands) {
+            String[] commandParts = command.split(" ");
+            Plugin plugin = PluginManager.pluginMap.get(commandParts[0]);
+            // no plugin match
+            if (plugin == null) {
+                // TODO give some tips
+                event.consume();
+                return;
             }
-        } else if (event instanceof MouseEvent) {
-            activePlugin = listView.getSelectionModel().getSelectedItem();
+            boolean overwriteParams = commandParts.length > 1;
+            String[] params = new String[commandParts.length - 1];
+            if (overwriteParams) {
+                System.arraycopy(commandParts, 1, params, 0, params.length);
+                plugin.setParameters(params);
+            }
+            activePlugins.add(plugin);
         }
-
-        execute(event, activePlugin);
+        execute(event, activePlugins);
     }
 
-    public void execute(Event event, Plugin activePlugin) {
+    public void execute(Event event, List<Plugin> activePlugins) {
         InputStream inputStream = null;
-        if (activePlugin != null) {
-            inputStream = activePlugin.execute();
+        for (Plugin activePlugin : activePlugins) {
+            if (activePlugin != null) {
+                inputStream = activePlugin.execute();
+            }
+            display(activePlugin.getDisplayType(), inputStream);
         }
         event.consume();
-        display(activePlugin.getDisplayType(), inputStream);
     }
 
     private void display(DisplayType type, InputStream inputStream) {
