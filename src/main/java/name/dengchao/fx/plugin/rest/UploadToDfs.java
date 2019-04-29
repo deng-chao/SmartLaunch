@@ -1,26 +1,11 @@
 package name.dengchao.fx.plugin.rest;
 
 import com.alibaba.fastjson.JSON;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.springframework.util.StreamUtils;
-
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -29,6 +14,14 @@ import javafx.stage.Stage;
 import name.dengchao.fx.PublicComponent;
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.util.StreamUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -68,8 +61,11 @@ public class UploadToDfs implements Plugin {
         if (filePath == null) {
             interactChooseFile();
         }
+        if (filePath == null) {
+            return null;
+        }
         String url = "http://dfs.hjfile.cn/v2/token?accessKey=HJTAKAMUDItVGjbuvQWqUDbmKeZWIkIx&timestamp="
-            + "621355968000000810&sign=72c10527cdd0500f57c2b0467b8cba73&uid=0&fileType=&maxSize=0&rawFileName=";
+                + "621355968000000810&sign=72c10527cdd0500f57c2b0467b8cba73&uid=0&fileType=&maxSize=0&rawFileName=";
         try {
             HttpGet getToken = new HttpGet(url);
             InputStream tokenIn = client.execute(getToken).getEntity().getContent();
@@ -78,14 +74,14 @@ public class UploadToDfs implements Plugin {
             HttpPost upload = new HttpPost("http://dfs.hjfile.cn/v1/file");
             upload.setHeader("token", token);
             HttpEntity entity = MultipartEntityBuilder.create()
-                .setMode(HttpMultipartMode.RFC6532)
-                .addBinaryBody("file", new File(filePath))
-                .build();
+                    .setMode(HttpMultipartMode.RFC6532)
+                    .addBinaryBody("file", new File(filePath))
+                    .build();
             upload.setEntity(entity);
             InputStream dfsInfoIn = client.execute(upload).getEntity().getContent();
             String dfsRawResp = StreamUtils.copyToString(dfsInfoIn, StandardCharsets.UTF_8);
             String publishUrl = JSON.parseObject(dfsRawResp).getJSONArray("data")
-                .getJSONObject(0).getString("publishUrl");
+                    .getJSONObject(0).getString("publishUrl");
             return new ByteArrayInputStream(publishUrl.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,7 +98,7 @@ public class UploadToDfs implements Plugin {
         Button buttonLoad = new Button("Choose File");
         Label txt = new Label("No file selected");
         txt.setBorder(
-            new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
+                new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
         txt.setPrefWidth(400);
         txt.setFont(new Font(15));
         txt.setPadding(new Insets(1, 5, 1, 5));
