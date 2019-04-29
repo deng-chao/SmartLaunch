@@ -64,7 +64,7 @@ public class UploadToDfs implements Plugin {
 
     @Override
     public InputStream execute() {
-        System.out.println("upload to dfs");
+        System.out.println("upload file, Path: " + filePath);
         if (filePath == null) {
             interactChooseFile();
         }

@@ -33,6 +33,7 @@ public class DisplayText implements DisplayResult {
                 textArea.setFont(Font.font("Courier New", 20));
                 textArea.setMaxHeight(400);
                 textArea.setPrefHeight(400);
+                textArea.setWrapText(true);
                 ((Pane) PublicComponent.getPrimaryStage().getScene().getRoot()).getChildren().add(textArea);
             }
             PublicComponent.getListView().setVisible(false);
