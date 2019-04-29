@@ -13,7 +13,7 @@ public class QrCodeTest {
     @Test
     public void testGenerateQrCode() throws Exception {
         QrCode qrCode = new QrCode();
-        qrCode.setParameters(new String[]{"https://www.hujiang.com"});
+        qrCode.setParameters(new String[]{"https://www.baidu.com"});
         InputStream inputStream = qrCode.execute();
         String content = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
         ObjectMapper mapper = new ObjectMapper();

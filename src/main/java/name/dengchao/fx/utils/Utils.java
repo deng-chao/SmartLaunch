@@ -1,20 +1,28 @@
 package name.dengchao.fx.utils;
 
 
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
 import org.apache.commons.lang.SystemUtils;
+import org.springframework.util.StreamUtils;
+
 import sun.awt.shell.ShellFolder;
 
-import javax.swing.*;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileSystemView;
-import java.awt.*;
+
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -31,6 +39,15 @@ public class Utils {
         } else {
             throw new RuntimeException("WTH OS are you using, do your mind support?");
         }
+    }
+
+    public static String streamToStr(InputStream inputStream) {
+        try {
+            return StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static String getPluginPath() {
