@@ -7,6 +7,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import name.dengchao.fx.plugin.Plugin;
@@ -20,8 +21,7 @@ public class ListViewCellFactory extends ListCell<Plugin> {
     private ImageView defaultImage;
 
     public ListViewCellFactory() {
-        try {
-            InputStream fis = new ClassPathResource("icon.jpg").getInputStream();
+        try(InputStream fis = new ClassPathResource("icon.jpg").getInputStream()) {
             Image defaultIcon = new Image(fis);
             defaultImage = new ImageView(defaultIcon);
             defaultImage.setFitHeight(30);
@@ -40,23 +40,32 @@ public class ListViewCellFactory extends ListCell<Plugin> {
             setGraphic(null);
         } else {
 
-            HBox vBox = new HBox();
-            Text name = new Text();
+            HBox hBox = new HBox();
+//            Text name = new Text();
+            Text desc = new Text();
+            desc.setFont(Font.font("Courier New", 20));
+            desc.setText(item.getDescription());
+//            name.setFont(Font.font("Courier New", 12));
+//            name.setText(item.getName());
+
+            VBox vBox = new VBox();
+            vBox.getChildren().add(desc);
+//            vBox.getChildren().add(name);
+            vBox.setPadding(new Insets(17, 0, 0, 10));
+
+
             ImageView imageView = item.getIcon() == null ? defaultImage : item.getIcon();
             imageView.setFitHeight(25);
             imageView.setFitWidth(25);
-            if (vBox.getChildren().size() == 0) {
-                Label label = new Label(item.getDescription(), imageView);
+            if (hBox.getChildren().size() == 0) {
+                Label label = new Label("", imageView);
                 label.setFont(Font.font("Courier New", 22));
-                vBox.getChildren().add(label);
-                vBox.getChildren().add(name);
-                vBox.setAlignment(Pos.CENTER_LEFT);
+
+                hBox.getChildren().add(label);
+                hBox.getChildren().add(vBox);
+                hBox.setAlignment(Pos.CENTER_LEFT);
             }
-
-            name.setFont(Font.font("Courier New", 17));
-            name.setText("『" + item.getName() + "』");
-
-            setGraphic(vBox);
+            setGraphic(hBox);
         }
     }
 

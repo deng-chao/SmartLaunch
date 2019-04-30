@@ -1,5 +1,6 @@
 package name.dengchao.fx.plugin.rest;
 
+import name.dengchao.fx.plugin.builtin.Configurable;
 import org.apache.http.client.fluent.Request;
 
 import name.dengchao.fx.plugin.Plugin;
@@ -8,7 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public abstract class RestPlugin implements Plugin {
+public abstract class RestPlugin implements Plugin, Configurable {
 
     abstract protected Request getRequest();
 

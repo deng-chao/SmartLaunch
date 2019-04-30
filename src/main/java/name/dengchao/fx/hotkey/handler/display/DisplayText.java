@@ -1,12 +1,11 @@
 package name.dengchao.fx.hotkey.handler.display;
 
-import org.apache.commons.io.IOUtils;
-import org.springframework.util.StreamUtils;
-
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import name.dengchao.fx.PublicComponent;
+import org.apache.commons.io.IOUtils;
+import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +21,9 @@ public class DisplayText implements DisplayResult {
 
     @Override
     public void display(InputStream inputStream) {
+        if (inputStream == null) {
+            return;
+        }
         try {
             if (!PublicComponent.getDisplayNodes().contains(textArea)) {
                 PublicComponent.getDisplayNodes().add(textArea);
@@ -33,6 +35,7 @@ public class DisplayText implements DisplayResult {
                 textArea.setFont(Font.font("Courier New", 20));
                 textArea.setMaxHeight(400);
                 textArea.setPrefHeight(400);
+                textArea.setWrapText(true);
                 ((Pane) PublicComponent.getPrimaryStage().getScene().getRoot()).getChildren().add(textArea);
             }
             PublicComponent.getListView().setVisible(false);

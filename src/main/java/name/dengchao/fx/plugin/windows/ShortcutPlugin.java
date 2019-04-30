@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Data
-public class WindowsPlugin implements Plugin {
+public class ShortcutPlugin implements Plugin {
 
     private String name;
     private DisplayType displayType;

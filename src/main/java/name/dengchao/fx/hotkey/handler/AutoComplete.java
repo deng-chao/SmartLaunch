@@ -21,6 +21,9 @@ public class AutoComplete {
 
     public static void complete() {
         Plugin mostMatch = getListView().getSelectionModel().getSelectedItems().get(0);
+        if (mostMatch == null) {
+            return;
+        }
         String currInput = getTextField().getText();
         int index = currInput.lastIndexOf('|');
         boolean hasPipe = currInput.lastIndexOf('|') >= 0;

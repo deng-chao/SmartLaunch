@@ -17,6 +17,7 @@ import name.dengchao.fx.plugin.PluginManager;
 import name.dengchao.fx.utils.Utils;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 public class CommandExecutor {
@@ -48,9 +49,11 @@ public class CommandExecutor {
                 return;
             }
             boolean overwriteParams = commandParts.length > 1;
+            System.out.println("commandParts: "  + Arrays.toString(commandParts));
             String[] params = new String[commandParts.length - 1];
             if (overwriteParams) {
                 System.arraycopy(commandParts, 1, params, 0, params.length);
+                System.out.println("params: " + Arrays.toString(params));
                 plugin.setParameters(params);
             }
             activePlugins.add(plugin);

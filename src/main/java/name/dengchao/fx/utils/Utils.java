@@ -1,22 +1,17 @@
 package name.dengchao.fx.utils;
 
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
-import org.apache.commons.lang.SystemUtils;
-import org.springframework.util.StreamUtils;
-
-import sun.awt.shell.ShellFolder;
-
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.apache.commons.lang.SystemUtils;
+import org.springframework.util.StreamUtils;
+import sun.awt.shell.ShellFolder;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
-
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -56,6 +51,10 @@ public class Utils {
 
     public static String getPluginConfigPath() {
         return getPluginPath().concat("/config");
+    }
+
+    public static String getShortcutPluginPath() {
+        return getPluginPath().concat("/shortcut");
     }
 
     public static String getLogPath() {
@@ -127,7 +126,7 @@ public class Utils {
     }
 
     public static Icon getBigIcon(File file) {
-        if (file != null && file.exists()) {
+        if (file == null && !file.exists()) {
             return null;
         }
         try {
@@ -136,6 +135,20 @@ public class Utils {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void openDir(String path) {
+        try {
+            String[] cmd = new String[5];
+            cmd[0] = "cmd";
+            cmd[1] = "/c";
+            cmd[2] = "start";
+            cmd[3] = " ";
+            cmd[4] = path;
+            Runtime.getRuntime().exec(cmd);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
