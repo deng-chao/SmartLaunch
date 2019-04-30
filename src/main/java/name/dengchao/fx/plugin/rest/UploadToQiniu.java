@@ -72,13 +72,15 @@ public class UploadToQiniu implements Plugin {
 
     @Override
     public InputStream execute() {
-
-        System.out.println("upload to dfs");
+        System.out.println("upload file, Path: " + filePath);
         if (filePath == null) {
             interactChooseFile();
         }
+        if (filePath == null) {
+            return null;
+        }
         try {
-            // the ak & sk is for personal use.
+            // the ak & sk is for public use.
             QiniuAuth auth = QiniuAuth.create(
                 "_X-HJipezNOe7hZ7Put5g7YwKrIZ7-Zvo__yH8cN",
                 "uaXmaVlFgmilj-GLGLqEb5vngfZpRneFQ--M6etL"

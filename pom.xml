@@ -139,7 +139,7 @@
                             <headerType>gui</headerType>
                             <outfile>target/SmartLaunch.exe</outfile>
                             <jar>target/SmartLaunch-jar-with-dependencies.jar</jar>
-                            <icon>F:\dengchao\git\SmartLaunch\src\main\resources\icon.ico</icon>
+                            <icon>src/main/resources/icon.ico</icon>
                             <!-- if <dontWrapJar>true</dontWrapJar> change to this conf
                             <jar>${project.artifactId}-${project.version}.jar</jar> -->
                             <dontWrapJar>false</dontWrapJar>
