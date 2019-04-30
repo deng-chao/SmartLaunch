@@ -1,12 +1,10 @@
 package name.dengchao.fx.plugin.rest;
 
-import com.alibaba.fastjson.JSON;
-
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.util.StreamUtils;
@@ -29,14 +27,18 @@ import javafx.stage.Stage;
 import name.dengchao.fx.PublicComponent;
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
+import name.dengchao.fx.utils.QiniuAuth;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
-public class UploadToDfs implements Plugin {
+public class UploadToQiniu implements Plugin {
 
     private String filePath;
 
@@ -62,31 +64,44 @@ public class UploadToDfs implements Plugin {
 
     private HttpClient client = HttpClientBuilder.create().build();
 
+    private String domain = "http://pqr4zmlfn.bkt.clouddn.com";
+
+    private static final String defaultBucket = "smart-launch";
+    private static final String uploadUrl = "http://upload.qiniup.com/";
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+
     @Override
     public InputStream execute() {
+
         System.out.println("upload to dfs");
         if (filePath == null) {
             interactChooseFile();
         }
-        String url = "http://dfs.hjfile.cn/v2/token?accessKey=HJTAKAMUDItVGjbuvQWqUDbmKeZWIkIx&timestamp="
-            + "621355968000000810&sign=72c10527cdd0500f57c2b0467b8cba73&uid=0&fileType=&maxSize=0&rawFileName=";
         try {
-            HttpGet getToken = new HttpGet(url);
-            InputStream tokenIn = client.execute(getToken).getEntity().getContent();
-            String tokenResp = StreamUtils.copyToString(tokenIn, StandardCharsets.UTF_8);
-            String token = JSON.parseObject(tokenResp).getString("data");
-            HttpPost upload = new HttpPost("http://dfs.hjfile.cn/v1/file");
-            upload.setHeader("token", token);
+            QiniuAuth auth = QiniuAuth.create(
+                "_X-HJipezNOe7hZ7Put5g7YwKrIZ7-Zvo__yH8cN",
+                "uaXmaVlFgmilj-GLGLqEb5vngfZpRneFQ--M6etL"
+            );
+            String token = auth.uploadToken(defaultBucket);
+            int indexOfDot = filePath.lastIndexOf('.');
+            String fileExt = indexOfDot > 0 ? filePath.substring(indexOfDot) : "";
+            String key = sdf.format(new Date()) + UUID.randomUUID().toString() + fileExt;
             HttpEntity entity = MultipartEntityBuilder.create()
-                .setMode(HttpMultipartMode.RFC6532)
                 .addBinaryBody("file", new File(filePath))
-                .build();
-            upload.setEntity(entity);
-            InputStream dfsInfoIn = client.execute(upload).getEntity().getContent();
-            String dfsRawResp = StreamUtils.copyToString(dfsInfoIn, StandardCharsets.UTF_8);
-            String publishUrl = JSON.parseObject(dfsRawResp).getJSONArray("data")
-                .getJSONObject(0).getString("publishUrl");
-            return new ByteArrayInputStream(publishUrl.getBytes(StandardCharsets.UTF_8));
+                .addTextBody("key", key)
+                .addTextBody("bucket", defaultBucket)
+                .addTextBody("token", token).build();
+            HttpPost post = new HttpPost(uploadUrl);
+            post.setEntity(entity);
+            HttpResponse httpResponse = client.execute(post);
+            StatusLine statusLine = httpResponse.getStatusLine();
+            if (statusLine.getStatusCode() / 100 == 2) {
+                String resp = StreamUtils.copyToString(httpResponse.getEntity().getContent(), StandardCharsets.UTF_8);
+                System.out.println(resp);
+                return new ByteArrayInputStream((domain + "/" + key).getBytes(StandardCharsets.UTF_8));
+            }
+            System.out.println(statusLine.getStatusCode());
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
         }
