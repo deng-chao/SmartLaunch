@@ -130,7 +130,7 @@ public class PluginManager {
             if (pluginMap.get(file.getName()) != null) {
                 return;
             }
-            log.info(file.getAbsolutePath());
+            log.info("read start menu plugin: " + file.getAbsolutePath());
             String displayName = file.getName().replace(".lnk", "");
             String pluginName = displayName.toLowerCase().replace(" ", "-");
 
@@ -164,7 +164,7 @@ public class PluginManager {
                 startMenu.setParameters(new String[0]);
                 startMenu.setPath(file.getAbsolutePath());
                 startMenu.setDescription(displayName);
-//                queue.offer(startMenu);
+                queue.offer(startMenu);
                 pluginMap.put(name, startMenu);
             }
         }

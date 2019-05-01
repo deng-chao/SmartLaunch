@@ -25,7 +25,7 @@ import java.text.ParseException;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Utils {
 
-    public static String getHomePath() {
+    public static String getAppHome() {
         String userHome = SystemUtils.getUserHome().getAbsolutePath();
         if (SystemUtils.IS_OS_WINDOWS) {
             return userHome.concat(Constants.HOME_WINDOWS);
@@ -48,7 +48,7 @@ public class Utils {
     }
 
     public static String getPluginPath() {
-        return getHomePath().concat("/plugins");
+        return getAppHome().concat("/plugins");
     }
 
     public static String getPluginConfigPath() {
@@ -59,8 +59,8 @@ public class Utils {
         return getPluginPath().concat("/shortcut");
     }
 
-    public static String getLogPath() {
-        return getHomePath().concat("/log");
+    public static String getLogHome() {
+        return getAppHome().concat("/log");
     }
 
     public static String getUserStartMenuPath() {

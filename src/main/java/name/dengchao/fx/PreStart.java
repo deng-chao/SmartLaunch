@@ -5,12 +5,18 @@ import name.dengchao.fx.hotkey.os.GlobalKeyListener;
 import name.dengchao.fx.hotkey.os.VoidDispatchService;
 import name.dengchao.fx.tray.Tray;
 import name.dengchao.fx.utils.Utils;
+import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 @Slf4j
@@ -21,7 +27,22 @@ public class PreStart {
         registerKey();
         Tray.createTray();
         checkDir(Utils.getPluginConfigPath(), "Plugin config");
-        checkDir(Utils.getLogPath(), "Log");
+        checkDir(Utils.getLogHome(), "Log");
+        String logConfig = Utils.getAppHome() + "/log4j2.xml";
+        File logConfigFile = new File(logConfig);
+        if (!logConfigFile.exists()) {
+            try {
+                InputStream inputStream = new ClassPathResource("log4j2-template.xml").getInputStream();
+                String cfg = Utils.streamToStr(inputStream);
+                cfg = cfg.replaceAll("\\$\\{logHome\\}", Utils.getLogHome().replaceAll("\\\\", "/"));
+                System.out.println("config: " + cfg);
+                FileUtils.write(logConfigFile, cfg, StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                log.error("failed to create log4j2.xml on path: " + logConfig);
+            }
+        }
+        LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
+        context.setConfigLocation(logConfigFile.toURI());
     }
 
     private static void checkDir(String dirPath, String name) {
@@ -34,14 +55,13 @@ public class PreStart {
 
     public static void registerKey() {
         // shutdown the logger in GlobalScreen
-        LogManager.getLogManager().reset();
+        java.util.logging.LogManager.getLogManager().reset();
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         logger.setLevel(Level.OFF);
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException ex) {
-            System.err.println("There was a problem registering the native hook.");
-            System.err.println(ex.getMessage());
+            log.error("There was a problem registering the native hook.", ex);
             System.exit(1);
         }
         GlobalScreen.setEventDispatcher(new VoidDispatchService());
