@@ -7,8 +7,8 @@ import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.google.common.collect.Lists;
 import javafx.scene.image.ImageView;
 import name.dengchao.fx.plugin.builtin.BuiltinPlugin;
-import name.dengchao.fx.plugin.windows.StartMenu;
 import name.dengchao.fx.plugin.windows.ShortcutPlugin;
+import name.dengchao.fx.plugin.windows.StartMenu;
 import name.dengchao.fx.utils.Utils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.SystemUtils;
@@ -20,7 +20,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class PluginManager {
 
@@ -29,6 +31,7 @@ public class PluginManager {
     public static Plugin getPlugin(String pluginName) {
         return pluginMap.get(pluginName);
     }
+
 
     public static void load() {
         loadBuiltinPlugin();
@@ -159,9 +162,28 @@ public class PluginManager {
                 startMenu.setParameters(new String[0]);
                 startMenu.setPath(file.getAbsolutePath());
                 startMenu.setDescription(displayName);
-                startMenu.setIcon(new ImageView(Utils.toFxImage(Utils.getBigIcon(file))));
+                queue.offer(startMenu);
                 pluginMap.put(name, startMenu);
             }
         }
+    }
+
+    private static BlockingQueue<StartMenu> queue = new LinkedBlockingDeque<>();
+
+    private static void readIconBackGround() {
+        while (true) {
+            try {
+                System.out.println("queue: " + queue.size());
+                StartMenu menu = queue.take();
+                System.out.println("reading icon for:" + menu);
+                menu.setIcon(new ImageView(Utils.toFxImage(Utils.getBigIcon(new File(menu.getPath())))));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    static {
+        (new Thread(() -> readIconBackGround())).start();
     }
 }

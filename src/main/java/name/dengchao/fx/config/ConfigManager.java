@@ -8,10 +8,7 @@ import name.dengchao.fx.plugin.builtin.Configurable;
 import name.dengchao.fx.utils.Utils;
 import org.apache.commons.io.FileUtils;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class ConfigManager {
@@ -46,8 +43,8 @@ public class ConfigManager {
             }
         }
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(f))) {
-            bw.write(JSON.toJSONString(JSON.parseObject(configJson), true));
+        try (FileOutputStream fos = new FileOutputStream(f)) {
+            fos.write(JSON.toJSONString(JSON.parseObject(configJson), true).getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             return;
         }
