@@ -1,5 +1,7 @@
 package name.dengchao.fx.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.*;
 import java.math.*;
 import java.nio.*;
@@ -8,6 +10,7 @@ import java.nio.*;
  * Structure holds all of the parsed information for a MFT Entry
  *
  */
+@Slf4j
 public class MFTEntry {
 
     // MFT entry data
@@ -144,18 +147,18 @@ public class MFTEntry {
      *
      */
     public void printMFTEntry() {
-        System.out.println("Signature\t\t\t" + this.signature);
-        System.out.println("Offset to fixup array\t\t" + this.offsetToFixupArray);
-        System.out.println("Entries in fixup array\t\t" + this.entriesInFixupArray);
-        System.out.println("$LogFile sequence number\t" + this.lsn);
-        System.out.println("Sequence Value\t\t\t" + this.sequenceValue);
-        System.out.println("Link count\t\t\t" + this.linkCount);
-        System.out.println("Offset to first attribute\t" + this.offsetToFirstAttr);
-        System.out.println("Flags\t\t\t\t" + this.flags);
-        System.out.println("Used size of the MFT entry\t" + this.usedSizeOfMFTEntry);
-        System.out.println("Allocated size of MFT entry\t" + this.allocatedSizeOfMFTEntry);
-        System.out.println("Reference to base record\t" + this.referenceToBaseRecord);
-        System.out.println("Next attribute ID\t\t" + this.nextAttrID);
+        log.info("Signature\t\t\t" + this.signature);
+        log.info("Offset to fixup array\t\t" + this.offsetToFixupArray);
+        log.info("Entries in fixup array\t\t" + this.entriesInFixupArray);
+        log.info("$LogFile sequence number\t" + this.lsn);
+        log.info("Sequence Value\t\t\t" + this.sequenceValue);
+        log.info("Link count\t\t\t" + this.linkCount);
+        log.info("Offset to first attribute\t" + this.offsetToFirstAttr);
+        log.info("Flags\t\t\t\t" + this.flags);
+        log.info("Used size of the MFT entry\t" + this.usedSizeOfMFTEntry);
+        log.info("Allocated size of MFT entry\t" + this.allocatedSizeOfMFTEntry);
+        log.info("Reference to base record\t" + this.referenceToBaseRecord);
+        log.info("Next attribute ID\t\t" + this.nextAttrID);
     }
 
     /**

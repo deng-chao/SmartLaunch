@@ -10,24 +10,26 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.Plugin;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+@Slf4j
 public class ListViewCellFactory extends ListCell<Plugin> {
 
     private ImageView defaultImage;
 
     public ListViewCellFactory() {
-        try(InputStream fis = new ClassPathResource("icon.jpg").getInputStream()) {
+        try (InputStream fis = new ClassPathResource("icon.jpg").getInputStream()) {
             Image defaultIcon = new Image(fis);
             defaultImage = new ImageView(defaultIcon);
             defaultImage.setFitHeight(30);
             defaultImage.setFitWidth(30);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("failed to read default image file.", e);
         }
     }
 

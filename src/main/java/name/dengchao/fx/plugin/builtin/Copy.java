@@ -2,6 +2,7 @@ package name.dengchao.fx.plugin.builtin;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.DisplayType;
 import org.springframework.core.io.ClassPathResource;
 
@@ -10,6 +11,7 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.io.InputStream;
 
+@Slf4j
 public class Copy extends BuiltinPlugin {
 
     private String content;
@@ -23,7 +25,7 @@ public class Copy extends BuiltinPlugin {
             iconView.setFitHeight(30);
             iconView.setFitWidth(30);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("failed to read icon image for copy.", e);
         }
     }
 

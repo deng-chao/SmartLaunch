@@ -1,5 +1,6 @@
 package name.dengchao.fx.tray;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -16,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+@Slf4j
 public class Tray {
 
     public static void createTray() {
@@ -23,7 +25,7 @@ public class Tray {
         try (InputStream inputStream = resource.getInputStream()) {
             //Check the SystemTray is supported
             if (!SystemTray.isSupported()) {
-                System.out.println("SystemTray is not supported");
+                log.info("SystemTray is not supported");
                 return;
             }
             final PopupMenu popup = new PopupMenu();
@@ -62,7 +64,7 @@ public class Tray {
             tray.add(trayIcon);
 
         } catch (AWTException e) {
-            System.out.println("TrayIcon could not be added.");
+            log.info("TrayIcon could not be added.");
         } catch (IOException e) {
             System.err.println("Failed to read icon file.");
         }

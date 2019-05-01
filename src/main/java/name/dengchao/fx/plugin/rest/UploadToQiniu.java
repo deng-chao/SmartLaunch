@@ -1,6 +1,7 @@
 package name.dengchao.fx.plugin.rest;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:src/main/java/name/dengchao/fx/plugin/rest/UploadToQiniu.java
 =======
 import name.dengchao.fx.plugin.builtin.Configurable;
@@ -17,6 +18,8 @@ import org.springframework.util.StreamUtils;
 =======
 import com.alibaba.fastjson.JSON;
 >>>>>>> 92adb10... 1. 解决 upload 插件在 interact 模式下, 取消文件选择后, 再次选择文件并上传时, 发生卡死的问题:src/main/java/name/dengchao/fx/plugin/rest/UploadToDfs.java
+=======
+>>>>>>> a283383... 使用slf4j+log4j2打印日志
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,9 +30,11 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.PublicComponent;
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
+<<<<<<< HEAD
 <<<<<<< HEAD:src/main/java/name/dengchao/fx/plugin/rest/UploadToQiniu.java
 import name.dengchao.fx.utils.QiniuAuth;
 =======
@@ -42,6 +47,18 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.util.StreamUtils;
 >>>>>>> 92adb10... 1. 解决 upload 插件在 interact 模式下, 取消文件选择后, 再次选择文件并上传时, 发生卡死的问题:src/main/java/name/dengchao/fx/plugin/rest/UploadToDfs.java
+=======
+import name.dengchao.fx.plugin.builtin.Configurable;
+import name.dengchao.fx.utils.QiniuAuth;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.util.StreamUtils;
+>>>>>>> a283383... 使用slf4j+log4j2打印日志
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -52,6 +69,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+@Slf4j
 public class UploadToQiniu implements Plugin, Configurable {
 
     private String filePath;
@@ -86,12 +104,16 @@ public class UploadToQiniu implements Plugin, Configurable {
 
     @Override
     public InputStream execute() {
+<<<<<<< HEAD
 <<<<<<< HEAD:src/main/java/name/dengchao/fx/plugin/rest/UploadToQiniu.java
 
         System.out.println("upload to dfs");
 =======
         System.out.println("upload file, Path: " + filePath);
 >>>>>>> de4bf5d... 1. 修正 upload 非交互模式下, 无法上传的问题:src/main/java/name/dengchao/fx/plugin/rest/UploadToDfs.java
+=======
+        log.info("upload file, Path: " + filePath);
+>>>>>>> a283383... 使用slf4j+log4j2打印日志
         if (filePath == null) {
             interactChooseFile();
         }
@@ -106,29 +128,36 @@ public class UploadToQiniu implements Plugin, Configurable {
         try {
             // the ak & sk is for personal use.
             QiniuAuth auth = QiniuAuth.create(
-                "_X-HJipezNOe7hZ7Put5g7YwKrIZ7-Zvo__yH8cN",
-                "uaXmaVlFgmilj-GLGLqEb5vngfZpRneFQ--M6etL"
+                    "_X-HJipezNOe7hZ7Put5g7YwKrIZ7-Zvo__yH8cN",
+                    "uaXmaVlFgmilj-GLGLqEb5vngfZpRneFQ--M6etL"
             );
             String token = auth.uploadToken(defaultBucket);
             int indexOfDot = filePath.lastIndexOf('.');
             String fileExt = indexOfDot > 0 ? filePath.substring(indexOfDot) : "";
             String key = sdf.format(new Date()) + UUID.randomUUID().toString() + fileExt;
             HttpEntity entity = MultipartEntityBuilder.create()
+<<<<<<< HEAD
 <<<<<<< HEAD:src/main/java/name/dengchao/fx/plugin/rest/UploadToQiniu.java
                 .addBinaryBody("file", new File(filePath))
                 .addTextBody("key", key)
                 .addTextBody("bucket", defaultBucket)
                 .addTextBody("token", token).build();
+=======
+                    .addBinaryBody("file", new File(filePath))
+                    .addTextBody("key", key)
+                    .addTextBody("bucket", defaultBucket)
+                    .addTextBody("token", token).build();
+>>>>>>> a283383... 使用slf4j+log4j2打印日志
             HttpPost post = new HttpPost(uploadUrl);
             post.setEntity(entity);
             HttpResponse httpResponse = client.execute(post);
             StatusLine statusLine = httpResponse.getStatusLine();
             if (statusLine.getStatusCode() / 100 == 2) {
                 String resp = StreamUtils.copyToString(httpResponse.getEntity().getContent(), StandardCharsets.UTF_8);
-                System.out.println(resp);
+                log.info(resp);
                 return new ByteArrayInputStream((domain + "/" + key).getBytes(StandardCharsets.UTF_8));
             }
-            System.out.println(statusLine.getStatusCode());
+            log.info("status code: " + statusLine.getStatusCode());
             return null;
 =======
                     .setMode(HttpMultipartMode.RFC6532)
@@ -142,7 +171,7 @@ public class UploadToQiniu implements Plugin, Configurable {
             return new ByteArrayInputStream(publishUrl.getBytes(StandardCharsets.UTF_8));
 >>>>>>> 92adb10... 1. 解决 upload 插件在 interact 模式下, 取消文件选择后, 再次选择文件并上传时, 发生卡死的问题:src/main/java/name/dengchao/fx/plugin/rest/UploadToDfs.java
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("failed upload file to qiniu.", e);
         }
         return null;
     }

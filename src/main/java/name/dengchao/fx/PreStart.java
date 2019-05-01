@@ -1,18 +1,19 @@
 package name.dengchao.fx;
 
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
-
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.hotkey.os.GlobalKeyListener;
 import name.dengchao.fx.hotkey.os.VoidDispatchService;
 import name.dengchao.fx.tray.Tray;
 import name.dengchao.fx.utils.Utils;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
 
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+@Slf4j
 // TODO should be a hook, allow developer register operation here.
 public class PreStart {
 
@@ -26,7 +27,7 @@ public class PreStart {
     private static void checkDir(String dirPath, String name) {
         File dir = new File(dirPath);
         if (!dir.exists()) {
-            System.out.println(name + " dir not exists, create it.");
+            log.info(name + " dir not exists, create it.");
             dir.mkdirs();
         }
     }

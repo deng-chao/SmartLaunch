@@ -1,17 +1,13 @@
 package name.dengchao.fx.hotkey.handler.display;
 
-import org.apache.commons.io.IOUtils;
-import org.springframework.util.StreamUtils;
-
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import name.dengchao.fx.utils.Utils;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 public class DisplayHtml extends Region implements DisplayResult {
 
@@ -37,14 +33,8 @@ public class DisplayHtml extends Region implements DisplayResult {
 
     @Override
     public void display(InputStream inputStream) {
-        try {
-            StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
-            webEngine.loadContent("<html><body><b>JavaFX</b></body></html>");
-            getChildren().add(browser);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            IOUtils.closeQuietly(inputStream);
-        }
+        String html = Utils.streamToStr(inputStream);
+        webEngine.loadContent(html);
+        getChildren().add(browser);
     }
 }

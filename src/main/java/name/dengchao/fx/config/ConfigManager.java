@@ -2,24 +2,23 @@ package name.dengchao.fx.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.plugin.PluginManager;
 import name.dengchao.fx.plugin.builtin.Configurable;
 import name.dengchao.fx.utils.Utils;
 import org.apache.commons.io.FileUtils;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class ConfigManager {
 
     public static JSONObject getConfig(String pluginName) {
         Plugin plugin = PluginManager.getPlugin(pluginName);
         if (plugin == null || !(plugin instanceof Configurable)) {
-            System.out.println("plugin is not found or not configurable");
+            log.info("plugin is not found or not configurable");
             return null;
         }
         String configPath = configFilePath(pluginName);
@@ -41,13 +40,13 @@ public class ConfigManager {
             try {
                 f.createNewFile();
             } catch (IOException e) {
-                System.out.println("failed to create config file: " + f.getAbsolutePath());
+                log.info("failed to create config file: " + f.getAbsolutePath());
                 return;
             }
         }
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(f))) {
-            bw.write(JSON.toJSONString(JSON.parseObject(configJson), true));
+        try (FileOutputStream fos = new FileOutputStream(f)) {
+            fos.write(JSON.toJSONString(JSON.parseObject(configJson), true).getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             return;
         }

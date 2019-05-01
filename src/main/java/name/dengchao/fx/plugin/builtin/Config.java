@@ -2,6 +2,7 @@ package name.dengchao.fx.plugin.builtin;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.config.ConfigWindow;
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class Config extends BuiltinPlugin {
 
     private ImageView iconView;
@@ -26,7 +28,7 @@ public class Config extends BuiltinPlugin {
             iconView.setFitHeight(30);
             iconView.setFitWidth(30);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("failed to read icon file for config.", e);
         }
     }
 
@@ -59,19 +61,19 @@ public class Config extends BuiltinPlugin {
 
     @Override
     public InputStream execute() {
-        System.out.println(pluginName);
-        System.out.println(Utils.getPluginConfigPath());
+        log.info(pluginName);
+        log.info(Utils.getPluginConfigPath());
         if (pluginName == null) {
             Utils.openDir(Utils.getPluginConfigPath());
             return null;
         }
         Plugin plugin = PluginManager.getPlugin(pluginName);
         if (plugin == null) {
-            System.out.println("no plugin named " + pluginName);
+            log.info("no plugin named " + pluginName);
             return null;
         }
         if (!(plugin instanceof Configurable)) {
-            System.out.println("plugin [" + pluginName + "] is not configurable");
+            log.info("plugin [" + pluginName + "] is not configurable");
             return null;
         }
         Configurable configurable = (Configurable) plugin;
