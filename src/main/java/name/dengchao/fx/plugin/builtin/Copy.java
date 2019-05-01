@@ -1,14 +1,31 @@
 package name.dengchao.fx.plugin.builtin;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import name.dengchao.fx.plugin.DisplayType;
+import org.springframework.core.io.ClassPathResource;
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class Copy extends BuiltinPlugin {
 
     private String content;
+
+    private ImageView iconView;
+
+    public Copy() {
+        try (InputStream fis = new ClassPathResource("copy.png").getInputStream()) {
+            javafx.scene.image.Image defaultIcon = new Image(fis);
+            iconView = new ImageView(defaultIcon);
+            iconView.setFitHeight(30);
+            iconView.setFitWidth(30);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public String getName() {
@@ -17,12 +34,17 @@ public class Copy extends BuiltinPlugin {
 
     @Override
     public String getDescription() {
-        return "cp input";
+        return "CP input";
     }
 
     @Override
     public DisplayType getDisplayType() {
         return DisplayType.NONE;
+    }
+
+    @Override
+    public ImageView getIcon() {
+        return iconView;
     }
 
     @Override

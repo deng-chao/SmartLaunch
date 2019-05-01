@@ -1,19 +1,17 @@
 package name.dengchao.fx.plugin.builtin;
 
+import com.alibaba.fastjson.JSONObject;
+import name.dengchao.fx.config.ConfigManager;
 import name.dengchao.fx.plugin.DisplayType;
+import name.dengchao.fx.utils.Utils;
 
 import javax.xml.bind.DatatypeConverter;
-
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -39,6 +37,13 @@ public class DecodeBase64Image extends BuiltinPlugin {
 
     }
 
+    @Override
+    public JSONObject defaultConfig() {
+        JSONObject config = new JSONObject();
+        config.put("saveTo", Utils.getHomePath() + "/Pictures/smart-launch");
+        return config;
+    }
+
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 
     @Override
@@ -53,9 +58,14 @@ public class DecodeBase64Image extends BuiltinPlugin {
                 text = text.substring(0, text.indexOf('&'));
                 System.out.println(text);
                 byte[] output = DatatypeConverter.parseBase64Binary(text);
-                String outputPath = "F:\\dengchao\\Desktop\\壁纸\\" + sdf.format(new Date()) + ".jpg";
-                System.out.println(outputPath);
+
+                String saveTo = ConfigManager.getConfig(getName()).getString("saveTo");
+                String outputPath = saveTo + "\\" + sdf.format(new Date()) + ".jpg";
+                System.out.println("outputPath:" + outputPath);
                 File outputFile = new File(outputPath);
+                if (!outputFile.getParentFile().exists()) {
+                    outputFile.getParentFile().mkdirs();
+                }
                 if (!outputFile.exists()) {
                     outputFile.createNewFile();
                 }

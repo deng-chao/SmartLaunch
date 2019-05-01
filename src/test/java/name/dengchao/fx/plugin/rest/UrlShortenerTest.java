@@ -1,7 +1,7 @@
 package name.dengchao.fx.plugin.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.springframework.util.StreamUtils;
 
@@ -16,10 +16,8 @@ public class UrlShortenerTest {
         shortener.setParameters(new String[]{"http://www.baidu.com"});
         InputStream inputStream = shortener.execute();
         String content = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
-        ObjectMapper mapper = new ObjectMapper();
-        Object object = mapper.readValue(content, Object.class);
-        String indented = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
-        System.out.println(indented);
+        JSONObject object = JSON.parseObject(content);
+        System.out.println(object);
         System.out.println(content);
     }
 }

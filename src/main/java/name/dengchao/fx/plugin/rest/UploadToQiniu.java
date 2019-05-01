@@ -1,5 +1,6 @@
 package name.dengchao.fx.plugin.rest;
 
+import name.dengchao.fx.plugin.builtin.Configurable;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -38,7 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-public class UploadToQiniu implements Plugin {
+public class UploadToQiniu implements Plugin, Configurable {
 
     private String filePath;
 
