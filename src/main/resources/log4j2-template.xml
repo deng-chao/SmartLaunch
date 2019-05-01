@@ -4,8 +4,8 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <RollingFile name="info" fileName="${ctx:logHome}/info.log"
-                     filePattern="${ctx:logHome}/info-%d{yyyy-MM-dd HH}.log">
+        <RollingFile name="info" fileName="${logHome}/info.log"
+                     filePattern="${logHome}/info-%d{yyyy-MM-dd HH}.log">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="250 MB"/>
@@ -15,7 +15,7 @@
     <Loggers>
         <Root level="info">
             <AppenderRef ref="info"/>
-            <!--<AppenderRef ref="Console"/>-->
+            <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
 </Configuration>
