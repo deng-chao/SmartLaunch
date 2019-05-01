@@ -1,7 +1,10 @@
 package name.dengchao.fx.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 
+@Slf4j
 public class FileReader {
 
     /**
@@ -21,7 +24,7 @@ public class FileReader {
             raf.readFully(b); // read in the bytes from where the file pointer is
         }
         catch(IOException ioe) {
-            System.out.println("Error: " + ioe.toString());
+            log.info("Error: " + ioe.toString());
         }
         return b; // return the bytes read in
     }

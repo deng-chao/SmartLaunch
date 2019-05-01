@@ -2,6 +2,7 @@ package name.dengchao.fx.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.plugin.PluginManager;
 import name.dengchao.fx.plugin.builtin.Configurable;
@@ -11,12 +12,13 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class ConfigManager {
 
     public static JSONObject getConfig(String pluginName) {
         Plugin plugin = PluginManager.getPlugin(pluginName);
         if (plugin == null || !(plugin instanceof Configurable)) {
-            System.out.println("plugin is not found or not configurable");
+            log.info("plugin is not found or not configurable");
             return null;
         }
         String configPath = configFilePath(pluginName);
@@ -38,7 +40,7 @@ public class ConfigManager {
             try {
                 f.createNewFile();
             } catch (IOException e) {
-                System.out.println("failed to create config file: " + f.getAbsolutePath());
+                log.info("failed to create config file: " + f.getAbsolutePath());
                 return;
             }
         }

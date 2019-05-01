@@ -2,6 +2,7 @@ package name.dengchao.fx.utils;
 
 import com.alibaba.fastjson.JSON;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.entity.ContentType;
 import org.springframework.util.StringUtils;
 
@@ -13,6 +14,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 
+@Slf4j
 public class QiniuAuth {
 
     /**
@@ -86,7 +88,6 @@ public class QiniuAuth {
             mac = javax.crypto.Mac.getInstance("HmacSHA1");
             mac.init(secretKey);
         } catch (GeneralSecurityException e) {
-            e.printStackTrace();
             throw new IllegalArgumentException(e);
         }
         return mac;
@@ -298,7 +299,7 @@ public class QiniuAuth {
             }
         }
 
-        System.out.println(sb.toString());
+        log.info(sb.toString());
         mac.update(utf8Bytes(sb.toString()));
 
         String digest = encodeToString(mac.doFinal());

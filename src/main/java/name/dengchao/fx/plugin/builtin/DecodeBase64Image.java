@@ -1,9 +1,10 @@
 package name.dengchao.fx.plugin.builtin;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.config.ConfigManager;
 import name.dengchao.fx.plugin.DisplayType;
-import name.dengchao.fx.utils.Utils;
+import org.apache.commons.lang.SystemUtils;
 
 import javax.xml.bind.DatatypeConverter;
 import java.awt.*;
@@ -15,6 +16,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Slf4j
 public class DecodeBase64Image extends BuiltinPlugin {
 
     @Override
@@ -40,7 +42,7 @@ public class DecodeBase64Image extends BuiltinPlugin {
     @Override
     public JSONObject defaultConfig() {
         JSONObject config = new JSONObject();
-        config.put("saveTo", Utils.getHomePath() + "/Pictures/smart-launch");
+        config.put("saveTo", SystemUtils.getUserHome() + "/Pictures/smart-launch");
         return config;
     }
 
@@ -56,12 +58,12 @@ public class DecodeBase64Image extends BuiltinPlugin {
                 text = text.substring(text.indexOf("base64"));
                 text = text.substring(text.indexOf(','));
                 text = text.substring(0, text.indexOf('&'));
-                System.out.println(text);
+                log.info(text);
                 byte[] output = DatatypeConverter.parseBase64Binary(text);
 
                 String saveTo = ConfigManager.getConfig(getName()).getString("saveTo");
                 String outputPath = saveTo + "\\" + sdf.format(new Date()) + ".jpg";
-                System.out.println("outputPath:" + outputPath);
+                log.info("outputPath:" + outputPath);
                 File outputFile = new File(outputPath);
                 if (!outputFile.getParentFile().exists()) {
                     outputFile.getParentFile().mkdirs();
@@ -72,10 +74,8 @@ public class DecodeBase64Image extends BuiltinPlugin {
                 try (OutputStream os = new FileOutputStream(outputPath)) {
                     os.write(output);
                 }
-            } catch (UnsupportedFlavorException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (UnsupportedFlavorException | IOException e) {
+                log.error("failed to decode and save image.", e);
             }
         }
         return null;

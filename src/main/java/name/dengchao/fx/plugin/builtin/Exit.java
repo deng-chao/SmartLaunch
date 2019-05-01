@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.DisplayType;
 import org.springframework.core.io.ClassPathResource;
 
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Data
+@Slf4j
 @EqualsAndHashCode(callSuper = false)
 public class Exit extends BuiltinPlugin {
 
@@ -25,7 +27,7 @@ public class Exit extends BuiltinPlugin {
             iconView.setFitHeight(30);
             iconView.setFitWidth(30);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("failed to read icon image for exit.", e);
         }
     }
 

@@ -1,10 +1,13 @@
 package name.dengchao.fx.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.LinkedList;
 import java.util.List;
 
+@Slf4j
 public class NTFSParser {
 
     private String ntImageFile;
@@ -126,17 +129,17 @@ public class NTFSParser {
      *
      */
     public void printBootSector() {
-        System.out.println("Bytes per sector\t" + this.bytesPerSector);
-        System.out.println("Size of MFT entry\t" + this.sizeOfMFTEntry);
-        System.out.println("Size of index record\t" + this.sizeOfIndexRecord);
-        System.out.println("Sectors per cluster\t" + this.sectorsPerCluster);
-        System.out.println("\tMFT start\t" + this.MFTStart);
-        System.out.println("\tSerial number\t" + this.serialNumber);
-        System.out.println("Signature(0xAA55)\t" + this.signature);
-        System.out.println("\tTotal sectors\t" + this.totalSectors);
-        System.out.println("MFT Mirror start\t" + this.MFTMirrorStart);
-        System.out.println("\tOEM\t\t" + this.oem);
-        System.out.println("Media descriptor\t" + this.mediaDescriptor);
+        log.info("Bytes per sector\t" + this.bytesPerSector);
+        log.info("Size of MFT entry\t" + this.sizeOfMFTEntry);
+        log.info("Size of index record\t" + this.sizeOfIndexRecord);
+        log.info("Sectors per cluster\t" + this.sectorsPerCluster);
+        log.info("\tMFT start\t" + this.MFTStart);
+        log.info("\tSerial number\t" + this.serialNumber);
+        log.info("Signature(0xAA55)\t" + this.signature);
+        log.info("\tTotal sectors\t" + this.totalSectors);
+        log.info("MFT Mirror start\t" + this.MFTMirrorStart);
+        log.info("\tOEM\t\t" + this.oem);
+        log.info("Media descriptor\t" + this.mediaDescriptor);
     }
 
     /**
@@ -185,10 +188,10 @@ public class NTFSParser {
      *
      */
     public static void instructions() {
-        System.out.println("To run program:");
-        System.out.println("java NTFSParser <nt_image_file> -o <value>");
-        System.out.println("java NTFSParser -h");
-        System.out.println("-o Offset (Optional, default is 0)");
-        System.out.println("-h Help");
+        log.info("To run program:");
+        log.info("java NTFSParser <nt_image_file> -o <value>");
+        log.info("java NTFSParser -h");
+        log.info("-o Offset (Optional, default is 0)");
+        log.info("-h Help");
     }
 }

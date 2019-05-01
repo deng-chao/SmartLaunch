@@ -5,6 +5,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.SystemUtils;
 import org.springframework.util.StreamUtils;
 import sun.awt.shell.ShellFolder;
@@ -20,6 +21,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Utils {
 
@@ -40,7 +42,7 @@ public class Utils {
         try {
             return StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("failed to convert InputStream to String.", e);
         }
         return null;
     }
@@ -78,9 +80,9 @@ public class Utils {
             WindowsShortcut shortcut = new WindowsShortcut(file);
             return shortcut.getRealFilename().endsWith(".exe");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("failed to read shortcut file: " + file.getAbsolutePath(), e);
         } catch (ParseException e) {
-            e.printStackTrace();
+            log.error("failed to parse shortcut file: " + file.getAbsolutePath(), e);
         }
         return false;
     }
@@ -133,7 +135,7 @@ public class Utils {
             ShellFolder sf = ShellFolder.getShellFolder(file);
             return new ImageIcon(sf.getIcon(true));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            log.error("failed to read big icon, file not exits: " + file.getAbsolutePath(), e);
             return null;
         }
     }
@@ -148,7 +150,7 @@ public class Utils {
             cmd[4] = path;
             Runtime.getRuntime().exec(cmd);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("failed to open dir: " + path, e);
         }
     }
 }

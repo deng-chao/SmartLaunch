@@ -1,8 +1,11 @@
 package name.dengchao.fx.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.HashMap;
 import java.util.Set;
 
+@Slf4j
 public class Attribute {
 
     int offsetToAttributeFromEntryStart = 0;
@@ -32,13 +35,13 @@ public class Attribute {
      *
      */
     public void printHeaderInformation() {
-        System.out.println("Attribute Type Identifier\t\t" + this.attributeTypeIdentifier);
-        System.out.println("Length of attribute\t\t" + this.lenOfAttr);
-        System.out.println("Non-resident flag\t\t" + this.nonResisdentFlag);
-        System.out.println("Length of name\t\t" + this.lenOfName);
-        System.out.println("Offset to name\t\t" + this.offsetToName);
-        System.out.println("Flags\t\t\t" + this.flags);
-        System.out.println("Attribute Identifier\t\t" + this.attrIdentifier);
+        log.info("Attribute Type Identifier\t\t" + this.attributeTypeIdentifier);
+        log.info("Length of attribute\t\t" + this.lenOfAttr);
+        log.info("Non-resident flag\t\t" + this.nonResisdentFlag);
+        log.info("Length of name\t\t" + this.lenOfName);
+        log.info("Offset to name\t\t" + this.offsetToName);
+        log.info("Flags\t\t\t" + this.flags);
+        log.info("Attribute Identifier\t\t" + this.attrIdentifier);
     }
 
     /**
@@ -48,7 +51,7 @@ public class Attribute {
     public void printAttributeValues() {
         Set<String> keys = this.values.keySet();
         for(String key : keys) {
-            System.out.println(key + "\t\t" + this.values.get(key));
+            log.info(key + "\t\t" + this.values.get(key));
         }
     }
 }

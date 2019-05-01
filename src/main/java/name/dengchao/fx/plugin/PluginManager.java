@@ -6,6 +6,7 @@ import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.google.common.collect.Lists;
 import javafx.scene.image.ImageView;
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.builtin.BuiltinPlugin;
 import name.dengchao.fx.plugin.windows.ShortcutPlugin;
 import name.dengchao.fx.plugin.windows.StartMenu;
@@ -24,6 +25,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingDeque;
 
+@Slf4j
 public class PluginManager {
 
     public static Map<String, Plugin> pluginMap = new ConcurrentHashMap<>();
@@ -70,7 +72,7 @@ public class PluginManager {
     public static void loadShortcutPlugins() {
         File file = new File(Utils.getShortcutPluginPath());
         if (!file.isDirectory()) {
-            System.out.println("plugin should be a directory");
+            log.info("plugin should be a directory");
             return;
         }
         File[] files = file.listFiles();
@@ -80,16 +82,16 @@ public class PluginManager {
                 ShortcutPlugin plugin = JSON.parseObject(configStr, ShortcutPlugin.class);
                 pluginMap.put(plugin.getName(), plugin);
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("failed to read shortcut plugin file.", e);
             }
         }
     }
 
     public static void loadStartMenu(String startMenuPath) {
         File dir = new File(startMenuPath);
-        System.out.println(dir.getAbsolutePath());
+        log.info(dir.getAbsolutePath());
         if (!dir.exists()) {
-            System.out.println("start menu folder incorrect");
+            log.info("start menu folder incorrect");
             return;
         }
         loadStartMenuItem(dir);
@@ -128,7 +130,7 @@ public class PluginManager {
             if (pluginMap.get(file.getName()) != null) {
                 return;
             }
-            System.out.println(file.getAbsolutePath());
+            log.info(file.getAbsolutePath());
             String displayName = file.getName().replace(".lnk", "");
             String pluginName = displayName.toLowerCase().replace(" ", "-");
 
@@ -142,7 +144,7 @@ public class PluginManager {
                         firstLetter.append(pinyin.substring(0, 1));
                         fullLetter.append(pinyin);
                     } catch (PinyinException e) {
-                        e.printStackTrace();
+                        log.error("failed convert pinyin.", e);
                     }
                 } else {
                     firstLetter.append(aChar);
@@ -162,7 +164,7 @@ public class PluginManager {
                 startMenu.setParameters(new String[0]);
                 startMenu.setPath(file.getAbsolutePath());
                 startMenu.setDescription(displayName);
-                queue.offer(startMenu);
+//                queue.offer(startMenu);
                 pluginMap.put(name, startMenu);
             }
         }
@@ -172,13 +174,15 @@ public class PluginManager {
 
     private static void readIconBackGround() {
         while (true) {
+            StartMenu menu = null;
             try {
-                System.out.println("queue: " + queue.size());
-                StartMenu menu = queue.take();
-                System.out.println("reading icon for:" + menu);
+                menu = queue.take();
+                log.info("reading icon for:" + menu);
                 menu.setIcon(new ImageView(Utils.toFxImage(Utils.getBigIcon(new File(menu.getPath())))));
             } catch (Exception e) {
-                e.printStackTrace();
+                if (menu != null) {
+                    log.error("failed to read icon for file: " + menu.getPath());
+                }
             }
         }
     }

@@ -1,6 +1,21 @@
 package name.dengchao.fx.plugin.rest;
 
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
+import name.dengchao.fx.PublicComponent;
+import name.dengchao.fx.plugin.DisplayType;
+import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.plugin.builtin.Configurable;
+import name.dengchao.fx.utils.QiniuAuth;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -9,26 +24,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.util.StreamUtils;
-
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import name.dengchao.fx.PublicComponent;
-import name.dengchao.fx.plugin.DisplayType;
-import name.dengchao.fx.plugin.Plugin;
-import name.dengchao.fx.utils.QiniuAuth;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -39,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+@Slf4j
 public class UploadToQiniu implements Plugin, Configurable {
 
     private String filePath;
@@ -73,7 +69,7 @@ public class UploadToQiniu implements Plugin, Configurable {
 
     @Override
     public InputStream execute() {
-        System.out.println("upload file, Path: " + filePath);
+        log.info("upload file, Path: " + filePath);
         if (filePath == null) {
             interactChooseFile();
         }
@@ -83,31 +79,31 @@ public class UploadToQiniu implements Plugin, Configurable {
         try {
             // the ak & sk is for public use.
             QiniuAuth auth = QiniuAuth.create(
-                "_X-HJipezNOe7hZ7Put5g7YwKrIZ7-Zvo__yH8cN",
-                "uaXmaVlFgmilj-GLGLqEb5vngfZpRneFQ--M6etL"
+                    "_X-HJipezNOe7hZ7Put5g7YwKrIZ7-Zvo__yH8cN",
+                    "uaXmaVlFgmilj-GLGLqEb5vngfZpRneFQ--M6etL"
             );
             String token = auth.uploadToken(defaultBucket);
             int indexOfDot = filePath.lastIndexOf('.');
             String fileExt = indexOfDot > 0 ? filePath.substring(indexOfDot) : "";
             String key = sdf.format(new Date()) + UUID.randomUUID().toString() + fileExt;
             HttpEntity entity = MultipartEntityBuilder.create()
-                .addBinaryBody("file", new File(filePath))
-                .addTextBody("key", key)
-                .addTextBody("bucket", defaultBucket)
-                .addTextBody("token", token).build();
+                    .addBinaryBody("file", new File(filePath))
+                    .addTextBody("key", key)
+                    .addTextBody("bucket", defaultBucket)
+                    .addTextBody("token", token).build();
             HttpPost post = new HttpPost(uploadUrl);
             post.setEntity(entity);
             HttpResponse httpResponse = client.execute(post);
             StatusLine statusLine = httpResponse.getStatusLine();
             if (statusLine.getStatusCode() / 100 == 2) {
                 String resp = StreamUtils.copyToString(httpResponse.getEntity().getContent(), StandardCharsets.UTF_8);
-                System.out.println(resp);
+                log.info(resp);
                 return new ByteArrayInputStream((domain + "/" + key).getBytes(StandardCharsets.UTF_8));
             }
-            System.out.println(statusLine.getStatusCode());
+            log.info("status code: " + statusLine.getStatusCode());
             return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("failed upload file to qiniu.", e);
         }
         return null;
     }
@@ -121,7 +117,7 @@ public class UploadToQiniu implements Plugin, Configurable {
         Button buttonLoad = new Button("Choose File");
         Label txt = new Label("No file selected");
         txt.setBorder(
-            new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
+                new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
         txt.setPrefWidth(400);
         txt.setFont(new Font(15));
         txt.setPadding(new Insets(1, 5, 1, 5));

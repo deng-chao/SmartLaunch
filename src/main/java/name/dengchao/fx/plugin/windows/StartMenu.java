@@ -1,17 +1,17 @@
 package name.dengchao.fx.plugin.windows;
 
-import lombok.Data;
-
-import org.springframework.util.ObjectUtils;
-
 import javafx.scene.image.ImageView;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
+import org.springframework.util.ObjectUtils;
 
 import java.io.InputStream;
 import java.util.Arrays;
 
 @Data
+@Slf4j
 public class StartMenu implements Plugin {
 
     private String name;
@@ -24,10 +24,10 @@ public class StartMenu implements Plugin {
     @Override
     public InputStream execute() {
         try {
-            System.out.println(path + ", " + Arrays.asList(parameters));
+            log.info(path + ", " + Arrays.asList(parameters));
             Runtime.getRuntime().exec("cmd /c  \"" + path + "\"");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("failed to execute start menu plugin: " + path, e);
         }
         return null;
     }

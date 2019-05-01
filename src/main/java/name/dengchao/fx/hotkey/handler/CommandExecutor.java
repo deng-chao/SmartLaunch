@@ -1,12 +1,12 @@
 package name.dengchao.fx.hotkey.handler;
 
 import com.google.common.collect.Lists;
-
 import javafx.event.Event;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.PublicComponent;
 import name.dengchao.fx.hotkey.handler.display.DisplayJson;
 import name.dengchao.fx.hotkey.handler.display.DisplayText;
@@ -15,11 +15,13 @@ import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.plugin.PluginManager;
 import name.dengchao.fx.utils.Utils;
+import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 public class CommandExecutor {
 
     public CommandExecutor() {
@@ -44,16 +46,16 @@ public class CommandExecutor {
             // no plugin match
             if (plugin == null) {
                 // TODO give some tips
-                System.out.println("no plugin match for command: " + commandParts[0]);
+                log.info("no plugin match for command: " + commandParts[0]);
                 event.consume();
                 return;
             }
             boolean overwriteParams = commandParts.length > 1;
-            System.out.println("commandParts: "  + Arrays.toString(commandParts));
+            log.info("commandParts: " + Arrays.toString(commandParts));
             String[] params = new String[commandParts.length - 1];
             if (overwriteParams) {
                 System.arraycopy(commandParts, 1, params, 0, params.length);
-                System.out.println("params: " + Arrays.toString(params));
+                log.info("params: " + Arrays.toString(params));
                 plugin.setParameters(params);
             }
             activePlugins.add(plugin);
@@ -80,20 +82,26 @@ public class CommandExecutor {
     }
 
     private void display(DisplayType type, InputStream inputStream) {
-        switch (type) {
-            case NONE:
-                primaryStage.hide();
-                break;
-            case JSON:
-                new DisplayJson().display(inputStream);
-                break;
-            case NUM:
-                new DisplayTooltip().display(inputStream);
-                break;
-            case TEXT:
-                new DisplayText().display(inputStream);
-                break;
-            default:
+        try {
+            switch (type) {
+                case NONE:
+                    primaryStage.hide();
+                    break;
+                case JSON:
+                    new DisplayJson().display(inputStream);
+                    break;
+                case NUM:
+                    new DisplayTooltip().display(inputStream);
+                    break;
+                case TEXT:
+                    new DisplayText().display(inputStream);
+                    break;
+                default:
+            }
+        } catch (Exception e) {
+            log.error("error occur when display results.", e);
+        } finally {
+            IOUtils.closeQuietly(inputStream);
         }
     }
 }
