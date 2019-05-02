@@ -38,7 +38,7 @@ public class Config extends BuiltinPlugin {
 
     @Override
     public String getDescription() {
-        return "config given plugin";
+        return "Config given plugin";
     }
 
     @Override

@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -39,6 +41,19 @@ public class UploadToQiniu implements Plugin, Configurable {
 
     private String filePath;
 
+    private ImageView iconView;
+
+    public UploadToQiniu() {
+        try (InputStream fis = getClass().getClassLoader().getResourceAsStream("upload.png")) {
+            Image defaultIcon = new Image(fis);
+            iconView = new ImageView(defaultIcon);
+            iconView.setFitHeight(30);
+            iconView.setFitWidth(30);
+        } catch (IOException e) {
+            log.error("failed to read icon image for upload.", e);
+        }
+    }
+
     @Override
     public String getName() {
         return "upload";
@@ -46,7 +61,7 @@ public class UploadToQiniu implements Plugin, Configurable {
 
     @Override
     public String getDescription() {
-        return "upload file to dfs, return file access url";
+        return "UPLOAD file to QINIU, return access url";
     }
 
     @Override
@@ -57,6 +72,11 @@ public class UploadToQiniu implements Plugin, Configurable {
     @Override
     public void setParameters(String... parameters) {
         this.filePath = parameters[0];
+    }
+
+    @Override
+    public ImageView getIcon() {
+        return iconView;
     }
 
     private HttpClient client = HttpClientBuilder.create().build();
