@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import lombok.extern.slf4j.Slf4j;
@@ -36,32 +37,26 @@ public class ListViewCellFactory extends ListCell<Plugin> {
     protected void updateItem(Plugin item, boolean empty) {
         super.updateItem(item, empty);
         setPrefHeight(55.0);
-        setPadding(new Insets(0, 0, 0, 17));
+        setPadding(new Insets(0));
         if (empty) {
             setGraphic(null);
         } else {
 
             HBox hBox = new HBox();
-//            Text name = new Text();
             Text desc = new Text();
-            desc.setFont(Font.font("Courier New", 20));
+            desc.setFont(Font.font(20));
             desc.setText(item.getDescription());
-//            name.setFont(Font.font("Courier New", 12));
-//            name.setText(item.getName());
+            desc.setFill(Color.WHITE);
 
             VBox vBox = new VBox();
             vBox.getChildren().add(desc);
-//            vBox.getChildren().add(name);
             vBox.setPadding(new Insets(17, 0, 0, 10));
-
 
             ImageView imageView = item.getIcon() == null ? defaultImage : item.getIcon();
             imageView.setFitHeight(25);
             imageView.setFitWidth(25);
             if (hBox.getChildren().size() == 0) {
                 Label label = new Label("", imageView);
-                label.setFont(Font.font("Courier New", 22));
-
                 hBox.getChildren().add(label);
                 hBox.getChildren().add(vBox);
                 hBox.setAlignment(Pos.CENTER_LEFT);

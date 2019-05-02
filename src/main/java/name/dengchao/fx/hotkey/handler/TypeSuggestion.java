@@ -37,6 +37,7 @@ public class TypeSuggestion {
     }
 
     private void suggestCommand(String input) {
+        PublicComponent.getListView().setVisible(true);
         Set<String> pluginNames = PluginManager.pluginMap.keySet();
         List<Plugin> candidates = new ArrayList<>();
         for (String pluginName : pluginNames) {
@@ -49,15 +50,12 @@ public class TypeSuggestion {
         }
         Collections.sort(candidates, Comparator.comparingInt(e -> e.getName().length()));
         if (!CollectionUtils.isEmpty(candidates)) {
-            PublicComponent.getListView().setVisible(true);
             ObservableList<Plugin> items = FXCollections.observableArrayList(candidates);
             PublicComponent.getListView().setItems(items);
         } else {
             if (input.contains(" ")) {
-                PublicComponent.getListView().setVisible(true);
                 PublicComponent.getListView().getItems().clear();
             } else {
-                PublicComponent.getListView().setVisible(true);
                 PublicComponent.getListView().getItems().clear();
             }
         }
