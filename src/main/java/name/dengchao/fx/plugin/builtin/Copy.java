@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.DisplayType;
-import org.springframework.core.io.ClassPathResource;
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -19,7 +18,7 @@ public class Copy extends BuiltinPlugin {
     private ImageView iconView;
 
     public Copy() {
-        try (InputStream fis = new ClassPathResource("copy.png").getInputStream()) {
+        try (InputStream fis = this.getClass().getClassLoader().getResourceAsStream("copy.png")) {
             javafx.scene.image.Image defaultIcon = new Image(fis);
             iconView = new ImageView(defaultIcon);
             iconView.setFitHeight(30);

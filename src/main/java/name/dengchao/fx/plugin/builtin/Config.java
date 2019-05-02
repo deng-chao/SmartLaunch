@@ -8,7 +8,6 @@ import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.plugin.PluginManager;
 import name.dengchao.fx.utils.Utils;
-import org.springframework.core.io.ClassPathResource;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class Config extends BuiltinPlugin {
     private String pluginName;
 
     public Config() {
-        try (InputStream fis = new ClassPathResource("config.png").getInputStream()) {
+        try (InputStream fis = Config.class.getClassLoader().getResourceAsStream("config.png")) {
             Image defaultIcon = new Image(fis);
             iconView = new ImageView(defaultIcon);
             iconView.setFitHeight(30);

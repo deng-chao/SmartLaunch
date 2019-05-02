@@ -2,10 +2,8 @@ package name.dengchao.fx.plugin.rest;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import org.apache.http.client.fluent.Request;
-
 import name.dengchao.fx.plugin.DisplayType;
+import org.apache.http.client.methods.HttpPost;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -28,9 +26,9 @@ public class UrlShortener extends RestPlugin {
     }
 
     @Override
-    protected Request getRequest() {
+    protected HttpPost getRequest() {
         String requestUrl = restApi;
         requestUrl = appendParameter(requestUrl);
-        return Request.Post(requestUrl);
+        return new HttpPost(requestUrl);
     }
 }

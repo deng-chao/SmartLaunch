@@ -1,8 +1,6 @@
 package name.dengchao.fx.tray;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 import javax.imageio.ImageIO;
 
@@ -21,8 +19,7 @@ import java.io.InputStream;
 public class Tray {
 
     public static void createTray() {
-        Resource resource = new ClassPathResource("icon.jpg");
-        try (InputStream inputStream = resource.getInputStream()) {
+        try (InputStream inputStream = Tray.class.getClassLoader().getResourceAsStream("icon.jpg")) {
             //Check the SystemTray is supported
             if (!SystemTray.isSupported()) {
                 log.info("SystemTray is not supported");

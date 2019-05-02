@@ -9,8 +9,8 @@ import lombok.Data;
 import name.dengchao.fx.PublicComponent;
 import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.plugin.PluginManager;
+import name.dengchao.fx.utils.CollectionUtils;
 import name.dengchao.fx.utils.Utils;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 

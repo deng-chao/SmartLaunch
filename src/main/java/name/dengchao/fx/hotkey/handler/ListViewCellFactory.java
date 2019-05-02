@@ -12,7 +12,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.Plugin;
-import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +22,7 @@ public class ListViewCellFactory extends ListCell<Plugin> {
     private ImageView defaultImage;
 
     public ListViewCellFactory() {
-        try (InputStream fis = new ClassPathResource("icon.jpg").getInputStream()) {
+        try (InputStream fis = this.getClass().getClassLoader().getResourceAsStream("icon.jpg")) {
             Image defaultIcon = new Image(fis);
             defaultImage = new ImageView(defaultIcon);
             defaultImage.setFitHeight(30);

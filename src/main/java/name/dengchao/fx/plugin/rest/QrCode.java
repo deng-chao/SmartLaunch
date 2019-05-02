@@ -2,10 +2,8 @@ package name.dengchao.fx.plugin.rest;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import org.apache.http.client.fluent.Request;
-
 import name.dengchao.fx.plugin.DisplayType;
+import org.apache.http.client.methods.HttpPost;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,8 +33,8 @@ public class QrCode extends RestPlugin {
     }
 
     @Override
-    protected Request getRequest() {
-        return Request.Post(appendParameter(restApi));
+    protected HttpPost getRequest() {
+        return new HttpPost(restApi);
     }
 
     @Override

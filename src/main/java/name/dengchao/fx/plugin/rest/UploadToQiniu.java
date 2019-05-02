@@ -16,6 +16,7 @@ import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.plugin.builtin.Configurable;
 import name.dengchao.fx.utils.QiniuAuth;
+import name.dengchao.fx.utils.StreamUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -23,7 +24,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.springframework.util.StreamUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
