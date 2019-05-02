@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import name.dengchao.fx.hotkey.InputEventHandler;
@@ -31,32 +30,24 @@ public class SmartLaunch extends Application {
 
         PublicComponent.setPrimaryStage(primaryStage);
 
+        Pane pane = new Pane();
+        pane.setId("main-pane");
+
+        TextField textField = createDefaultTextField();
+        pane.getChildren().add(textField);
+        PublicComponent.setTextField(textField);
+
         ListView<Plugin> listView = new ListView();
         listView.setCellFactory(lst -> new ListViewCellFactory());
         listView.setLayoutY(Constants.INTERACT_WINDOW_Y);
         listView.setLayoutX(Constants.INTERACT_WINDOW_X);
-        listView.setMaxWidth(Constants.PREF_WIDTH);
-        listView.setPrefWidth(Constants.PREF_WIDTH);
-        listView.setMaxHeight(Constants.INTERACT_WINDOW_HEIGHT);
-        listView.setPrefHeight(Constants.INTERACT_WINDOW_HEIGHT);
         listView.setVisible(false);
+        pane.getChildren().add(listView);
         PublicComponent.setListView(listView);
 
-        TextField textField = createDefaultTextField();
-        PublicComponent.setTextField(textField);
-
-        Pane pane = new Pane();
-        pane.getChildren().add(textField);
-        pane.setBorder(new Border(new BorderStroke(Color.valueOf("#1B1B1B"), BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(2))));
-        pane.setPadding(new Insets(0, 0, 0, 0));
-        pane.setStyle("-fx-background-color: #1B1B1B;");
-
-
-        pane.getChildren().add(listView);
-        pane.setPrefHeight(450);
-
         Scene scene = new Scene(pane, 800, 56);
-        scene.getStylesheets().add(getClass().getClassLoader().getResource("application.css").toExternalForm());
+        scene.getStylesheets().add(loadCss("constants.css"));
+        scene.getStylesheets().add(loadCss("application.css"));
         primaryStage.setMaxHeight(500);
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -73,12 +64,12 @@ public class SmartLaunch extends Application {
 
     private TextField createDefaultTextField() {
         TextField textField = new TextField();
-        textField.setMinHeight(50);
-        textField.setPrefHeight(50);
-        textField.setMaxHeight(50);
         textField.setLayoutX(3);
         textField.setLayoutY(3);
-        textField.setPrefWidth(Constants.PREF_WIDTH);
         return textField;
+    }
+
+    private String loadCss(String cssFileName) {
+        return getClass().getClassLoader().getResource(cssFileName).toExternalForm();
     }
 }

@@ -25,7 +25,7 @@ public class StartMenu implements Plugin {
     public InputStream execute() {
         try {
             log.info(path + ", " + Arrays.asList(parameters));
-            Runtime.getRuntime().exec("cmd /c  \"" + path + "\"");
+            Runtime.getRuntime().exec("cmd /c  \'" + path + "\'");
         } catch (Exception e) {
             log.error("failed to execute start menu plugin: " + path, e);
         }

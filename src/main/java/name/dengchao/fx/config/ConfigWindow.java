@@ -3,6 +3,7 @@ package name.dengchao.fx.config;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -36,7 +37,7 @@ public class ConfigWindow {
         textArea.setText(JSON.toJSONString(configJSON, true));
 
         HBox menuHBox = new HBox();
-
+        menuHBox.setAlignment(Pos.BOTTOM_RIGHT);
         Button buttonSave = new Button("Save");
         buttonSave.setOnAction((evt) -> ConfigManager.saveConfig(pluginName, textArea.getText()));
         menuHBox.getChildren().add(buttonSave);

@@ -52,6 +52,8 @@ public class Copy extends BuiltinPlugin {
     public void setParameters(String... parameters) {
         if (parameters != null && parameters.length != 0 && parameters[0] != null) {
             this.content = parameters[0];
+        } else {
+            this.content = null;
         }
     }
 

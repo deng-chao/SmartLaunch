@@ -38,7 +38,7 @@ public class Config extends BuiltinPlugin {
 
     @Override
     public String getDescription() {
-        return "config given plugin";
+        return "Config given plugin";
     }
 
     @Override
@@ -50,6 +50,8 @@ public class Config extends BuiltinPlugin {
     public void setParameters(String... parameters) {
         if (parameters != null && parameters.length > 0) {
             pluginName = parameters[0];
+        } else {
+            pluginName = null;
         }
     }
 

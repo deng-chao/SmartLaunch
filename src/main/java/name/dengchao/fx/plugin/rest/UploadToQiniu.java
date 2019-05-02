@@ -2,6 +2,7 @@ package name.dengchao.fx.plugin.rest;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:src/main/java/name/dengchao/fx/plugin/rest/UploadToQiniu.java
 =======
 import name.dengchao.fx.plugin.builtin.Configurable;
@@ -20,10 +21,15 @@ import com.alibaba.fastjson.JSON;
 >>>>>>> 92adb10... 1. 解决 upload 插件在 interact 模式下, 取消文件选择后, 再次选择文件并上传时, 发生卡死的问题:src/main/java/name/dengchao/fx/plugin/rest/UploadToDfs.java
 =======
 >>>>>>> a283383... 使用slf4j+log4j2打印日志
+=======
+import com.alibaba.fastjson.JSONObject;
+>>>>>>> 520b98f... 调整样式
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -32,6 +38,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.PublicComponent;
+import name.dengchao.fx.config.ConfigManager;
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
 <<<<<<< HEAD
@@ -78,6 +85,19 @@ public class UploadToQiniu implements Plugin, Configurable {
 
     private String filePath;
 
+    private ImageView iconView;
+
+    public UploadToQiniu() {
+        try (InputStream fis = getClass().getClassLoader().getResourceAsStream("upload.png")) {
+            Image defaultIcon = new Image(fis);
+            iconView = new ImageView(defaultIcon);
+            iconView.setFitHeight(30);
+            iconView.setFitWidth(30);
+        } catch (IOException e) {
+            log.error("failed to read icon image for upload.", e);
+        }
+    }
+
     @Override
     public String getName() {
         return "upload";
@@ -85,7 +105,7 @@ public class UploadToQiniu implements Plugin, Configurable {
 
     @Override
     public String getDescription() {
-        return "upload file to dfs, return file access url";
+        return "UPLOAD file to QINIU, return access url";
     }
 
     @Override
@@ -95,7 +115,14 @@ public class UploadToQiniu implements Plugin, Configurable {
 
     @Override
     public void setParameters(String... parameters) {
-        this.filePath = parameters[0];
+        if (parameters != null && parameters.length > 0) {
+            this.filePath = parameters[0];
+        }
+    }
+
+    @Override
+    public ImageView getIcon() {
+        return iconView;
     }
 
     private HttpClient client = HttpClientBuilder.create().build();
@@ -105,6 +132,19 @@ public class UploadToQiniu implements Plugin, Configurable {
     private static final String defaultBucket = "smart-launch";
     private static final String uploadUrl = "http://upload.qiniup.com/";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+
+    private static final String ak = "_X-HJipezNOe7hZ7Put5g7YwKrIZ7-Zvo__yH8cN";
+    private static final String sk = "uaXmaVlFgmilj-GLGLqEb5vngfZpRneFQ--M6etL";
+
+    @Override
+    public JSONObject defaultConfig() {
+        JSONObject json = new JSONObject();
+        json.put("ak", ak);
+        json.put("sk", sk);
+        json.put("bucket", defaultBucket);
+        json.put("domain", domain);
+        return json;
+    }
 
     @Override
     public InputStream execute() {
@@ -130,12 +170,22 @@ public class UploadToQiniu implements Plugin, Configurable {
                 + "621355968000000810&sign=72c10527cdd0500f57c2b0467b8cba73&uid=0&fileType=&maxSize=0&rawFileName=";
 >>>>>>> 92adb10... 1. 解决 upload 插件在 interact 模式下, 取消文件选择后, 再次选择文件并上传时, 发生卡死的问题:src/main/java/name/dengchao/fx/plugin/rest/UploadToDfs.java
         try {
+<<<<<<< HEAD
             // the ak & sk is for personal use.
             QiniuAuth auth = QiniuAuth.create(
                     "_X-HJipezNOe7hZ7Put5g7YwKrIZ7-Zvo__yH8cN",
                     "uaXmaVlFgmilj-GLGLqEb5vngfZpRneFQ--M6etL"
             );
             String token = auth.uploadToken(defaultBucket);
+=======
+            // the ak & sk is for public use.
+            String ak = ConfigManager.getConfig(getName()).getString("ak");
+            String sk = ConfigManager.getConfig(getName()).getString("sk");
+            String bucket = ConfigManager.getConfig(getName()).getString("bucket");
+            String domain = ConfigManager.getConfig(getName()).getString("domain");
+            QiniuAuth auth = QiniuAuth.create(ak, sk);
+            String token = auth.uploadToken(bucket);
+>>>>>>> 520b98f... 调整样式
             int indexOfDot = filePath.lastIndexOf('.');
             String fileExt = indexOfDot > 0 ? filePath.substring(indexOfDot) : "";
             String key = sdf.format(new Date()) + UUID.randomUUID().toString() + fileExt;
@@ -149,7 +199,7 @@ public class UploadToQiniu implements Plugin, Configurable {
 =======
                     .addBinaryBody("file", new File(filePath))
                     .addTextBody("key", key)
-                    .addTextBody("bucket", defaultBucket)
+                    .addTextBody("bucket", bucket)
                     .addTextBody("token", token).build();
 >>>>>>> a283383... 使用slf4j+log4j2打印日志
             HttpPost post = new HttpPost(uploadUrl);

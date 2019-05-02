@@ -56,15 +56,13 @@ public class PluginManager {
             try {
                 BuiltinPlugin builtin = builtinClass.newInstance();
                 Plugin plugin = pluginMap.get(builtin.getName());
-                if (plugin == null) {
-                    pluginMap.put(builtin.getName(), builtin);
-                } else {
-                    throw new RuntimeException("Duplicated plugin name");
+                if (plugin != null) {
+                    log.error("duplicated plugin name: " + builtin.getName());
+                    continue;
                 }
-            } catch (InstantiationException e) {
-                // TODO throw exception
-            } catch (IllegalAccessException e) {
-                // TODO throw exception
+                pluginMap.put(builtin.getName(), builtin);
+            } catch (InstantiationException | IllegalAccessException e) {
+                log.error("failed to load builtin plugin: " + builtinClass.getName(), e);
             }
         }
     }
@@ -104,15 +102,13 @@ public class PluginManager {
             try {
                 Plugin builtin = restClass.newInstance();
                 Plugin plugin = pluginMap.get(builtin.getName());
-                if (plugin == null) {
-                    pluginMap.put(builtin.getName(), builtin);
-                } else {
-                    throw new RuntimeException("Duplicated plugin name");
+                if (plugin != null) {
+                    log.error("duplicated plugin name: " + restClass.getName());
+                    continue;
                 }
-            } catch (InstantiationException e) {
-                // TODO throw exception
-            } catch (IllegalAccessException e) {
-                // TODO throw exception
+                pluginMap.put(builtin.getName(), builtin);
+            } catch (InstantiationException | IllegalAccessException e) {
+                log.error("failed to load plugin: " + restClass);
             }
         }
     }
@@ -130,7 +126,7 @@ public class PluginManager {
             if (pluginMap.get(file.getName()) != null) {
                 return;
             }
-            log.info("read start menu plugin: " + file.getAbsolutePath());
+            log.debug("read start menu plugin: " + file.getAbsolutePath());
             String displayName = file.getName().replace(".lnk", "");
             String pluginName = displayName.toLowerCase().replace(" ", "-");
 
@@ -177,7 +173,7 @@ public class PluginManager {
             StartMenu menu = null;
             try {
                 menu = queue.take();
-                log.info("reading icon for:" + menu);
+                log.debug("reading icon for:" + menu);
                 menu.setIcon(new ImageView(Utils.toFxImage(Utils.getBigIcon(new File(menu.getPath())))));
             } catch (Exception e) {
                 if (menu != null) {

@@ -2,7 +2,6 @@ package name.dengchao.fx.hotkey.handler;
 
 import com.google.common.collect.Lists;
 import javafx.event.Event;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
@@ -27,12 +26,10 @@ public class CommandExecutor {
     public CommandExecutor() {
         this.primaryStage = PublicComponent.getPrimaryStage();
         this.textField = PublicComponent.getTextField();
-        this.listView = PublicComponent.getListView();
     }
 
     private Stage primaryStage;
     private TextField textField;
-    private ListView<Plugin> listView;
 
     public void execute(InputEvent event) {
         AutoComplete.complete();
@@ -57,6 +54,8 @@ public class CommandExecutor {
                 System.arraycopy(commandParts, 1, params, 0, params.length);
                 log.info("params: " + Arrays.toString(params));
                 plugin.setParameters(params);
+            } else {
+                plugin.setParameters((String[]) null);
             }
             activePlugins.add(plugin);
         }
@@ -82,6 +81,10 @@ public class CommandExecutor {
     }
 
     private void display(DisplayType type, InputStream inputStream) {
+        if (inputStream == null) {
+            primaryStage.hide();
+            return;
+        }
         try {
             switch (type) {
                 case NONE:
