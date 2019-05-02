@@ -3,6 +3,7 @@ package name.dengchao.fx.hotkey.handler.display;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import name.dengchao.fx.Constants;
 import name.dengchao.fx.PublicComponent;
 import name.dengchao.fx.utils.Utils;
 
@@ -24,13 +25,14 @@ public class DisplayText implements DisplayResult {
         if (!PublicComponent.getDisplayNodes().contains(textArea)) {
             PublicComponent.getDisplayNodes().add(textArea);
             textArea.setEditable(false);
-            textArea.setLayoutY(53);
-            textArea.setLayoutX(3);
-            textArea.setMaxWidth(794);
-            textArea.setPrefWidth(794);
-            textArea.setFont(Font.font("Courier New", 20));
-            textArea.setMaxHeight(400);
-            textArea.setPrefHeight(400);
+            textArea.setLayoutY(Constants.INTERACT_WINDOW_Y);
+            textArea.setLayoutX(Constants.INTERACT_WINDOW_X);
+            textArea.setMaxWidth(Constants.PREF_WIDTH);
+            textArea.setPrefWidth(Constants.PREF_WIDTH);
+            textArea.setFont(Font.font(20));
+
+            textArea.setMaxHeight(Constants.INTERACT_WINDOW_HEIGHT);
+            textArea.setPrefHeight(Constants.INTERACT_WINDOW_HEIGHT);
             textArea.setWrapText(true);
             ((Pane) PublicComponent.getPrimaryStage().getScene().getRoot()).getChildren().add(textArea);
         }
