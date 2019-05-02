@@ -2,7 +2,7 @@ package name.dengchao.fx.hotkey.handler;
 
 import javafx.scene.input.KeyEvent;
 import name.dengchao.fx.plugin.Plugin;
-import org.springframework.util.CollectionUtils;
+import name.dengchao.fx.utils.CollectionUtils;
 
 import static name.dengchao.fx.PublicComponent.getListView;
 import static name.dengchao.fx.PublicComponent.getTextField;

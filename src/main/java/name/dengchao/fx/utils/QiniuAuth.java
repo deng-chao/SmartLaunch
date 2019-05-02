@@ -1,14 +1,12 @@
 package name.dengchao.fx.utils;
 
 import com.alibaba.fastjson.JSON;
-
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.entity.ContentType;
-import org.springframework.util.StringUtils;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;

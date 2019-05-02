@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.DisplayType;
-import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +20,7 @@ public class Exit extends BuiltinPlugin {
     private ImageView iconView;
 
     public Exit() {
-        try (InputStream fis = new ClassPathResource("exit.png").getInputStream()) {
+        try (InputStream fis = Exit.class.getClassLoader().getResourceAsStream("exit.png")) {
             Image defaultIcon = new Image(fis);
             iconView = new javafx.scene.image.ImageView(defaultIcon);
             iconView.setFitHeight(30);

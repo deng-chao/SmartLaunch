@@ -1,9 +1,10 @@
 package name.dengchao.fx.plugin.rest;
 
-import name.dengchao.fx.plugin.builtin.Configurable;
-import org.apache.http.client.fluent.Request;
-
 import name.dengchao.fx.plugin.Plugin;
+import name.dengchao.fx.plugin.builtin.Configurable;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -11,14 +12,16 @@ import java.io.InputStream;
 
 public abstract class RestPlugin implements Plugin, Configurable {
 
-    abstract protected Request getRequest();
+    abstract protected HttpRequestBase getRequest();
 
     abstract protected String[] getFinalParameters();
+
+    private HttpClient client = HttpClientBuilder.create().build();
 
     @Override
     public InputStream execute() {
         try {
-            return getRequest().execute().returnContent().asStream();
+            return client.execute(getRequest()).getEntity().getContent();
         } catch (IOException e) {
             return new ByteArrayInputStream("Failed to call rest api".getBytes());
         }

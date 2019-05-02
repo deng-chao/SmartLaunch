@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
-import org.springframework.util.ObjectUtils;
+import org.apache.commons.lang.ObjectUtils;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -40,7 +40,7 @@ public class StartMenu implements Plugin {
         if (this == object) {
             return true;
         }
-        return ObjectUtils.nullSafeEquals(path, ((StartMenu) object).getPath());
+        return ObjectUtils.equals(path, ((StartMenu) object).getPath());
     }
 
     @Override

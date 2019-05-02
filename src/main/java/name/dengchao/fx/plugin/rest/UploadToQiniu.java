@@ -50,6 +50,7 @@ import org.springframework.util.StreamUtils;
 =======
 import name.dengchao.fx.plugin.builtin.Configurable;
 import name.dengchao.fx.utils.QiniuAuth;
+import name.dengchao.fx.utils.StreamUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -57,8 +58,11 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
+<<<<<<< HEAD
 import org.springframework.util.StreamUtils;
 >>>>>>> a283383... 使用slf4j+log4j2打印日志
+=======
+>>>>>>> 0d4842d... 减少依赖
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

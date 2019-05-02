@@ -2,8 +2,8 @@ package name.dengchao.fx.plugin.rest;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import name.dengchao.fx.utils.StreamUtils;
 import org.junit.Test;
-import org.springframework.util.StreamUtils;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;

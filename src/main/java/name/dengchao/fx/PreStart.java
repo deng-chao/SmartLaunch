@@ -10,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
-import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,9 +30,8 @@ public class PreStart {
         String logConfig = Utils.getAppHome() + "/log4j2.xml";
         File logConfigFile = new File(logConfig);
         if (!logConfigFile.exists()) {
-            try {
-                InputStream inputStream = new ClassPathResource("log4j2-template.xml").getInputStream();
-                String cfg = Utils.streamToStr(inputStream);
+            try (InputStream fis = PreStart.class.getClassLoader().getResourceAsStream("log4j2-template.xml")) {
+                String cfg = Utils.streamToStr(fis);
                 cfg = cfg.replaceAll("\\$\\{logHome\\}", Utils.getLogHome().replaceAll("\\\\", "/"));
                 System.out.println("config: " + cfg);
                 FileUtils.write(logConfigFile, cfg, StandardCharsets.UTF_8);

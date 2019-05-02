@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.plugin.DisplayType;
-import org.springframework.core.io.ClassPathResource;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -26,7 +25,7 @@ public class Calculator extends BuiltinPlugin {
     private ImageView iconView;
 
     public Calculator() {
-        try (InputStream fis = new ClassPathResource("calc.png").getInputStream()) {
+        try (InputStream fis = this.getClass().getClassLoader().getResourceAsStream("calc.png")) {
             Image defaultIcon = new Image(fis);
             iconView = new ImageView(defaultIcon);
             iconView.setFitHeight(30);
