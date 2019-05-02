@@ -83,6 +83,7 @@ public class Utils {
             log.error("failed to read shortcut file: " + file.getAbsolutePath(), e);
         } catch (ParseException e) {
             log.error("failed to parse shortcut file: " + file.getAbsolutePath(), e);
+            return true;
         }
         return false;
     }
