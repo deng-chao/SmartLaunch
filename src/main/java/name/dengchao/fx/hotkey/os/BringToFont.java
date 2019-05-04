@@ -1,9 +1,8 @@
 package name.dengchao.fx.hotkey.os;
 
 
-import lombok.Data;
-
 import javafx.application.Platform;
+import lombok.Data;
 import name.dengchao.fx.PublicComponent;
 
 @Data
@@ -25,7 +24,6 @@ public class BringToFont implements Action {
                     PublicComponent.getPrimaryStage().show();
                     PublicComponent.getTextField().selectAll();
                     PublicComponent.getTextField().requestFocus();
-//                    PublicComponent.getShade().setText("");
                 }
             });
         }

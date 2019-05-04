@@ -1,5 +1,6 @@
 package name.dengchao.fx.plugin.rest;
 
+import com.alibaba.fastjson.JSONObject;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import name.dengchao.fx.PublicComponent;
+import name.dengchao.fx.config.ConfigManager;
 import name.dengchao.fx.plugin.DisplayType;
 import name.dengchao.fx.plugin.Plugin;
 import name.dengchao.fx.plugin.builtin.Configurable;
@@ -71,7 +73,9 @@ public class UploadToQiniu implements Plugin, Configurable {
 
     @Override
     public void setParameters(String... parameters) {
-        this.filePath = parameters[0];
+        if (parameters != null && parameters.length > 0) {
+            this.filePath = parameters[0];
+        }
     }
 
     @Override
@@ -87,6 +91,19 @@ public class UploadToQiniu implements Plugin, Configurable {
     private static final String uploadUrl = "http://upload.qiniup.com/";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
 
+    private static final String ak = "_X-HJipezNOe7hZ7Put5g7YwKrIZ7-Zvo__yH8cN";
+    private static final String sk = "uaXmaVlFgmilj-GLGLqEb5vngfZpRneFQ--M6etL";
+
+    @Override
+    public JSONObject defaultConfig() {
+        JSONObject json = new JSONObject();
+        json.put("ak", ak);
+        json.put("sk", sk);
+        json.put("bucket", defaultBucket);
+        json.put("domain", domain);
+        return json;
+    }
+
     @Override
     public InputStream execute() {
         log.info("upload file, Path: " + filePath);
@@ -98,18 +115,19 @@ public class UploadToQiniu implements Plugin, Configurable {
         }
         try {
             // the ak & sk is for public use.
-            QiniuAuth auth = QiniuAuth.create(
-                    "_X-HJipezNOe7hZ7Put5g7YwKrIZ7-Zvo__yH8cN",
-                    "uaXmaVlFgmilj-GLGLqEb5vngfZpRneFQ--M6etL"
-            );
-            String token = auth.uploadToken(defaultBucket);
+            String ak = ConfigManager.getConfig(getName()).getString("ak");
+            String sk = ConfigManager.getConfig(getName()).getString("sk");
+            String bucket = ConfigManager.getConfig(getName()).getString("bucket");
+            String domain = ConfigManager.getConfig(getName()).getString("domain");
+            QiniuAuth auth = QiniuAuth.create(ak, sk);
+            String token = auth.uploadToken(bucket);
             int indexOfDot = filePath.lastIndexOf('.');
             String fileExt = indexOfDot > 0 ? filePath.substring(indexOfDot) : "";
             String key = sdf.format(new Date()) + UUID.randomUUID().toString() + fileExt;
             HttpEntity entity = MultipartEntityBuilder.create()
                     .addBinaryBody("file", new File(filePath))
                     .addTextBody("key", key)
-                    .addTextBody("bucket", defaultBucket)
+                    .addTextBody("bucket", bucket)
                     .addTextBody("token", token).build();
             HttpPost post = new HttpPost(uploadUrl);
             post.setEntity(entity);

@@ -50,6 +50,8 @@ public class Config extends BuiltinPlugin {
     public void setParameters(String... parameters) {
         if (parameters != null && parameters.length > 0) {
             pluginName = parameters[0];
+        } else {
+            pluginName = null;
         }
     }
 

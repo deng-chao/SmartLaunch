@@ -1,11 +1,29 @@
-.root {
-    -fx-font-family: "Courier New";
+
+#main-pane {
+    -fx-border-color: #1B1B1B;
+    -fx-border-width: 2px;
+    -fx-border-style: soild;
+    -fx-border-radius: 0;
+    -fx-background-color: #1B1B1B;
+    -fx-padding: 0;
+    -fx-pref-height: 450;
+}
+
+.text-field {
+    -fx-min-height: -input-area-height;
+    -fx-pref-height: -input-area-height;
+    -fx-max-height: -input-area-height;
+    -fx-pref-width: -pref-width;
 }
 
 .list-view {
     -fx-background-color: #1b1b1b;
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-max-width: -pref-width;
+    -fx-pref-width: -pref-width;
+    -fx-min-width: -pref-width;
+    -fx-pref-height: -display-area-hight;
 }
 
 .list-cell {
@@ -28,6 +46,11 @@
     -fx-font-size: 25px;
     -fx-text-fill: #fff;
     -fx-font-family: 'Courier New';
+}
+
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-pref-width: 5px;
 }
 
 .scroll-bar:horizontal .track,
