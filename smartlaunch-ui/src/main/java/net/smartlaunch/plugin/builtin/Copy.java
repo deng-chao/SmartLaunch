@@ -38,7 +38,7 @@ public class Copy extends BuiltinPlugin implements Configurable {
 
     @Override
     public String getDescription() {
-        return "CP input";
+        return "copy input";
     }
 
     @Override

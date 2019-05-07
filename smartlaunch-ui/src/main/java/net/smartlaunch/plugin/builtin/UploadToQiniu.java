@@ -64,7 +64,7 @@ public class UploadToQiniu extends BuiltinPlugin implements Configurable {
 
     @Override
     public String getDescription() {
-        return "UPLOAD file to QINIU, return access url";
+        return "upload file to qiniu, return access url";
     }
 
     @Override

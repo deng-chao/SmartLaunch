@@ -32,6 +32,9 @@ public class InputEventHandler implements EventHandler<KeyEvent> {
 
     @Override
     public void handle(KeyEvent event) {
+        if (event.getCode() != KeyCode.UP && event.getCode() != KeyCode.DOWN) {
+            sl.resetIndex();
+        }
         if (event.getCode() == KeyCode.ENTER) {
             ce.execute(event);
         } else if (event.getCode() == KeyCode.ESCAPE) {

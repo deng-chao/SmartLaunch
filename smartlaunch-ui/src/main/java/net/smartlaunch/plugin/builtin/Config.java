@@ -40,7 +40,7 @@ public class Config extends BuiltinPlugin implements Configurable {
 
     @Override
     public String getDescription() {
-        return "Config given plugin";
+        return "config given plugin";
     }
 
     @Override

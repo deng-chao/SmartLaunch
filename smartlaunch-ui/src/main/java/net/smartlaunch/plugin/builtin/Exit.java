@@ -18,7 +18,7 @@ import java.io.InputStream;
 @EqualsAndHashCode(callSuper = false)
 public class Exit extends BuiltinPlugin implements Configurable {
 
-    private String description = "Exit SmartLaunch";
+    private String description = "exit SmartLaunch";
 
     private ImageView iconView;
 
