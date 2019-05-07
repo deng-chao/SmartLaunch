@@ -1,4 +1,4 @@
-package net.smartlaunch.plugin.builtin;
+package net.smartlaunch.plugin;
 
 import net.smartlaunch.base.plugin.Configurable;
 import net.smartlaunch.base.plugin.Plugin;
@@ -10,7 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public abstract class RestPlugin implements Plugin, Configurable {
+public abstract class RestPlugin extends BuiltinPlugin implements Plugin, Configurable {
 
     abstract protected HttpRequestBase getRequest();
 

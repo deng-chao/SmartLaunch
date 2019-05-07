@@ -7,6 +7,7 @@ import net.smartlaunch.base.plugin.Configurable;
 import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.base.utils.Utils;
+import net.smartlaunch.plugin.BuiltinPlugin;
 import net.smartlaunch.plugin.PluginManager;
 import net.smartlaunch.plugin.config.ConfigWindow;
 
@@ -16,7 +17,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-public class Config implements Plugin, Configurable {
+public class Config extends BuiltinPlugin implements Configurable {
 
     private ImageView iconView;
     private String pluginName;
@@ -63,7 +64,6 @@ public class Config implements Plugin, Configurable {
 
     @Override
     public InputStream execute() {
-        log.info(pluginName);
         log.info(Utils.getPluginConfigPath());
         if (pluginName == null) {
             Utils.openDir(Utils.getPluginConfigPath());
@@ -71,7 +71,7 @@ public class Config implements Plugin, Configurable {
         }
         Plugin plugin = PluginManager.getPlugin(pluginName);
         if (plugin == null) {
-            log.info("no plugin named " + pluginName);
+            log.info("no such plugin: " + pluginName);
             return null;
         }
         if (!(plugin instanceof Configurable)) {

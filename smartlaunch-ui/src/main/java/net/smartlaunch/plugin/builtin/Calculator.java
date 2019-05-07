@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.base.plugin.Plugin;
+import net.smartlaunch.plugin.BuiltinPlugin;
 import net.smartlaunch.plugin.exception.PluginExecutionException;
 
 import javax.script.ScriptEngine;
@@ -19,7 +20,7 @@ import java.io.InputStream;
 @Data
 @Slf4j
 @EqualsAndHashCode(callSuper = false)
-public class Calculator implements Plugin {
+public class Calculator extends BuiltinPlugin {
 
     private String expression;
     private String description = "内置计算器，直接输入表达式";

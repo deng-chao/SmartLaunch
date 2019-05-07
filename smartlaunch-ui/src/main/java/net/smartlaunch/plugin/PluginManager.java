@@ -72,9 +72,8 @@ public class PluginManager {
 
     public static void loadStartMenu(String startMenuPath) {
         File dir = new File(startMenuPath);
-        log.info(dir.getAbsolutePath());
         if (!dir.exists()) {
-            log.info("start menu folder incorrect");
+            log.info("start menu folder not exists: " + startMenuPath);
             return;
         }
         loadStartMenuItem(dir);
@@ -111,7 +110,7 @@ public class PluginManager {
             if (pluginMap.get(file.getName()) != null) {
                 return;
             }
-            log.info("read start menu plugin: " + file.getAbsolutePath());
+            log.debug("read start menu plugin: " + file.getAbsolutePath());
             String displayName = file.getName().replace(".lnk", "");
             String pluginName = displayName.toLowerCase().replace(" ", "-");
 
@@ -181,7 +180,7 @@ public class PluginManager {
             StartMenu menu = null;
             try {
                 menu = queue.take();
-                log.info("reading icon for:" + menu);
+                log.debug("reading icon for:" + menu);
                 menu.setIcon(new ImageView(Utils.toFxImage(Utils.getBigIcon(new File(menu.getPath())))));
             } catch (Exception e) {
                 if (menu != null) {

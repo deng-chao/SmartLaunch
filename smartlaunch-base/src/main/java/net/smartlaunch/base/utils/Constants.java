@@ -7,7 +7,7 @@ public abstract class Constants {
     public static final int INTERACT_WINDOW_Y = 57;
     public static final int INTERACT_WINDOW_HEIGHT = 400;
 
-    public static final String HOME_WINDOWS = "/AppData/Local/SmartLaunch";
+    public static final String HOME_WINDOWS = "\\AppData\\Local\\SmartLaunch";
 
     public static final String HOME_MAC = "/Library/Application Support/SmartLaunch";
 

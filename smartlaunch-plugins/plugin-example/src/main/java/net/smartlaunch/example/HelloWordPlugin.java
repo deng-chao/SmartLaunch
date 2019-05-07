@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class HelloWordPlugin implements Plugin {
+
     @Override
     public String getName() {
         return "hello";

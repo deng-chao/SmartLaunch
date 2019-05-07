@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.smartlaunch.base.plugin.Configurable;
 import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.base.plugin.Plugin;
+import net.smartlaunch.plugin.BuiltinPlugin;
 import net.smartlaunch.plugin.config.ConfigManager;
 import org.apache.commons.lang.SystemUtils;
 
@@ -19,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Slf4j
-public class DecodeBase64Image implements Plugin, Configurable {
+public class DecodeBase64Image extends BuiltinPlugin implements Configurable {
 
     @Override
     public String getName() {

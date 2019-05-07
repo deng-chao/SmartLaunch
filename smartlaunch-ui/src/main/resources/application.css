@@ -28,7 +28,7 @@
 
 .list-cell {
     -fx-background-color: #1b1b1b;
-    -fx-font-family: 'Courier New';
+    -fx-font-family: Arial, 'Times New Roman', 'Microsoft YaHei', SimHei;
     -fx-text-fill: #FFF;
     -fx-padding: 0 0 0 17;
     -fx-font-size: 22px;
@@ -44,7 +44,7 @@
     -fx-border-style: soild;
     -fx-font-size: 25px;
     -fx-text-fill: #fff;
-    -fx-font-family: 'Courier New';
+    -fx-font-family: Arial, 'Times New Roman', 'Microsoft YaHei', SimHei;
 }
 
 .scroll-bar:vertical,
@@ -104,5 +104,7 @@
 .tooltip {
     -fx-background-radius: 1 1 1 1;
     /*-fx-background-color: linear-gradient(#333333, #DEDEDE);*/
-    -fx-background-color: #393e46;
+    -fx-background-color: #1b1b1b;
+    -fx-pref-height: 50;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 0, 0, 0, 0);
 }

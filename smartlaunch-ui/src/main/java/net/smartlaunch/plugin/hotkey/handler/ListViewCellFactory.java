@@ -13,7 +13,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import lombok.extern.slf4j.Slf4j;
 import net.smartlaunch.base.plugin.Plugin;
-import net.smartlaunch.plugin.StartMenu;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,16 +59,12 @@ public class ListViewCellFactory extends ListCell<Plugin> {
             main.getChildren().add(name);
             main.getChildren().add(desc);
             vBox.getChildren().add(main);
-            if (item instanceof StartMenu) {
-                Text path = new Text();
-                path.setText(((StartMenu) item).getPath());
-                path.setFont(Font.font(12));
-                path.setFill(Color.WHITE);
-                vBox.getChildren().add(path);
-                vBox.setPadding(new Insets(6, 0, 0, 10));
-            } else {
-                vBox.setPadding(new Insets(13, 0, 0, 10));
-            }
+            Text path = new Text();
+            path.setText(item.getPath() == null ? "unknown" : item.getPath());
+            path.setFont(Font.font(12));
+            path.setFill(Color.WHITE);
+            vBox.getChildren().add(path);
+            vBox.setPadding(new Insets(6, 0, 0, 10));
 
             ImageView imageView = item.getIcon() == null ? defaultImage : item.getIcon();
             imageView.setFitHeight(35);

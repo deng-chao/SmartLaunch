@@ -19,6 +19,7 @@ import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.base.utils.QiniuAuth;
 import net.smartlaunch.base.utils.StreamUtils;
+import net.smartlaunch.plugin.BuiltinPlugin;
 import net.smartlaunch.plugin.config.ConfigManager;
 import net.smartlaunch.ui.PublicComponent;
 import org.apache.http.HttpEntity;
@@ -39,7 +40,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Slf4j
-public class UploadToQiniu implements Plugin, Configurable {
+public class UploadToQiniu extends BuiltinPlugin implements Configurable {
 
     private String filePath;
 
@@ -135,11 +136,14 @@ public class UploadToQiniu implements Plugin, Configurable {
             HttpResponse httpResponse = client.execute(post);
             StatusLine statusLine = httpResponse.getStatusLine();
             if (statusLine.getStatusCode() / 100 == 2) {
-                String resp = StreamUtils.copyToString(httpResponse.getEntity().getContent(), StandardCharsets.UTF_8);
-                log.info(resp);
                 return new ByteArrayInputStream((domain + "/" + key).getBytes(StandardCharsets.UTF_8));
+            } else {
+                log.error("failed upload file to qiniu, status code: " + statusLine.getStatusCode());
+                if (httpResponse.getEntity() != null && httpResponse.getEntity().getContent() != null) {
+                    String resp = StreamUtils.copyToString(httpResponse.getEntity().getContent(), StandardCharsets.UTF_8);
+                    log.error("qiniu response: " + resp);
+                }
             }
-            log.info("status code: " + statusLine.getStatusCode());
             return null;
         } catch (Exception e) {
             log.error("failed upload file to qiniu.", e);
@@ -155,8 +159,7 @@ public class UploadToQiniu implements Plugin, Configurable {
         dialogHBox.setPadding(new Insets(10, 5, 5, 5));
         Button buttonLoad = new Button("Choose File");
         Label txt = new Label("No file selected");
-        txt.setBorder(
-                new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
+        txt.setBorder(new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
         txt.setPrefWidth(400);
         txt.setFont(new Font(15));
         txt.setPadding(new Insets(1, 5, 1, 5));

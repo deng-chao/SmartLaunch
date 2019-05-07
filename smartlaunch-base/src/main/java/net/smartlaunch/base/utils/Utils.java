@@ -48,23 +48,23 @@ public class Utils {
     }
 
     public static String getPluginPath() {
-        return getAppHome().concat("/plugins");
+        return getAppHome().concat(File.separator).concat("plugins");
     }
 
     public static String getPluginConfigPath() {
-        return getPluginPath().concat("/config");
+        return getPluginPath().concat(File.separator).concat("config");
     }
 
     public static String getShortcutPluginPath() {
-        return getPluginPath().concat("/shortcut");
+        return getPluginPath().concat(File.separator).concat("shortcut");
     }
 
     public static String getLogHome() {
-        return getAppHome().concat("/log");
+        return getAppHome().concat(File.separator).concat("log");
     }
 
     public static String getUserStartMenuPath() {
-        return SystemUtils.getUserHome() + "/AppData/Roaming/Microsoft/Windows/Start Menu/Programs";
+        return SystemUtils.getUserHome() + "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs";
     }
 
     public static String getSystemStartMenuPath() {

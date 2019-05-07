@@ -3,6 +3,7 @@ package net.smartlaunch.plugin.builtin;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import net.smartlaunch.base.plugin.DisplayType;
+import net.smartlaunch.plugin.RestPlugin;
 import org.apache.http.client.methods.HttpPost;
 
 import java.util.ArrayList;

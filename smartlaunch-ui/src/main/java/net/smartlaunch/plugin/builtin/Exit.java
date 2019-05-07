@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.smartlaunch.base.plugin.Configurable;
 import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.base.plugin.Plugin;
+import net.smartlaunch.plugin.BuiltinPlugin;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +16,7 @@ import java.io.InputStream;
 @Data
 @Slf4j
 @EqualsAndHashCode(callSuper = false)
-public class Exit implements Plugin, Configurable {
+public class Exit extends BuiltinPlugin implements Configurable {
 
     private String description = "Exit SmartLaunch";
 

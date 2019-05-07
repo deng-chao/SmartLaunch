@@ -58,7 +58,7 @@ public abstract class Tray {
         } catch (AWTException e) {
             log.info("TrayIcon could not be added.");
         } catch (IOException e) {
-            System.err.println("Failed to read icon file.");
+            log.error("Failed to read icon file.", e);
         }
     }
 

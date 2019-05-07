@@ -43,7 +43,6 @@ public class SmartLaunch extends Application {
         listView.setVisible(false);
         pane.getChildren().add(listView);
         PublicComponent.setListView(listView);
-
         Scene scene = new Scene(pane, 800, 56);
         scene.getStylesheets().add(loadCss("constants.css"));
         scene.getStylesheets().add(loadCss("application.css"));
