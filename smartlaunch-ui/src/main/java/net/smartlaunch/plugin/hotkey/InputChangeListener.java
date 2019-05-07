@@ -1,11 +1,11 @@
-package net.smartlaunch.plugin.hotkey.handler;
+package net.smartlaunch.plugin.hotkey;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import lombok.Data;
 import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.base.utils.CollectionUtils;
 import net.smartlaunch.base.utils.Utils;
@@ -14,24 +14,13 @@ import net.smartlaunch.ui.PublicComponent;
 
 import java.util.*;
 
-@Data
-public class TypeSuggestion {
-
-    public void suggest(KeyEvent event) {
-        // Prevent false suggestion
-        if (event.getCode() == KeyCode.WINDOWS) {
-            return;
-        }
+public class InputChangeListener implements ChangeListener<String> {
+    @Override
+    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
         for (Node node : PublicComponent.getDisplayNodes()) {
             node.setVisible(false);
         }
-        String input = PublicComponent.getTextField().getText();
-        if (event.getCode() == KeyCode.BACK_SPACE && input.length() > 0) {
-            input = input.substring(0, input.length() - 1);
-        } else {
-            input = input + event.getText();
-        }
-        input = Utils.removeSurplusSpace(input);
+        String input = Utils.removeSurplusSpace(newValue);
         String[] parts = input.split("\\|");
         suggestCommand(parts[parts.length - 1].trim());
     }
@@ -61,15 +50,5 @@ public class TypeSuggestion {
         }
         PublicComponent.getListView().getSelectionModel().select(0);
         PublicComponent.getPrimaryStage().setHeight(PublicComponent.getListView().getHeight() + 60);
-    }
-
-    private void suggestParameter(Plugin plugin, String input) {
-        if (plugin == null) {
-            return;
-        }
-        String[] parts = input.split(" ");
-        if (parts[parts.length - 1].trim().equals("")) {
-
-        }
     }
 }

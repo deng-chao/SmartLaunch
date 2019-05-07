@@ -12,6 +12,7 @@ import javafx.stage.StageStyle;
 import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.base.utils.Constants;
 import net.smartlaunch.plugin.PluginManager;
+import net.smartlaunch.plugin.hotkey.InputChangeListener;
 import net.smartlaunch.plugin.hotkey.InputEventHandler;
 import net.smartlaunch.plugin.hotkey.handler.ListViewCellFactory;
 
@@ -55,6 +56,7 @@ public class SmartLaunch extends Application {
         Platform.setImplicitExit(false);
         Platform.runLater(() -> {
             textField.requestFocus();
+            textField.textProperty().addListener(new InputChangeListener());
             InputEventHandler handler = new InputEventHandler();
             textField.addEventHandler(KeyEvent.KEY_PRESSED, handler);
         });

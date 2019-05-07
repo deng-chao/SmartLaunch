@@ -10,13 +10,11 @@ import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.plugin.hotkey.handler.AutoComplete;
 import net.smartlaunch.plugin.hotkey.handler.CommandExecutor;
 import net.smartlaunch.plugin.hotkey.handler.SelectListView;
-import net.smartlaunch.plugin.hotkey.handler.TypeSuggestion;
 import net.smartlaunch.ui.PublicComponent;
 
 public class InputEventHandler implements EventHandler<KeyEvent> {
 
     private Stage primaryStage = PublicComponent.getPrimaryStage();
-    private TypeSuggestion ts = new TypeSuggestion();
     private AutoComplete ac = new AutoComplete();
     private SelectListView sl = new SelectListView();
     private CommandExecutor ce = new CommandExecutor();
@@ -42,8 +40,6 @@ public class InputEventHandler implements EventHandler<KeyEvent> {
             ac.execute(event);
         } else if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN) {
             sl.execute(event);
-        } else {
-            ts.suggest(event);
         }
     }
 }
