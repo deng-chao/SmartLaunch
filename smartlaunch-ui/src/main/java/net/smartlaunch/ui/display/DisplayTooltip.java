@@ -12,21 +12,21 @@ import java.io.InputStream;
 @Slf4j
 public class DisplayTooltip implements DisplayResult {
 
-    private Tooltip tooltip = new Tooltip();
+    private static Tooltip tooltip = new Tooltip();
 
     @Override
     public void display(InputStream inputStream) {
 
         String tip = Utils.streamToStr(inputStream);
         tooltip.setText(tip);
-        Point2D point2D = PublicComponent.getTextField().localToScreen(0, 0);
         if (!tooltip.isShowing()) {
+            Point2D point2D = PublicComponent.getTextField().localToScreen(0, 0);
             tooltip.setY(point2D.getY());
             tooltip.setFont(Font.font(16));
             tooltip.setHeight(50);
             tooltip.setPrefHeight(50);
             tooltip.show(PublicComponent.getPrimaryStage());
-            tooltip.setX(point2D.getX() + PublicComponent.getPrimaryStage().getWidth() - tooltip.getWidth()- 3 );
+            tooltip.setX(point2D.getX() + PublicComponent.getPrimaryStage().getWidth() - tooltip.getWidth() - 3);
         }
     }
 }
