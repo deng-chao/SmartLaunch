@@ -1,20 +1,22 @@
 package net.smartlaunch.ui;
 
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.base.utils.Constants;
 import net.smartlaunch.plugin.PluginManager;
 import net.smartlaunch.plugin.hotkey.InputChangeListener;
 import net.smartlaunch.plugin.hotkey.InputEventHandler;
 import net.smartlaunch.plugin.hotkey.handler.ListViewCellFactory;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class SmartLaunch extends Application {
 
@@ -52,6 +54,12 @@ public class SmartLaunch extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
+
+        primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ESCAPE) {
+                primaryStage.hide();
+            }
+        });
 
         Platform.setImplicitExit(false);
         Platform.runLater(() -> {

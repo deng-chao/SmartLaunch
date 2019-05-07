@@ -24,7 +24,7 @@
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <outputDirectory>C:\Users\Administrator\AppData\Local\SmartLaunch\plugins\</outputDirectory>
+                    <outputDirectory>C:\Users\dengchao\AppData\Local\SmartLaunch\plugins\</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

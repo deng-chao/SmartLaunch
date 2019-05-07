@@ -1,20 +1,19 @@
 package net.smartlaunch.plugin.hotkey;
 
-import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.scene.control.ListView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.plugin.hotkey.handler.AutoComplete;
 import net.smartlaunch.plugin.hotkey.handler.CommandExecutor;
 import net.smartlaunch.plugin.hotkey.handler.SelectListView;
 import net.smartlaunch.ui.PublicComponent;
 
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
 public class InputEventHandler implements EventHandler<KeyEvent> {
 
-    private Stage primaryStage = PublicComponent.getPrimaryStage();
     private AutoComplete ac = new AutoComplete();
     private SelectListView sl = new SelectListView();
     private CommandExecutor ce = new CommandExecutor();
@@ -37,8 +36,6 @@ public class InputEventHandler implements EventHandler<KeyEvent> {
         }
         if (event.getCode() == KeyCode.ENTER) {
             ce.execute(event);
-        } else if (event.getCode() == KeyCode.ESCAPE) {
-            primaryStage.hide();
         } else if (event.getCode() == KeyCode.TAB) {
             ac.execute(event);
         } else if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN) {
