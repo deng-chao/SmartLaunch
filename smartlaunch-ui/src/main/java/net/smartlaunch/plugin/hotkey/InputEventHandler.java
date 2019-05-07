@@ -20,13 +20,11 @@ public class InputEventHandler implements EventHandler<KeyEvent> {
 
     public InputEventHandler() {
         ListView<Plugin> listView = PublicComponent.getListView();
-        Platform.runLater(() -> {
-            listView.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
-                    ce.execute(event);
-                }
-            });
-        });
+        Platform.runLater(() -> listView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                ce.execute(event);
+            }
+        }));
     }
 
     @Override

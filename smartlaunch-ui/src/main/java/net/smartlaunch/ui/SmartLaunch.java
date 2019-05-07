@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -53,6 +54,8 @@ public class SmartLaunch extends Application {
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setAlwaysOnTop(true);
+        primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream("icon.jpg")));
+        primaryStage.setTitle("SmartLaunch");
         primaryStage.show();
 
         primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, e -> {

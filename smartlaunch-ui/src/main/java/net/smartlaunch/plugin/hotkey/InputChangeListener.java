@@ -1,20 +1,25 @@
 package net.smartlaunch.plugin.hotkey;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.input.KeyCode;
 import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.base.utils.CollectionUtils;
 import net.smartlaunch.base.utils.Utils;
 import net.smartlaunch.plugin.PluginManager;
 import net.smartlaunch.ui.PublicComponent;
 
-import java.util.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 
 public class InputChangeListener implements ChangeListener<String> {
+
     @Override
     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
         for (Node node : PublicComponent.getDisplayNodes()) {
