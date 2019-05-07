@@ -16,7 +16,7 @@ public interface Plugin {
     String getDescription();
 
     default String getPath() {
-        return Utils.getPluginPath();
+        return this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
     }
 
     DisplayType getDisplayType();
