@@ -184,7 +184,7 @@ public class PluginManager {
                 menu.setIcon(new ImageView(Utils.toFxImage(Utils.getBigIcon(new File(menu.getPath())))));
             } catch (Exception e) {
                 if (menu != null) {
-                    log.error("failed to read icon for file: " + menu.getPath());
+                    log.warn("unable to read icon for file: " + menu.getPath());
                 }
             }
         }

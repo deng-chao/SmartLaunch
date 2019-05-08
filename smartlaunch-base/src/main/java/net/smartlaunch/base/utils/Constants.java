@@ -15,4 +15,6 @@ public abstract class Constants {
     public static final String HOME_LINUX = "/AppData/Local/SmartLaunch";
 
     public static final String USER_HOME = System.getProperty("user.home");
+
+    public static final String PLUGIN_REPO = "http://plugin.smart-launch.net";
 }

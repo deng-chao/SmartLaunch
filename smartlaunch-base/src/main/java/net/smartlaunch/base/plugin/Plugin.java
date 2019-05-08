@@ -1,7 +1,6 @@
 package net.smartlaunch.base.plugin;
 
 import javafx.scene.image.ImageView;
-import net.smartlaunch.base.utils.Utils;
 
 import java.io.InputStream;
 

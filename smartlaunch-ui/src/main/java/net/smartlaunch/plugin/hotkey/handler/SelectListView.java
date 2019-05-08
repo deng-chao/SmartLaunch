@@ -11,6 +11,7 @@ public class SelectListView {
 
     public void resetIndex() {
     }
+
     private int topIndex = 0;
     private static final int PAGE_ITEM_SIZE = 7;
 
