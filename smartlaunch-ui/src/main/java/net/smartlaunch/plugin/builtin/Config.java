@@ -39,7 +39,7 @@ public class Config extends BuiltinPlugin implements Configurable {
     }
 
     @Override
-    public String getDescription() {
+    public String getSummary() {
         return "config given plugin";
     }
 

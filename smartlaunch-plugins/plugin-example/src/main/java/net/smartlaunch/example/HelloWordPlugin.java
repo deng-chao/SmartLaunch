@@ -15,7 +15,7 @@ public class HelloWordPlugin implements Plugin {
     }
 
     @Override
-    public String getDescription() {
+    public String getSummary() {
         return "SmartLaunch plugin example";
     }
 

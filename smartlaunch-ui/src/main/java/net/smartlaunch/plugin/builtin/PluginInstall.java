@@ -15,7 +15,7 @@ public class PluginInstall extends BuiltinPlugin {
     }
 
     @Override
-    public String getDescription() {
+    public String getSummary() {
         return "install plugin";
     }
 

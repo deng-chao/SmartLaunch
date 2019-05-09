@@ -12,7 +12,7 @@ public interface Plugin {
         return null;
     }
 
-    String getDescription();
+    String getSummary();
 
     default String getPath() {
         return this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();

@@ -5,7 +5,6 @@ import javafx.scene.image.ImageView;
 import lombok.extern.slf4j.Slf4j;
 import net.smartlaunch.base.plugin.Configurable;
 import net.smartlaunch.base.plugin.DisplayType;
-import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.plugin.BuiltinPlugin;
 
 import java.awt.*;
@@ -37,7 +36,7 @@ public class Copy extends BuiltinPlugin implements Configurable {
     }
 
     @Override
-    public String getDescription() {
+    public String getSummary() {
         return "copy input";
     }
 

@@ -1,11 +1,9 @@
 package net.smartlaunch.plugin.builtin;
 
 import lombok.extern.slf4j.Slf4j;
-
 import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.plugin.BuiltinPlugin;
 import net.smartlaunch.plugin.exception.PluginExecutionException;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -20,12 +18,12 @@ public class PluginList extends BuiltinPlugin {
 
     @Override
     public String getName() {
-        return "plugin-list";
+        return "ps";
     }
 
     @Override
-    public String getDescription() {
-        return "list plugin";
+    public String getSummary() {
+        return "search plugin";
     }
 
     @Override

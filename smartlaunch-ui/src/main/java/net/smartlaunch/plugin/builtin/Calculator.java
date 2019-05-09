@@ -23,7 +23,7 @@ import java.io.InputStream;
 public class Calculator extends BuiltinPlugin {
 
     private String expression;
-    private String description = "内置计算器，直接输入表达式";
+    private String summary = "内置计算器，直接输入表达式";
 
     private ImageView iconView;
 

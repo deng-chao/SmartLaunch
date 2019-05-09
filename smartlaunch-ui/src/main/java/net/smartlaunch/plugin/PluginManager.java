@@ -11,6 +11,7 @@ import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.base.utils.StreamUtils;
 import net.smartlaunch.base.utils.Utils;
+import net.smartlaunch.plugin.exception.PluginExecutionException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.SystemUtils;
 import org.reflections.Reflections;
@@ -143,7 +144,7 @@ public class PluginManager {
                 startMenu.setName(name);
                 startMenu.setParameters(new String[0]);
                 startMenu.setPath(file.getAbsolutePath());
-                startMenu.setDescription(displayName);
+                startMenu.setSummary(displayName);
                 queue.offer(startMenu);
                 pluginMap.put(name, startMenu);
             }
@@ -157,19 +158,26 @@ public class PluginManager {
             if (!file.getName().endsWith(".jar")) {
                 continue;
             }
-            try {
-                URLClassLoader classLoader = new URLClassLoader(
-                        new URL[]{file.toURI().toURL()},
-                        PluginManager.class.getClassLoader()
-                );
-                String config = StreamUtils.copyToString(classLoader.getResourceAsStream("plugin.json"), StandardCharsets.UTF_8);
-                String className = JSON.parseObject(config).getString("class");
-                Class<Plugin> clz = (Class<Plugin>) Class.forName(className, true, classLoader);
-                Plugin plugin = clz.newInstance();
-                pluginMap.put(plugin.getName(), plugin);
-            } catch (Exception e) {
-                log.error("failed to load plugin: " + file.getAbsolutePath(), e);
-            }
+            loadExternalPlugin(file);
+        }
+    }
+
+    public static void loadExternalPlugin(File jarFile) {
+        if (!jarFile.exists()) {
+            throw new PluginExecutionException("failed to load plugin: " + jarFile.getName() + ", jar not exist");
+        }
+        try {
+            URLClassLoader classLoader = new URLClassLoader(
+                    new URL[]{jarFile.toURI().toURL()},
+                    PluginManager.class.getClassLoader()
+            );
+            String config = StreamUtils.copyToString(classLoader.getResourceAsStream("plugin.json"), StandardCharsets.UTF_8);
+            String className = JSON.parseObject(config).getString("class");
+            Class<Plugin> clz = (Class<Plugin>) Class.forName(className, true, classLoader);
+            Plugin plugin = clz.newInstance();
+            pluginMap.put(plugin.getName(), plugin);
+        } catch (Exception e) {
+            log.error("failed to load plugin: " + jarFile.getAbsolutePath(), e);
         }
     }
 

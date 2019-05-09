@@ -46,7 +46,7 @@ public class ListViewCellFactory extends ListCell<Plugin> {
 
             Text desc = new Text();
             desc.setFont(Font.font(20));
-            desc.setText(" - " + item.getDescription());
+            desc.setText(" - " + item.getSummary());
             desc.setFill(Color.WHITE);
 
             Text name = new Text();

@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import net.smartlaunch.base.plugin.Configurable;
 import net.smartlaunch.base.plugin.DisplayType;
-import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.base.utils.QiniuAuth;
 import net.smartlaunch.base.utils.StreamUtils;
 import net.smartlaunch.plugin.BuiltinPlugin;
@@ -63,7 +62,7 @@ public class UploadToQiniu extends BuiltinPlugin implements Configurable {
     }
 
     @Override
-    public String getDescription() {
+    public String getSummary() {
         return "upload file to qiniu, return access url";
     }
 

@@ -11,7 +11,7 @@ import org.apache.http.client.methods.HttpPost;
 public class UrlShortener extends RestPlugin {
 
     private String name = "url-shortener";
-    private String description = "generate short url";
+    private String summary = "generate short url";
     private String[] parameterNames = {"url"};
     private String[] parameters;
     private String restApi = "https://hj.vc/v1/shorten";

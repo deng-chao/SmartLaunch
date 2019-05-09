@@ -15,7 +15,7 @@ import java.util.List;
 public class QrCode extends RestPlugin {
 
     private String name = "qrcode";
-    private String description = "generate qrcode";
+    private String summary = "generate qrcode";
     private String[] parameterNames = {"text", "size", "format", "referrer"};
     private String[] parameters;
 

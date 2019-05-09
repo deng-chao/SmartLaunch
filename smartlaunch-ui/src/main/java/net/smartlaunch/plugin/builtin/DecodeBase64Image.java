@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import net.smartlaunch.base.plugin.Configurable;
 import net.smartlaunch.base.plugin.DisplayType;
-import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.plugin.BuiltinPlugin;
 import net.smartlaunch.plugin.config.ConfigManager;
 import org.apache.commons.lang.SystemUtils;
@@ -28,7 +27,7 @@ public class DecodeBase64Image extends BuiltinPlugin implements Configurable {
     }
 
     @Override
-    public String getDescription() {
+    public String getSummary() {
         return "decode image and save";
     }
 
