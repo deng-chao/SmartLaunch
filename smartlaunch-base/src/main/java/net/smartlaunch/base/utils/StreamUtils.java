@@ -17,8 +17,18 @@ package net.smartlaunch.base.utils;
  */
 
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FilterInputStream;
+import java.io.FilterOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * copied from spring-core
@@ -31,8 +41,7 @@ public abstract class StreamUtils {
 
 
     /**
-     * Copy the contents of the given InputStream into a new byte array.
-     * Leaves the stream open when done.
+     * Copy the contents of the given InputStream into a new byte array. Leaves the stream open when done.
      *
      * @param in the stream to copy from
      * @return the new byte array that has been copied to
@@ -45,8 +54,7 @@ public abstract class StreamUtils {
     }
 
     /**
-     * Copy the contents of the given InputStream into a String.
-     * Leaves the stream open when done.
+     * Copy the contents of the given InputStream into a String. Leaves the stream open when done.
      *
      * @param in the InputStream to copy from
      * @return the String that has been copied to
@@ -64,11 +72,14 @@ public abstract class StreamUtils {
         return out.toString();
     }
 
+    public static String copyToString(InputStream in) throws IOException {
+        return copyToString(in, StandardCharsets.UTF_8);
+    }
+
     /**
-     * Copy the contents of the given byte array to the given OutputStream.
-     * Leaves the stream open when done.
+     * Copy the contents of the given byte array to the given OutputStream. Leaves the stream open when done.
      *
-     * @param in  the byte array to copy from
+     * @param in the byte array to copy from
      * @param out the OutputStream to copy to
      * @throws IOException in case of I/O errors
      */
@@ -79,12 +90,11 @@ public abstract class StreamUtils {
     }
 
     /**
-     * Copy the contents of the given String to the given output OutputStream.
-     * Leaves the stream open when done.
+     * Copy the contents of the given String to the given output OutputStream. Leaves the stream open when done.
      *
-     * @param in      the String to copy from
+     * @param in the String to copy from
      * @param charset the Charset
-     * @param out     the OutputStream to copy to
+     * @param out the OutputStream to copy to
      * @throws IOException in case of I/O errors
      */
     public static void copy(String in, Charset charset, OutputStream out) throws IOException {
@@ -97,10 +107,9 @@ public abstract class StreamUtils {
     }
 
     /**
-     * Copy the contents of the given InputStream to the given OutputStream.
-     * Leaves both streams open when done.
+     * Copy the contents of the given InputStream to the given OutputStream. Leaves both streams open when done.
      *
-     * @param in  the InputStream to copy from
+     * @param in the InputStream to copy from
      * @param out the OutputStream to copy to
      * @return the number of bytes copied
      * @throws IOException in case of I/O errors
@@ -125,10 +134,10 @@ public abstract class StreamUtils {
      * up to the end of the stream and returns the actual number of copied bytes.
      * <p>Leaves both streams open when done.
      *
-     * @param in    the InputStream to copy from
-     * @param out   the OutputStream to copy to
+     * @param in the InputStream to copy from
+     * @param out the OutputStream to copy to
      * @param start the position to start copying from
-     * @param end   the position to end copying
+     * @param end the position to end copying
      * @return the number of bytes copied
      * @throws IOException in case of I/O errors
      * @since 4.3
@@ -156,8 +165,7 @@ public abstract class StreamUtils {
     }
 
     /**
-     * Drain the remaining content of the given InputStream.
-     * Leaves the InputStream open when done.
+     * Drain the remaining content of the given InputStream. Leaves the InputStream open when done.
      *
      * @param in the InputStream to drain
      * @return the number of bytes read
@@ -186,8 +194,8 @@ public abstract class StreamUtils {
     }
 
     /**
-     * Return a variant of the given {@link InputStream} where calling
-     * {@link InputStream#close() close()} has no effect.
+     * Return a variant of the given {@link InputStream} where calling {@link InputStream#close() close()} has no
+     * effect.
      *
      * @param in the InputStream to decorate
      * @return a version of the InputStream that ignores calls to close
@@ -198,8 +206,8 @@ public abstract class StreamUtils {
     }
 
     /**
-     * Return a variant of the given {@link OutputStream} where calling
-     * {@link OutputStream#close() close()} has no effect.
+     * Return a variant of the given {@link OutputStream} where calling {@link OutputStream#close() close()} has no
+     * effect.
      *
      * @param out the OutputStream to decorate
      * @return a version of the OutputStream that ignores calls to close

@@ -1,23 +1,33 @@
 package net.smartlaunch.plugin.hotkey.handler;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
-import javafx.event.Event;
-import javafx.scene.control.TextField;
-import javafx.scene.input.InputEvent;
-import javafx.stage.Stage;
+
 import lombok.extern.slf4j.Slf4j;
+
 import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.base.plugin.Plugin;
+import net.smartlaunch.base.utils.StreamUtils;
 import net.smartlaunch.base.utils.Utils;
 import net.smartlaunch.plugin.PluginManager;
+import net.smartlaunch.plugin.RemotePlugin;
 import net.smartlaunch.plugin.tray.Tray;
 import net.smartlaunch.ui.PublicComponent;
 import net.smartlaunch.ui.display.DisplayJson;
 import net.smartlaunch.ui.display.DisplayText;
 import net.smartlaunch.ui.display.DisplayTooltip;
+
 import org.apache.commons.io.IOUtils;
 
-import java.awt.*;
+import javafx.collections.FXCollections;
+import javafx.event.Event;
+import javafx.scene.control.TextField;
+import javafx.scene.input.InputEvent;
+import javafx.stage.Stage;
+
+import java.awt.TrayIcon;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -105,6 +115,20 @@ public class CommandExecutor {
                     break;
                 case TEXT:
                     new DisplayText().display(inputStream);
+                    break;
+                case LIST_VIEW:
+                    JSONObject json = JSON.parseObject(StreamUtils.copyToString(inputStream));
+                    JSONArray pluginJsonArr = json.getJSONArray("data");
+                    List<Plugin> candidates = Lists.newArrayList();
+                    for (int i = 0; i < pluginJsonArr.size(); i++) {
+                        JSONObject pluginJson = pluginJsonArr.getJSONObject(i);
+                        RemotePlugin plugin = new RemotePlugin();
+                        plugin.setName(pluginJson.getString("name"));
+                        plugin.setDescription(pluginJson.getString("description"));
+                        plugin.setDisplayType(DisplayType.NONE);
+                        candidates.add(plugin);
+                    }
+                    PublicComponent.getListView().setItems(FXCollections.observableArrayList(candidates));
                     break;
                 default:
             }
