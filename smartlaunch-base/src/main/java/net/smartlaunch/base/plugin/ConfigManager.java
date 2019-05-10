@@ -1,12 +1,12 @@
-package net.smartlaunch.plugin.config;
+package net.smartlaunch.base.plugin;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+
 import lombok.extern.slf4j.Slf4j;
-import net.smartlaunch.base.plugin.Configurable;
-import net.smartlaunch.base.plugin.Plugin;
+
 import net.smartlaunch.base.utils.Utils;
-import net.smartlaunch.plugin.PluginManager;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

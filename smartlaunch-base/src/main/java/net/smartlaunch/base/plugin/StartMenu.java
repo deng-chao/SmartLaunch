@@ -1,19 +1,18 @@
-package net.smartlaunch.plugin;
+package net.smartlaunch.base.plugin;
 
 import javafx.scene.image.ImageView;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import net.smartlaunch.base.plugin.DisplayType;
-import net.smartlaunch.base.plugin.Plugin;
+
 import net.smartlaunch.base.utils.Utils;
-import net.smartlaunch.plugin.exception.PluginExecutionException;
+
 import org.apache.commons.lang.ObjectUtils;
 
 import java.io.InputStream;
 
 @Data
 @Slf4j
-public class StartMenu implements Plugin {
+class StartMenu implements Plugin {
 
     private String name;
     private DisplayType displayType;

@@ -8,7 +8,7 @@ import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.base.utils.Utils;
 import net.smartlaunch.plugin.BuiltinPlugin;
-import net.smartlaunch.plugin.PluginManager;
+import net.smartlaunch.base.plugin.PluginManager;
 import net.smartlaunch.plugin.config.ConfigWindow;
 
 import java.io.ByteArrayInputStream;

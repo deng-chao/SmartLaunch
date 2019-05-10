@@ -2,7 +2,7 @@ package net.smartlaunch.plugin;
 
 import net.smartlaunch.base.plugin.Configurable;
 import net.smartlaunch.base.plugin.Plugin;
-import net.smartlaunch.plugin.exception.PluginExecutionException;
+import net.smartlaunch.base.plugin.PluginExecutionException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.HttpClientBuilder;

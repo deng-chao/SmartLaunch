@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import net.smartlaunch.base.plugin.ConfigManager;
 import net.smartlaunch.ui.PublicComponent;
 
 public class ConfigWindow {

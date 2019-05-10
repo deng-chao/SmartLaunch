@@ -2,7 +2,7 @@ package net.smartlaunch.ui;
 
 import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.base.utils.Constants;
-import net.smartlaunch.plugin.PluginManager;
+import net.smartlaunch.base.plugin.PluginManager;
 import net.smartlaunch.plugin.hotkey.InputChangeListener;
 import net.smartlaunch.plugin.hotkey.InputEventHandler;
 import net.smartlaunch.plugin.hotkey.handler.ListViewCellFactory;

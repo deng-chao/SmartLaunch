@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.smartlaunch.base.plugin.Configurable;
 import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.plugin.BuiltinPlugin;
-import net.smartlaunch.plugin.config.ConfigManager;
+import net.smartlaunch.base.plugin.ConfigManager;
 import org.apache.commons.lang.SystemUtils;
 
 import javax.xml.bind.DatatypeConverter;

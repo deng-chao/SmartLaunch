@@ -19,7 +19,7 @@ import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.base.utils.QiniuAuth;
 import net.smartlaunch.base.utils.StreamUtils;
 import net.smartlaunch.plugin.BuiltinPlugin;
-import net.smartlaunch.plugin.config.ConfigManager;
+import net.smartlaunch.base.plugin.ConfigManager;
 import net.smartlaunch.ui.PublicComponent;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

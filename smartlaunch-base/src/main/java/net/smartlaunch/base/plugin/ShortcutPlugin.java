@@ -1,17 +1,14 @@
-package net.smartlaunch.plugin;
+package net.smartlaunch.base.plugin;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import net.smartlaunch.base.plugin.DisplayType;
-import net.smartlaunch.base.plugin.Plugin;
-import net.smartlaunch.plugin.exception.PluginExecutionException;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 @Data
 @Slf4j
-public class ShortcutPlugin implements Plugin {
+class ShortcutPlugin implements Plugin {
 
     private String name;
     private DisplayType displayType;

@@ -1,4 +1,4 @@
-package net.smartlaunch.plugin;
+package net.smartlaunch.base.plugin;
 
 import com.alibaba.fastjson.JSON;
 import com.github.stuxuhai.jpinyin.PinyinException;
@@ -7,11 +7,9 @@ import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.google.common.collect.Lists;
 import javafx.scene.image.ImageView;
 import lombok.extern.slf4j.Slf4j;
-import net.smartlaunch.base.plugin.DisplayType;
-import net.smartlaunch.base.plugin.Plugin;
+
 import net.smartlaunch.base.utils.StreamUtils;
 import net.smartlaunch.base.utils.Utils;
-import net.smartlaunch.plugin.exception.PluginExecutionException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.SystemUtils;
 import org.reflections.Reflections;

@@ -1,4 +1,4 @@
-package net.smartlaunch.plugin.exception;
+package net.smartlaunch.base.plugin;
 
 public class PluginExecutionException extends RuntimeException {
 

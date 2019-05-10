@@ -3,7 +3,7 @@ package net.smartlaunch.plugin.hotkey;
 import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.base.utils.CollectionUtils;
 import net.smartlaunch.base.utils.Utils;
-import net.smartlaunch.plugin.PluginManager;
+import net.smartlaunch.base.plugin.PluginManager;
 import net.smartlaunch.ui.PublicComponent;
 
 import javafx.beans.value.ChangeListener;

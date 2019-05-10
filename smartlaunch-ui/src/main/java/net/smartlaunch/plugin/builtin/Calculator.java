@@ -6,9 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import net.smartlaunch.base.plugin.DisplayType;
-import net.smartlaunch.base.plugin.Plugin;
 import net.smartlaunch.plugin.BuiltinPlugin;
-import net.smartlaunch.plugin.exception.PluginExecutionException;
+import net.smartlaunch.base.plugin.PluginExecutionException;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;

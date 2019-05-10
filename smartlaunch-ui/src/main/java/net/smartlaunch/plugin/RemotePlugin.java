@@ -3,8 +3,9 @@ package net.smartlaunch.plugin;
 import lombok.Data;
 import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.base.plugin.Plugin;
+import net.smartlaunch.base.plugin.PluginManager;
 import net.smartlaunch.base.utils.Utils;
-import net.smartlaunch.plugin.exception.PluginExecutionException;
+import net.smartlaunch.base.plugin.PluginExecutionException;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
