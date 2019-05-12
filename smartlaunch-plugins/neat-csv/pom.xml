@@ -23,7 +23,7 @@
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <outputDirectory>C:\Users\dengchao\AppData\Local\SmartLaunch\plugins\</outputDirectory>
+                    <outputDirectory>${user.home}\AppData\Local\SmartLaunch\plugins\</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

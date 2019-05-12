@@ -80,9 +80,9 @@ public class Utils {
             WindowsShortcut shortcut = new WindowsShortcut(file);
             return shortcut.getRealFilename().endsWith(".exe");
         } catch (IOException e) {
-            log.warn("failed to read shortcut file: " + file.getAbsolutePath(), e);
+            log.warn("failed to read shortcut file: " + file.getAbsolutePath());
         } catch (ParseException e) {
-            log.warn("failed to parse shortcut file: " + file.getAbsolutePath(), e);
+            log.warn("failed to parse shortcut file: " + file.getAbsolutePath());
             return true;
         }
         return false;

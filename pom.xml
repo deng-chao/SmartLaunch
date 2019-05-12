@@ -12,6 +12,7 @@
         <module>smartlaunch-base</module>
         <module>smartlaunch-ui</module>
         <module>smartlaunch-plugins</module>
+        <module>smartlaunch-plugin-archetype</module>
     </modules>
 
 
