@@ -1,15 +1,17 @@
 package net.smartlaunch.plugin.builtin;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import lombok.extern.slf4j.Slf4j;
+
 import net.smartlaunch.base.plugin.Configurable;
 import net.smartlaunch.base.plugin.DisplayType;
 import net.smartlaunch.base.plugin.Plugin;
+import net.smartlaunch.base.plugin.PluginManager;
 import net.smartlaunch.base.utils.Utils;
 import net.smartlaunch.plugin.BuiltinPlugin;
-import net.smartlaunch.base.plugin.PluginManager;
 import net.smartlaunch.plugin.config.ConfigWindow;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -20,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 public class Config extends BuiltinPlugin implements Configurable {
 
     private ImageView iconView;
-    private String pluginName;
+    private String moduleName;
 
     public Config() {
         try (InputStream fis = Config.class.getClassLoader().getResourceAsStream("config.png")) {
@@ -51,9 +53,9 @@ public class Config extends BuiltinPlugin implements Configurable {
     @Override
     public void setParameters(String... parameters) {
         if (parameters != null && parameters.length > 0) {
-            pluginName = parameters[0];
+            moduleName = parameters[0];
         } else {
-            pluginName = null;
+            moduleName = null;
         }
     }
 
@@ -65,21 +67,21 @@ public class Config extends BuiltinPlugin implements Configurable {
     @Override
     public InputStream execute() {
         log.info(Utils.getPluginConfigPath());
-        if (pluginName == null) {
+        if (moduleName == null) {
             Utils.openDir(Utils.getPluginConfigPath());
             return null;
         }
-        Plugin plugin = PluginManager.getPlugin(pluginName);
+        Plugin plugin = PluginManager.getPlugin(moduleName);
         if (plugin == null) {
-            log.info("no such plugin: " + pluginName);
+            log.info("no such plugin: " + moduleName);
             return null;
         }
         if (!(plugin instanceof Configurable)) {
-            log.info("plugin [" + pluginName + "] is not configurable");
+            log.info("plugin [" + moduleName + "] is not configurable");
             return null;
         }
         Configurable configurable = (Configurable) plugin;
-        ConfigWindow.show(pluginName);
+        ConfigWindow.show(moduleName);
         return new ByteArrayInputStream(configurable.defaultConfig().toJSONString().getBytes(StandardCharsets.UTF_8));
     }
 }

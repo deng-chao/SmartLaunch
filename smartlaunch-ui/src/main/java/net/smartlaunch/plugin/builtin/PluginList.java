@@ -18,7 +18,7 @@ public class PluginList extends BuiltinPlugin {
 
     @Override
     public String getName() {
-        return "spms";
+        return "spm-s";
     }
 
     @Override

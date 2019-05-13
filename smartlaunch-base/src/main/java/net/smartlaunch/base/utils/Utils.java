@@ -1,17 +1,22 @@
 package net.smartlaunch.base.utils;
 
 
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang.SystemUtils;
+
 import sun.awt.shell.ShellFolder;
 
-import javax.swing.*;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileSystemView;
-import java.awt.*;
+
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,7 +39,7 @@ public class Utils {
         } else if (SystemUtils.IS_OS_LINUX) {
             return userHome.concat(Constants.HOME_LINUX);
         } else {
-            throw new RuntimeException("WTH OS are you using, do your mind support?");
+            throw new RuntimeException("os not support");
         }
     }
 

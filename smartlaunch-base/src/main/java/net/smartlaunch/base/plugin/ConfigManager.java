@@ -35,6 +35,20 @@ public class ConfigManager {
         return ((Configurable) plugin).defaultConfig();
     }
 
+    public static JSONObject getConfig(Configurable config) {
+        String configFileName = config.getClass().getSimpleName();
+        String configPath = configFilePath(configFileName);
+        File f = new File(configPath);
+        if (f.exists()) {
+            try {
+                return JSON.parseObject(FileUtils.readFileToString(f, StandardCharsets.UTF_8));
+            } catch (IOException e) {
+                return null;
+            }
+        }
+        return config.defaultConfig();
+    }
+
     public static void saveConfig(String pluginName, String configJson) {
 
         File f = new File(configFilePath(pluginName));
