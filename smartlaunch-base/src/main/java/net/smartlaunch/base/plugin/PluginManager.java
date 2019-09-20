@@ -7,7 +7,6 @@ import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.google.common.collect.Lists;
 import javafx.scene.image.ImageView;
 import lombok.extern.slf4j.Slf4j;
-
 import net.smartlaunch.base.utils.StreamUtils;
 import net.smartlaunch.base.utils.Utils;
 import org.apache.commons.io.FileUtils;

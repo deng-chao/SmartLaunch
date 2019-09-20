@@ -1,22 +1,21 @@
 package net.smartlaunch.ui;
 
+import com.tulskiy.keymaster.common.Provider;
 import lombok.extern.slf4j.Slf4j;
 import net.smartlaunch.base.utils.Utils;
-import net.smartlaunch.plugin.os.GlobalKeyListener;
-import net.smartlaunch.plugin.os.VoidDispatchService;
+import net.smartlaunch.plugin.os.BringToFont;
 import net.smartlaunch.plugin.tray.Tray;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
+import org.apache.pivot.wtk.Keyboard;
 
+import javax.swing.*;
+import java.awt.event.InputEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Slf4j
 // TODO should be a hook, allow developer register operation here.
@@ -52,17 +51,20 @@ public class PreStart {
     }
 
     public static void registerKey() {
-        // shutdown the logger in GlobalScreen
-        java.util.logging.LogManager.getLogManager().reset();
-        Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
-        logger.setLevel(Level.OFF);
-        try {
-            GlobalScreen.registerNativeHook();
-        } catch (NativeHookException ex) {
-            log.error("There was a problem registering the native hook.", ex);
-            System.exit(1);
-        }
-        GlobalScreen.setEventDispatcher(new VoidDispatchService());
-        GlobalScreen.addNativeKeyListener(new GlobalKeyListener());
+        final Provider provider = Provider.getCurrentProvider(false);
+        Runtime.getRuntime().addShutdownHook(new Thread("shutdown-hook") {
+            @Override
+            public void run() {
+                provider.reset();
+                provider.stop();
+            }
+        });
+        provider.reset();
+        provider.register(
+                KeyStroke.getKeyStroke(Keyboard.KeyCode.SPACE, InputEvent.ALT_MASK),
+                hotKey -> bringToFont.act()
+        );
     }
+
+    private static BringToFont bringToFont = new BringToFont();
 }
