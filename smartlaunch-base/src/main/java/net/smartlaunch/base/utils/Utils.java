@@ -1,25 +1,18 @@
 package net.smartlaunch.base.utils;
 
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.lang.SystemUtils;
 
-import sun.awt.shell.ShellFolder;
-
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
-
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -134,13 +127,13 @@ public class Utils {
     }
 
     public static Icon getBigIcon(File file) {
-        if (file == null && !file.exists()) {
+        if (file == null || !file.exists()) {
             return null;
         }
         try {
-            ShellFolder sf = ShellFolder.getShellFolder(file);
-            return new ImageIcon(sf.getIcon(true));
-        } catch (FileNotFoundException e) {
+            FileSystemView fs = FileSystemView.getFileSystemView();
+            return fs.getSystemIcon(file);
+        } catch (Exception e) {
             log.error("failed to read big icon, file not exits: " + file.getAbsolutePath(), e);
             return null;
         }

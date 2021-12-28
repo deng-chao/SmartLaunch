@@ -34,7 +34,7 @@ class StartMenu implements Plugin {
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof StartMenu)) {
+        if (!(object instanceof StartMenu)) {
             return false;
         }
         if (this == object) {

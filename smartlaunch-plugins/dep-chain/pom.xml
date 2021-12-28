@@ -9,13 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>smartlaunch-plugins</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>plugin-example</module>
-        <module>neat-csv</module>
-        <module>tbc</module>
-    </modules>
+    <artifactId>dep-chain</artifactId>
 
 
 </project>

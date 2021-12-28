@@ -13,14 +13,17 @@
         <module>smartlaunch-ui</module>
         <module>smartlaunch-plugins</module>
         <module>smartlaunch-plugin-archetype</module>
+        <module>smartlaunch-plugins/cicd</module>
+        <module>smartlaunch-plugins/daily-report</module>
+        <module>smartlaunch-plugins/dep-chain</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <encoding>UTF-8</encoding>
-        <java.version>1.8</java.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
 </project>

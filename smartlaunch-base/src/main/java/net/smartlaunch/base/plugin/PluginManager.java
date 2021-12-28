@@ -102,13 +102,13 @@ public class PluginManager {
                 loadStartMenuItem(file1);
             }
         } else {
-            if (!Utils.isLink(file.getName()) || !Utils.isAppFile(file)) {
+            if (!Utils.isLink(file.getName()) || !Utils.isAppFile(file) || !file.getParentFile().getName().equals(file.getName().substring(0, file.getName().lastIndexOf(".")))) {
                 return;
             }
             if (pluginMap.get(file.getName()) != null) {
                 return;
             }
-            log.debug("read start menu plugin: " + file.getAbsolutePath());
+            log.debug("`read start menu plugin`: " + file.getAbsolutePath());
             String displayName = file.getName().replace(".lnk", "");
             String pluginName = displayName.toLowerCase().replace(" ", "-");
 
@@ -119,7 +119,7 @@ public class PluginManager {
                 if (Utils.isChinese(aChar)) {
                     try {
                         String pinyin = PinyinHelper.convertToPinyinString(aChar, "", PinyinFormat.WITHOUT_TONE);
-                        firstLetter.append(pinyin.substring(0, 1));
+                        firstLetter.append(pinyin, 0, 1);
                         fullLetter.append(pinyin);
                     } catch (PinyinException e) {
                         log.error("failed convert pinyin.", e);
@@ -196,6 +196,6 @@ public class PluginManager {
     }
 
     static {
-        (new Thread(() -> readIconBackGround())).start();
+        (new Thread(PluginManager::readIconBackGround)).start();
     }
 }

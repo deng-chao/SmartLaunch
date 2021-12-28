@@ -19,7 +19,7 @@ public class ConfigManager {
 
     public static JSONObject getConfig(String pluginName) {
         Plugin plugin = PluginManager.getPlugin(pluginName);
-        if (plugin == null || !(plugin instanceof Configurable)) {
+        if (!(plugin instanceof Configurable)) {
             log.info("plugin is not found or not configurable: " + pluginName);
             return null;
         }

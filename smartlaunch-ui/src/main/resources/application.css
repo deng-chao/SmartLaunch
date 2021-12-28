@@ -1,7 +1,7 @@
 #main-pane {
     -fx-border-color: #1B1B1B;
     -fx-border-width: 2px;
-    -fx-border-style: soild;
+    -fx-border-style: solid;
     -fx-border-radius: 0;
     -fx-background-color: #1B1B1B;
     -fx-padding: 0;
@@ -39,8 +39,8 @@
 
 .text-field {
     -fx-background-color: #2B2B2B;
-    -fx-border-width: 10px;
-    -fx-border-style: soild;
+    -fx-border-width: 0px;
+    -fx-border-style: solid;
     -fx-font-size: 25px;
     -fx-text-fill: #fff;
     -fx-font-family: Arial, 'Times New Roman', 'Microsoft YaHei', SimHei;
