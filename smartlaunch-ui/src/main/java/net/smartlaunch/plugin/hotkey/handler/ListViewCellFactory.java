@@ -24,8 +24,10 @@ public class ListViewCellFactory extends ListCell<Plugin> {
 
     private ImageView defaultImage;
 
+
     public ListViewCellFactory() {
         try (InputStream fis = this.getClass().getClassLoader().getResourceAsStream("icon.jpg")) {
+            assert fis != null;
             Image defaultIcon = new Image(fis);
             defaultImage = new ImageView(defaultIcon);
             defaultImage.setFitHeight(35);
@@ -33,6 +35,12 @@ public class ListViewCellFactory extends ListCell<Plugin> {
         } catch (IOException e) {
             log.error("failed to read default image file.", e);
         }
+    }
+
+    @Override
+    public void updateSelected(boolean selected) {
+        super.updateSelected(selected);
+
     }
 
     @Override
@@ -47,13 +55,13 @@ public class ListViewCellFactory extends ListCell<Plugin> {
             HBox hBox = new HBox();
 
             Text desc = new Text();
-            desc.setFont(Font.font(20));
+            desc.setFont(Font.font(18));
             desc.setText(" - " + item.getSummary());
             desc.setFill(Color.WHITE);
             desc.setFontSmoothingType(FontSmoothingType.LCD);
 
             Text name = new Text();
-            name.setFont(Font.font(20));
+            name.setFont(Font.font(18));
             name.setText(item.getName());
             name.setFill(Color.WHITE);
             name.setFontSmoothingType(FontSmoothingType.LCD);
@@ -70,16 +78,18 @@ public class ListViewCellFactory extends ListCell<Plugin> {
             path.setTextOrigin(VPos.TOP);
             path.setFontSmoothingType(FontSmoothingType.LCD);
             vBox.getChildren().add(path);
-            vBox.setPadding(new Insets(6, 0, 0, 10));
+            vBox.setPadding(new Insets(10, 0, 0, 10));
 
             ImageView imageView = item.getIcon() == null ? defaultImage : item.getIcon();
             imageView.setFitHeight(35);
             imageView.setFitWidth(35);
             if (hBox.getChildren().size() == 0) {
                 Label label = new Label("", imageView);
+                label.setPrefHeight(35);
+                label.setPrefWidth(35);
+                hBox.setAlignment(Pos.CENTER_LEFT);
                 hBox.getChildren().add(label);
                 hBox.getChildren().add(vBox);
-                hBox.setAlignment(Pos.CENTER_LEFT);
             }
             setGraphic(hBox);
         }

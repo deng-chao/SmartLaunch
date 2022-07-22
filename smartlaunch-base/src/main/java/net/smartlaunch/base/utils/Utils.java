@@ -7,12 +7,14 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.SystemUtils;
+import sun.awt.shell.ShellFolder;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -131,8 +133,8 @@ public class Utils {
             return null;
         }
         try {
-            FileSystemView fs = FileSystemView.getFileSystemView();
-            return fs.getSystemIcon(file);
+            ShellFolder sf = ShellFolder.getShellFolder(file);
+            return new ImageIcon(sf.getIcon(true));
         } catch (Exception e) {
             log.error("failed to read big icon, file not exits: " + file.getAbsolutePath(), e);
             return null;

@@ -19,6 +19,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.util.Objects;
+
 public class SmartLaunch extends Application {
 
 
@@ -40,7 +42,7 @@ public class SmartLaunch extends Application {
         pane.getChildren().add(textField);
         PublicComponent.setTextField(textField);
 
-        ListView<Plugin> listView = new ListView();
+        ListView<Plugin> listView = new ListView<>();
         listView.setCellFactory(lst -> new ListViewCellFactory());
         listView.setLayoutY(Constants.INTERACT_WINDOW_Y);
         listView.setLayoutX(Constants.INTERACT_WINDOW_X);
@@ -54,7 +56,7 @@ public class SmartLaunch extends Application {
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setAlwaysOnTop(true);
-        primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream("icon.jpg")));
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("icon.jpg"))));
         primaryStage.setTitle("SmartLaunch");
         primaryStage.show();
 
@@ -81,6 +83,6 @@ public class SmartLaunch extends Application {
     }
 
     private String loadCss(String cssFileName) {
-        return getClass().getClassLoader().getResource(cssFileName).toExternalForm();
+        return Objects.requireNonNull(getClass().getClassLoader().getResource(cssFileName)).toExternalForm();
     }
 }

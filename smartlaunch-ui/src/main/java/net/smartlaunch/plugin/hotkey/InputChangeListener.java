@@ -1,33 +1,53 @@
 package net.smartlaunch.plugin.hotkey;
 
-import net.smartlaunch.base.plugin.Plugin;
-import net.smartlaunch.base.utils.CollectionUtils;
-import net.smartlaunch.base.utils.Utils;
-import net.smartlaunch.base.plugin.PluginManager;
-import net.smartlaunch.ui.PublicComponent;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import net.smartlaunch.base.plugin.Plugin;
+import net.smartlaunch.base.plugin.PluginManager;
+import net.smartlaunch.base.utils.CollectionUtils;
+import net.smartlaunch.base.utils.Utils;
+import net.smartlaunch.ui.PublicComponent;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class InputChangeListener implements ChangeListener<String> {
 
+    private Stack<String> inputs = new Stack<>();
+    private final Object lock = new Object();
+    private boolean running = false;
+
     @Override
     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//        for (Node node : PublicComponent.getDisplayNodes()) {
+//            node.setVisible(false);
+//        }
+        String input = Utils.removeSurplusSpace(newValue);
+        String[] parts = input.split("\\|");
+        suggestCommand(parts[parts.length - 1].trim());
+    }
+
+    private void handleInput() {
+        running = true;
+        String newValue;
+        synchronized (lock) {
+            newValue = inputs.peek();
+            inputs.clear();
+        }
         for (Node node : PublicComponent.getDisplayNodes()) {
             node.setVisible(false);
         }
         String input = Utils.removeSurplusSpace(newValue);
         String[] parts = input.split("\\|");
         suggestCommand(parts[parts.length - 1].trim());
+        try {
+            Thread.sleep(10);
+        } catch (Exception e) {
+            // not
+        }
+        running = false;
     }
 
     private void suggestCommand(String input) {
@@ -42,7 +62,7 @@ public class InputChangeListener implements ChangeListener<String> {
                 }
             }
         }
-        Collections.sort(candidates, Comparator.comparingInt(e -> e.getName().length()));
+        candidates.sort(Comparator.comparingInt(e -> e.getName().length()));
         if (!CollectionUtils.isEmpty(candidates)) {
             ObservableList<Plugin> items = FXCollections.observableArrayList(candidates);
             PublicComponent.getListView().setItems(items);
@@ -53,7 +73,7 @@ public class InputChangeListener implements ChangeListener<String> {
                 PublicComponent.getListView().getItems().clear();
             }
         }
-        PublicComponent.getListView().getSelectionModel().select(0);
         PublicComponent.getPrimaryStage().setHeight(PublicComponent.getListView().getHeight() + 60);
+        PublicComponent.getListView().getSelectionModel().select(0);
     }
 }

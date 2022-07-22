@@ -9,28 +9,32 @@ import net.smartlaunch.ui.PublicComponent;
 
 public class SelectListView {
 
-    public void resetIndex() {
-    }
+    private final ListView<Plugin> listView = PublicComponent.getListView();
 
-    private int topIndex = 0;
-    private static final int PAGE_ITEM_SIZE = 7;
-
-    private ListView<Plugin> listView = PublicComponent.getListView();
+    private int fromTop = 0;
 
     public void execute(KeyEvent event) {
         if (event.getCode() == KeyCode.UP) {
             ObservableList<Integer> indices = listView.getSelectionModel().getSelectedIndices();
             int index = indices.get(0);
             if (index > 0) {
+                if (fromTop > 1) {
+                    fromTop = fromTop - 1;
+                } else {
+                    listView.scrollTo(index - 1);
+                }
                 listView.getSelectionModel().select(index - 1);
-//                listView.scrollTo(index - 5);
             }
             event.consume();
         } else if (event.getCode() == KeyCode.DOWN) {
             ObservableList<Integer> indices = listView.getSelectionModel().getSelectedIndices();
             int index = indices.get(0);
             if (index < listView.getItems().size()) {
-                listView.scrollTo(index - 5);
+                if (fromTop < 6) {
+                    fromTop = fromTop + 1;
+                } else {
+                    listView.scrollTo(index - 5);
+                }
                 listView.getSelectionModel().select(index + 1);
             }
             event.consume();

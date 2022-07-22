@@ -18,10 +18,10 @@ public class AutoComplete {
     }
 
     public static void complete() {
+        if (CollectionUtils.isEmpty(PublicComponent.getListView().getSelectionModel().getSelectedItems())) return;
         Plugin mostMatch = PublicComponent.getListView().getSelectionModel().getSelectedItems().get(0);
-        if (mostMatch == null) {
-            return;
-        }
+        if (mostMatch == null) return;
+
         String currInput = PublicComponent.getTextField().getText();
         int index = currInput.lastIndexOf('|');
         boolean hasPipe = currInput.lastIndexOf('|') >= 0;

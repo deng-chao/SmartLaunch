@@ -54,7 +54,8 @@ public class Exit extends BuiltinPlugin implements Configurable {
 
     @Override
     public InputStream execute() {
-        System.exit(0);
+        Thread t = new Thread(() -> System.exit(0));
+        t.start();
         return null;
     }
 }

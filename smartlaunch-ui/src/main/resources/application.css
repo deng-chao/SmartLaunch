@@ -35,6 +35,10 @@
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
     -fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
+    -fx-font-family: Arial, 'Times New Roman', 'Microsoft YaHei', SimHei;
+    -fx-text-fill: #FFF;
+    -fx-padding: 0 0 0 17;
+    -fx-font-size: 22px;
 }
 
 .text-field {
@@ -63,15 +67,14 @@
 .scroll-bar:horizontal .decrement-button {
     -fx-background-color: #1b1b1b;
     -fx-background-radius: 0.0em;
-    -fx-padding: 0.0 10 10.0 0.0;
+    -fx-padding: 0 0 0 0;
 }
 
 .scroll-bar:vertical .increment-button,
 .scroll-bar:vertical .decrement-button {
-    -fx-background-color: transparent;
+    -fx-background-color: #1b1b1b;
     -fx-background-radius: 0.0em;
     -fx-padding: 0.0 10.0 0.0 0.0;
-
 }
 
 .scroll-bar .increment-arrow,
@@ -80,6 +83,8 @@
     -fx-padding: 0.15em 0.0;
 }
 
+.scroll-bar:horizontal .increment-arrow,
+.scroll-bar:horizontal .decrement-arrow,
 .scroll-bar:vertical .increment-arrow,
 .scroll-bar:vertical .decrement-arrow {
     -fx-shape: " ";
